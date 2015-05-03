@@ -50,7 +50,7 @@ int main()
 			charsPlaced ++;					//another character has been succesfully placed
 			system("cls");					//This clears the screen works with windows, not nesscery to run game
 			display();						//displayed updated board
-			system("pause");
+			system("pause");				//r// pauses for human readability
 		}
 	}
 	system("cls");							//this clears the screen
