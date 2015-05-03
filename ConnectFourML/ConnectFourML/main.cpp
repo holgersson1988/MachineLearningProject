@@ -6,8 +6,8 @@ void display();
 bool check(int a, int b);
 int drop(int b, char player);
 char place[6][7];//available for whole program
-#define SUN		15
-#define SQUARE	254
+#define PLAY2	15
+#define PLAY1	254
 
 int main()
 {
@@ -15,21 +15,21 @@ int main()
 		for(int b = 0; b<=6; b++)	
 			place[a][b] = ' ';		
 }								
-	display(); //Displays for first time so players can see the board
-	int hold; //Will house user row choice
-	int hold2 = 0; //will hold drop value
-	int charsPlaced = 0;//Number of peices dropped so can end game if a draw
-	bool gamewon = false;//Will be changed to true when game is won and will exit while loop
-	char player = SUN;//start as player 2 will change back 2 player 1
-	while(!gamewon){//will stop when game is won, ! means NOT makes the oppisite be checked
-		if(hold2 != -1){//check if there was a error in the last drop
-			if(player == SUN){//if player 2 lasted dropped a piece so its player 1s turn
+	display();						//Displays for first time so players can see the board
+	int hold;						//Will house user row choice
+	int hold2 = 0;					//will hold drop value
+	int charsPlaced = 0;			//Number of peices dropped so can end game if a draw
+	bool gamewon = false;			//Will be changed to true when game is won and will exit while loop
+	char player = PLAY2;			//start as player 2 will change back 2 player 1
+	while(!gamewon){				//will stop when game is won, ! means NOT makes the oppisite be checked
+		if(hold2 != -1){			//check if there was a error in the last drop
+			if(player == PLAY2){	//if player 2 lasted dropped a piece so its player 1s turn
 				cout<<"player 1 drop where?";
-				player = SQUARE;//char of players piece
+				player = PLAY1;		//char of players piece
 			}
 			else{
 				cout<<"player 2 drop where?";
-				player = SUN;//char of player piece
+				player = PLAY2;//char of player piece
 			}
 		}
 		while(true){//will run untill 'break;'
@@ -62,7 +62,7 @@ int main()
 		system("pause");
 		return 0;
 	}
-	if(player == SUN)//if won by player 2
+	if(player == PLAY2)//if won by player 2
 		cout<<"gamewon by : player 2\n";
 	else cout<<"gamewon by : player 1\n";//Else won by player 1
 	system("pause");//pauses before exit so players can see who won, works with windows
