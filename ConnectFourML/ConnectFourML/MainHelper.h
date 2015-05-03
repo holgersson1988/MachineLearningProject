@@ -1,7 +1,7 @@
 #pragma once
 
-#define CHAR2	char(15)
-#define CHAR1	char(254)
+#define CHAR2	15 //char(15)
+#define CHAR1	43 //char(254)
 
 void display();
 
@@ -39,8 +39,8 @@ class RandomPlayer : public Player
 	public:
 
 		// default constructor
-		RandomPlayer(char piece)
-			: Player(piece){};
+		RandomPlayer(char tPiece)
+			: Player(tPiece){};
 		/*
 		Returns random choice from 0-6.
 		*/

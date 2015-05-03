@@ -75,8 +75,8 @@ int getMoveDepth(int b)
 	}
 }
 int drop(int b, char player){
-	int depth;
-	if (depth = getMoveDepth(b) >= 0)
+	int depth = getMoveDepth(b);
+	if (depth >= 0)
 	{
 		place[depth][b] = player;
 		return depth;
@@ -88,13 +88,13 @@ int drop(int b, char player){
 
 }
 
-Player::Player(char piece = CHAR1){
-	piece = piece;
+Player::Player(char tPiece = CHAR1){
+	piece = tPiece;
 }
 
 int RandomPlayer::getMove()
 {
 	int column = rand() % 7;				// random column
 	int depth = getMoveDepth(column);		// Get depth and validate
-	return depth;
+	return column;
 }

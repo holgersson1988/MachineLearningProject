@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include <string>
 #include <cstdlib>
 #include <time.h>
@@ -12,7 +12,7 @@ int main()
 	// initialize random seed. Is global.
 	srand(time(NULL));
 
-	for(int a =0;a <= 5; a++){		//fill place with whitespace
+	for(int a =0;a <= 5; a++){		//fill place with whitespaces
 		for(int b = 0; b<=6; b++)	
 			place[a][b] = ' ';		
 }								
@@ -50,6 +50,7 @@ int main()
 			charsPlaced ++;					//another character has been succesfully placed
 			system("cls");					//This clears the screen works with windows, not nesscery to run game
 			display();						//displayed updated board
+			system("pause");
 		}
 	}
 	system("cls");							//this clears the screen
