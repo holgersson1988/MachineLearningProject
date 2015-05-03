@@ -1,6 +1,10 @@
 #include "MainHelper.h"
 #include <iostream>
+#include <cstdlib>
+#include <time.h>
+
 using namespace std;
+extern char place[6][7];	// Declared in main
 MainHelper::MainHelper()
 {
 }
@@ -10,7 +14,13 @@ MainHelper::~MainHelper()
 {
 }
 
-void MainHelper::display(){
+
+/*
+display()
+
+Prints the game board
+*/
+void display(){
 	cout << " 1   2   3   4   5   6   7\n";
 	for (int a = 0; a <= 5; a++)
 	{
@@ -22,7 +32,13 @@ void MainHelper::display(){
 		cout << '\n';
 	}
 }
-bool MainHelper::check(int a, int b){
+
+/*
+check (int a, int b)
+
+Checks to see if move at location (a,b) created a win).
+*/
+bool check(int a, int b){
 	int vertical = 1;//(|)
 	int horizontal = 1;//(-)
 	int diagonal1 = 1;//(\)
@@ -30,14 +46,17 @@ bool MainHelper::check(int a, int b){
 	char player = place[a][b];
 	int i;//vertical
 	int ii;//horizontal
+
 	//check for vertical(|)
 	for (i = a + 1; place[i][b] == player && i <= 5; i++, vertical++);//Check down
 	for (i = a - 1; place[i][b] == player && i >= 0; i--, vertical++);//Check up
 	if (vertical >= 4)return true;
+
 	//check for horizontal(-)
 	for (ii = b - 1; place[a][ii] == player && ii >= 0; ii--, horizontal++);//Check left
 	for (ii = b + 1; place[a][ii] == player && ii <= 6; ii++, horizontal++);//Check right
 	if (horizontal >= 4) return true;
+
 	//check for diagonal 1 (\)
 	for (i = a - 1, ii = b - 1; place[i][ii] == player && i >= 0 && ii >= 0; diagonal1++, i--, ii--);//up and left
 	for (i = a + 1, ii = b + 1; place[i][ii] == player && i <= 5 && ii <= 6; diagonal1++, i++, ii++);//down and right
@@ -48,7 +67,9 @@ bool MainHelper::check(int a, int b){
 	if (diagonal2 >= 4) return true;
 	return false;
 }
-int MainHelper::drop(int b, char player){
+
+
+int drop(int b, char player){
 	if (b >= 0 && b <= 6)
 	{
 		if (place[0][b] == ' '){
@@ -73,3 +94,23 @@ int MainHelper::drop(int b, char player){
 	}
 
 }
+
+/*
+class Player
+
+Interface class to be extended. When player.getMove() is called, a number
+from 0-6 is returned as a choice.
+*/
+class Player
+{
+public:
+	virtual int getMove(char place[6][7]) = 0; // virtual signifies that it can be overidden 
+};
+
+class RPlayer : Player
+{
+	int getMove(char place[6][7])
+	{
+		return rand() % 7;
+	}
+};
