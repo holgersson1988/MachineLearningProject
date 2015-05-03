@@ -95,6 +95,6 @@ Player::Player(char tPiece = CHAR1){
 int RandomPlayer::getMove()
 {
 	int column = rand() % 7;				// random column
-	int depth = getMoveDepth(column);		// Get depth and validate
+	int depth = getMoveDepth(column);		// Gets depth and validate
 	return column;
 }
