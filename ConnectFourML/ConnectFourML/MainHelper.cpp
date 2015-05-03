@@ -88,28 +88,13 @@ int drop(int b, char player){
 
 }
 
-/*
-class Player
+Player::Player(char piece = CHAR1){
+	piece = piece;
+}
 
-Interface class to be extended. When player.getMove() is called, a number
-from 0-6 is returned as a choice.
-*/
-class Player
+int RandomPlayer::getMove()
 {
-public:
-	char piece;
-	Player(char piece){
-		piece = piece;
-	}
-	virtual int getMove(char place[6][7]) = 0; // virtual signifies that it can be overidden 
-};
-
-class RandomPlayer : Player
-{
-	int getMove(char place[6][7])
-	{
-		int column = rand() % 7;				// random column
-		int depth = getMoveDepth(column);		// Get depth and validate
-		return depth;
-	}
-};
+	int column = rand() % 7;				// random column
+	int depth = getMoveDepth(column);		// Get depth and validate
+	return depth;
+}

@@ -1,7 +1,7 @@
 #pragma once
 
-#define PLAY2	15
-#define PLAY1	254
+#define CHAR2	char(15)
+#define CHAR1	char(254)
 
 void display();
 
@@ -16,9 +16,33 @@ positive integer otherwise.
 */
 int drop(int b, char player);
 
-/*
-Returns depth of chosen move 'b'. Returns -1 if move invalid.
-*/
-int getMoveDepth(int b, char player);
-
 extern char place[6][7];
+
+/*
+Interface class to be extended. When player.getMove() is called, a number
+from 0 - 6 is returned as a choice.
+*/
+class Player
+{
+public:
+	char piece;
+
+	// default constructor
+	Player(char piece);
+
+	virtual int getMove()= 0; // virtual signifies that it can be overidden 
+	char getPiece(){ return piece; };
+};
+
+class RandomPlayer : public Player
+{
+	public:
+
+		// default constructor
+		RandomPlayer(char piece)
+			: Player(piece){};
+		/*
+		Returns random choice from 0-6.
+		*/
+		int getMove() override;
+};
