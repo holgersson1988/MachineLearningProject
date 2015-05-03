@@ -97,13 +97,19 @@ from 0-6 is returned as a choice.
 class Player
 {
 public:
+	char piece;
+	Player(char piece){
+		piece = piece;
+	}
 	virtual int getMove(char place[6][7]) = 0; // virtual signifies that it can be overidden 
 };
 
-class RPlayer : Player
+class RandomPlayer : Player
 {
 	int getMove(char place[6][7])
 	{
-		return rand() % 7;
+		int column = rand() % 7;				// random column
+		int depth = getMoveDepth(column);		// Get depth and validate
+		return depth;
 	}
 };

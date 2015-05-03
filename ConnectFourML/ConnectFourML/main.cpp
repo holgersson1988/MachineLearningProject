@@ -35,7 +35,7 @@ int main()
 			}
 		}
 		while(true)
-		{						//will run untill 'break;'
+		{									//will run untill 'break;'
 			if(charsPlaced == 42) break;	//if draw
 			cin>>hold;						//get user input
 			hold--;							//take off 1 to account for arrays starting at 0 not 1
