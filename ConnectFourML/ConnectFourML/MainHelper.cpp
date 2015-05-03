@@ -4,16 +4,6 @@
 #include <time.h>
 
 using namespace std;
-extern char place[6][7];	// Declared in main
-MainHelper::MainHelper()
-{
-}
-
-
-MainHelper::~MainHelper()
-{
-}
-
 
 /*
 display()
@@ -33,11 +23,7 @@ void display(){
 	}
 }
 
-/*
-check (int a, int b)
 
-Checks to see if move at location (a,b) created a win).
-*/
 bool check(int a, int b){
 	int vertical = 1;//(|)
 	int horizontal = 1;//(-)
@@ -68,28 +54,35 @@ bool check(int a, int b){
 	return false;
 }
 
-
-int drop(int b, char player){
+int getMoveDepth(int b)
+{
 	if (b >= 0 && b <= 6)
 	{
-		if (place[0][b] == ' '){
+		if (place[0][b] == ' ')
+		{
 			int i;
-			for (i = 0; place[i][b] == ' '; i++)
-			if (i == 5){
-				place[i][b] = player;
-				return i;
-			}
-			i--;
-			place[i][b] = player;
+			for (i = 0; place[i + 1][b] == ' '; i++);
 			return i;
-
 		}
-		else{
+		else
+		{
 			return -1;
 		}
 
 	}
 	else{
+		return -1;
+	}
+}
+int drop(int b, char player){
+	int depth;
+	if (depth = getMoveDepth(b) >= 0)
+	{
+		place[depth][b] = player;
+		return depth;
+	}
+	else
+	{
 		return -1;
 	}
 
