@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 	if(charsPlaced == 42){					//if draw
 		//r//cout<<"No winner, Game was draw\n";
 		cout << 0 << ',' << charsPlaced << "\n";
-		system("pause");
+		//system("pause");
 		return 0;
 	}
 	if(player->getPiece() == CHAR2)						//if won by player 2
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 	else 
 		// cout<<"game won by : player 1\n";	//Else won by player 1
 		cout << 1 << ',' << charsPlaced << "\n";
-	system("pause");						//pauses before exit so players can see who won, works with 
+	//system("pause");						//pauses before exit so players can see who won, works with 
 
 	// Display board if display is true
 	if (showBoard){
