@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 			showBoard = true;
 		}
 	}
-
+	//
 	// initialize random seed. Is global.
 	srand(time(NULL));
 
