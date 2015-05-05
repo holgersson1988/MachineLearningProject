@@ -48,3 +48,11 @@ ConnectFourML/ConnectFourML.sdf
 ConnectFourML/ConnectFourML.v12.suo
 *.log
 ConnectFourML/ConnectFourML.v12.suo
+*.sdf
+*.suo
+*.log
+*.tlog
+*.lastbuildstate
+*.obj
+*.idb
+*.ilk
