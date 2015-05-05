@@ -13,8 +13,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainHelper.cpp" />
+    <ClCompile Include="QPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QLearn.h" />
+    <ClInclude Include="Qplayer.h" />
     <ClInclude Include="MainHelper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -45,7 +48,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\src\include;$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
