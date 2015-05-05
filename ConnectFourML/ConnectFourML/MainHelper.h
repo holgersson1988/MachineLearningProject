@@ -29,8 +29,10 @@ public:
 
 	// default constructor
 	Player(char piece);
-
-	virtual int getMove()= 0; // virtual signifies that it can be overidden 
+	/*
+	Must return ONLY VALID move.
+	*/
+	virtual int getMove() = 0; // virtual signifies that it can be overidden 
 	char getPiece(){ return piece; };
 };
 
