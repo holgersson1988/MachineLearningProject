@@ -54,7 +54,6 @@ int main(int argc, char* argv[])
 
 		// Break if game over
 		if (charsPlaced == 42) break;
-
 		depthChoice = drop(colChoice, player->getPiece());
 		moveHistory[charsPlaced] = colChoice;
 		gamewon = check(depthChoice, colChoice);	
@@ -71,13 +70,15 @@ int main(int argc, char* argv[])
 	// Tie
 	if (charsPlaced == 42)
 		cout << 0 << ',' << charsPlaced << "\n";
-	// Player 2 Won
-	else if (player->getPiece() == CHAR2)
-		cout << 2 << ',' << charsPlaced << "\n";
-	// Player 1 won
-	else
-		cout << 1 << ',' << charsPlaced << "\n";
-
+	else{
+		player->hasWon();
+		// Player 2 Won
+		if (player->getPiece() == CHAR2)
+			cout << 2 << ',' << charsPlaced << "\n";
+		// Player 1 won
+		else
+			cout << 1 << ',' << charsPlaced << "\n";
+	}
 	// Display board if display is true
 	if (showBoard)
 		display();

@@ -19,7 +19,12 @@ public:
 	{
 		QLearnObj = tQLearn;
 	};
-	
 
 	int getMove() override;
+
+	/*
+	Signal to this player that it has won. Used to update reward of last
+	saved QTS tuple.
+	*/
+	void hasWon();
 };

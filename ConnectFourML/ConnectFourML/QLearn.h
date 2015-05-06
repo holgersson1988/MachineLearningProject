@@ -22,7 +22,7 @@ public:
 
 
 	/*
-	 * Construct QLearn Object with a pre-initialized NN.
+	 * Construct QLearn Object with a Neural Net.
 	 */
 	QLearn(FANN::neural_net &tNet) {
 		net = tNet;

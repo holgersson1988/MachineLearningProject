@@ -33,6 +33,7 @@ public:
 	Must return ONLY VALID move.
 	*/
 	virtual int getMove() = 0; // virtual signifies that it can be overidden 
+	virtual void hasWon() = 0;
 	char getPiece(){ return piece; };
 };
 
@@ -47,4 +48,5 @@ class RandomPlayer : public Player
 		Returns random choice from 0-6.
 		*/
 		int getMove() override;
+		void hasWon() override {};
 };
