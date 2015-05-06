@@ -37,6 +37,11 @@ public:
 		net = tNet;
 	}
 
+	/*
+	 * Convert Game state[a][b] to a bit string for input to the ANN
+	 */
+	bool* getInput(char**);
+
 	// TODO
 	// getQValue(NetState tState)
 

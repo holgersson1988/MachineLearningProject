@@ -14,6 +14,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="QPlayer.cpp" />
+    <ClCompile Include="QLearn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QLearn.h" />
@@ -49,9 +50,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\src\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\FANN-2.2.0-Source\src\include;C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\src\include;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\bin;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\FANN-2.2.0-Source\bin\;C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
