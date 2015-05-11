@@ -34,6 +34,7 @@ public:
 	*/
 	virtual int getMove() = 0; // virtual signifies that it can be overidden 
 	virtual void hasWon() = 0;
+	virtual void hasLost() = 0;
 	char getPiece(){ return piece; };
 };
 
@@ -49,4 +50,5 @@ class RandomPlayer : public Player
 		*/
 		int getMove() override;
 		void hasWon() override {};
+		void hasLost() override {};
 };

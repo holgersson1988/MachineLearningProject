@@ -6,7 +6,6 @@
 using namespace std;
 
 /*
-display()
 
 Prints the game board
 */

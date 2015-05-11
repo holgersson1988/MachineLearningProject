@@ -13,11 +13,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainHelper.cpp" />
-    <ClCompile Include="QPlayer.cpp" />
+    <ClCompile Include="LearnPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="QLearn.h" />
-    <ClInclude Include="Qplayer.h" />
+    <ClInclude Include="Learn.h" />
+    <ClInclude Include="LearnPlayer.h" />
     <ClInclude Include="MainHelper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

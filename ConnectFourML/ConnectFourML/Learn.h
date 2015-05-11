@@ -7,16 +7,16 @@
  */
 #include "floatfann.h"
 #include "fann_cpp.h"
-
-class QLearn {
+class Learn {
 public:
 	FANN::neural_net net;
+	netState gameSequence;
 
 
 	/* 
 	Default constructor 
 	 */
-	QLearn(){
+	Learn(){
 		net = NULL;
 	};
 
@@ -24,25 +24,26 @@ public:
 	/*
 	 * Construct QLearn Object with a Neural Net.
 	 */
-	QLearn(FANN::neural_net &tNet) {
+	Learn(FANN::neural_net &tNet) {
 		net = tNet;
 		// Net properties should outside of this function.
 	}
 
 
 	/* 
-	 * Assigns the Neural Network used for approximating the Q-Value function.
+	Assigns the Neural Network used for approximating the Q-Value function.
 	 */
 	void setNet(FANN::neural_net &tNet){
 		net = tNet;
 	}
-
+	
 	// TODO
-	// getQValue(NetState tState)
+	// updates gameSequence
+	float getValue(int (&tStateValue)[7]);
+	/* TODO d
 
-	/* TODO
-	updateQValues(netState sequence[42]){
-		// takes sequence of state-QValue pairs
+	updateValues(){
+		// takes global sequence of state-QValue pairs
 		// sends to Neural Net to train
 
 		net.train(stateSequence

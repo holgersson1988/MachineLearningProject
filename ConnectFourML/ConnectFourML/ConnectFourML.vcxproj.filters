@@ -21,7 +21,7 @@
     <ClCompile Include="MainHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPlayer.cpp">
+    <ClCompile Include="LearnPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,10 +29,10 @@
     <ClInclude Include="MainHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Qplayer.h">
+    <ClInclude Include="LearnPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QLearn.h">
+    <ClInclude Include="Learn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
