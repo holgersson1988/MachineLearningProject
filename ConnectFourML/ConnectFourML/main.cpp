@@ -3,6 +3,10 @@
 #include <cstdlib>
 #include <time.h>
 #include "MainHelper.h"
+
+#include "floatfann.h"
+#include "fann_cpp.h"
+
 using namespace std;
 
 char place[6][7];	// Declared in MainHelper.h
@@ -15,6 +19,29 @@ int main(int argc, char* argv[])
 		if (string(argv[i]) == "-d")
 			showBoard = true;
 	}
+
+#pragma region Create Artificial Neural Network
+
+	FANN::neural_net net;
+	// Net vatiables
+	int numLayers = 3;
+	int numInputs = 84;
+	int numHidden = 250;
+	int numOutputs = 1;
+
+	double learningRate = 0.95;
+
+	net.create_standard(numLayers, numInputs, numHidden, numOutputs);
+	net.set_learning_rate(learningRate);
+
+	net.set_activation_steepness_hidden(1.0);
+	net.set_activation_steepness_output(1.0);
+	net.set_activation_function_hidden(FANN::SIGMOID_SYMMETRIC_STEPWISE);
+	net.set_activation_function_output(FANN::LINEAR);//SIGMOID_SYMMETRIC_STEPWISE?
+	
+	//net.train(FANN::training_data())
+
+#pragma endregion
 
 	// initialize random seed. Is global.
 	srand(time(NULL));
