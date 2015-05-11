@@ -51,34 +51,32 @@ bool* Learn::getInput(char** gameState)
 int Learn::nextState(){
 	int moveChoice = -1;
 	float moveValue = -1;	// Saves values of greedy choice
-	bool* netState; // for saving the state in NN form
-	
-
-	// Explore or Greedy
+	bool* netState;			// for saving the state in NN form
+	char nextPlace[6][7];	// Place holder for next state
 	float randValue = ((float)rand()) / (float)RAND_MAX;
-	// Greedy. 
-	if (randValue < exploreValue){
-
-		int stateValue[7];		// Holds Values of next 7 possible states
-		char nextPlace[6][7];	// Place holder for next state
-		bool* netInput;
+	
+	// Greedy
+	if (randValue < exploreValue)
+	{
+		int stateValue[7] = { -1 };		// Holds Values of next 7 possible states
+		bool* neuralState;
 
 		for (int i = 0; i < 7; i++)
 		{
 			int moveDepth = getMoveDepth(i);
 			if (moveDepth > 0)
 			{
-				std::memcpy(nextPlace, place, sizeof (int)* 6 * 7);
+				std::memcpy(nextPlace, place, sizeof (int)* 6 * 7); // Copies global place array to temporary nextPlace array
 				nextPlace[moveDepth][i] = player->getPiece();
-				netInput = getInput(nextPlace); // No idea how to pass this TODO
-				stateValue[i] = net.run(netInput)[0];
-				if (stateValue[i] > greedyValue){
+				neuralState = getInput(nextPlace); // No idea how to pass this. TODO
+				stateValue[i] = net.run(neuralState)[0];
+				if (stateValue[i] > moveValue)
+				{
 					moveChoice = i;
-					netState = netInput;
+					netState = neuralState;
+					moveValue = stateValue[i];
 				}
 			}
-			else
-				stateValue[i] = -1;
 		} 
 	}
 
@@ -91,8 +89,10 @@ int Learn::nextState(){
 			moveChoice = rand() % 7;
 			depth = getMoveDepth(moveChoice);
 		}
+		std::memcpy(nextPlace, place, sizeof (int)* 6 * 7);
+		nextPlace[depth][moveChoice] = player->getPiece();
 		netState = getInput(nextPlace); // No idea how to pass this
-
+		moveValue = net.run(netState)[0];
 	}
 
 	// Save netState and Value to learnTrainSequence
