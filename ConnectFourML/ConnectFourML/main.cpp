@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 	int charsPlaced = 0;
 	bool gamewon = false;
 	int moveHistory[42];
-	Player* player = &play2;		//start as player 2, will change back 2 player 1
+	Player* player = &play2;		//start as player 2, will change back to player 1
 
 
 	// Main game loop
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 		else
 			cout << 1 << ',' << charsPlaced << "\n";
 	}
-	// Display board if display is true
+	// Display board if display flag (-d)
 	if (showBoard)
 		display();
 	system("pause");

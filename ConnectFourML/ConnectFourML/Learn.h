@@ -42,10 +42,16 @@ public:
 	 */
 	bool* getInput(char**);
 
+	
 	// TODO
 	// updates gameSequence
 	float getValue(int (&tStateValue)[7]);
-	/* TODO d
+	/* TODO 
+	
+	/*
+	 * Convert Game state[a][b] to a bit string for input to the ANN
+	 */
+	bool* getInput(char**);
 
 	updateValues(){
 		// takes global sequence of state-QValue pairs
