@@ -13,12 +13,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainHelper.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="LearnPlayer.cpp" />
-=======
-    <ClCompile Include="QPlayer.cpp" />
-    <ClCompile Include="QLearn.cpp" />
->>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Learn.h" />
