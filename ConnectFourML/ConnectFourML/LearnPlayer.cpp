@@ -1,10 +1,8 @@
 
-
 #include "LearnPlayer.h"
 
 int LearnPlayer::getMove(){
-	int stateValue[7];
-	LearnObj.getValue(stateValue); // <
+	int move = LearnObj.chooseState(); // <
 	// Get 7 next state values
 		// uses QLearn obj
 		// Send (S, QSA, MaxQSA, r) to QLearn Obj. r is always zero, but will update if win.
@@ -18,5 +16,5 @@ void LearnPlayer::hasWon(){
 }
 
 void LearnPlayer::hasLost(){
-
+	// TODO
 }

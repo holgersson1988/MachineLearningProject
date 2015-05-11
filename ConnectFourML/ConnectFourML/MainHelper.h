@@ -6,6 +6,12 @@
 void display();
 
 /*
+ * Returns depth of move choice 'b'. Zero is highest placement
+ * on board. Returns -1 if move is invalid.
+ */
+int getMoveDepth(int b);
+
+/*
 Checks to see if move at location (a,b) created a win.
 */
 bool check(int a, int b);
@@ -17,6 +23,8 @@ positive integer otherwise.
 int drop(int b, char player);
 
 extern char place[6][7];
+extern Player player;
+extern int charsPlaced;
 
 /*
 Interface class to be extended. When player.getMove() is called, a number

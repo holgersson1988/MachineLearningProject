@@ -9,7 +9,10 @@
 
 using namespace std;
 
-char place[6][7];	// Declared in MainHelper.h
+// Declared in MainHelper.h
+char place[6][7];	
+Player* player;
+int charsPlaced;
 
 int main(int argc, char* argv[])
 {
@@ -60,10 +63,10 @@ int main(int argc, char* argv[])
 	//r// display();						
 	int colChoice;					//Will house user row choice
 	int depthChoice = 0;			//will hold drop value
-	int charsPlaced = 0;
+	charsPlaced = 0;
 	bool gamewon = false;
 	int moveHistory[42];
-	Player* player = &play2;		//start as player 2, will change back to player 1
+	player = &play2;		//start as player 2, will change back to player 1
 
 
 	// Main game loop

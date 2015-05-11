@@ -7,10 +7,32 @@
  */
 #include "floatfann.h"
 #include "fann_cpp.h"
+
+/*
+ * Saves State, Value, and Reward tuples for generating a training sequence
+ * for the neural net.
+ */
+struct LearnTuple
+{
+	bool* state;
+	float value;
+	int reward;
+	
+	LearnTuple(){};
+
+	LearnTuple(bool* tState, float tValue, int tReward){
+		state = tState;
+		value = tValue;
+		reward = tReward;
+	}
+
+
+};
+
 class Learn {
 public:
-	FANN::neural_net net;
-	netState gameSequence;
+	static FANN::neural_net net;
+	static LearnTuple learnTrainSequence[42];
 
 
 	/* 
@@ -22,7 +44,7 @@ public:
 
 
 	/*
-	 * Construct QLearn Object with a Neural Net.
+	 * Construct Learn Object with a Neural Net.
 	 */
 	Learn(FANN::neural_net &tNet) {
 		net = tNet;
@@ -31,7 +53,7 @@ public:
 
 
 	/* 
-	Assigns the Neural Network used for approximating the Q-Value function.
+	 * Assigns the Neural Network used for approximating the Q-Value function.
 	 */
 	void setNet(FANN::neural_net &tNet){
 		net = tNet;
@@ -43,16 +65,14 @@ public:
 	bool* getInput(char**);
 
 	
-	// TODO
-	// updates gameSequence
-	float getValue(int (&tStateValue)[7]);
-	/* TODO 
-	
 	/*
-	 * Convert Game state[a][b] to a bit string for input to the ANN
+	 * Called by LearnPlayer. Returns a next state choice, from a greedy
+	 * or exploration choice.
 	 */
-	bool* getInput(char**);
+	int nextState();
+	
 
+	/*
 	updateValues(){
 		// takes global sequence of state-QValue pairs
 		// sends to Neural Net to train

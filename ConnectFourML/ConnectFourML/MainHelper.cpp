@@ -6,9 +6,8 @@
 using namespace std;
 
 /*
-
-Prints the game board
-*/
+ * Prints the game board
+ */
 void display(){
 	cout << " 1   2   3   4   5   6   7\n";
 	for (int a = 0; a <= 5; a++)
@@ -22,7 +21,9 @@ void display(){
 	}
 }
 
-
+/*
+ * Checks to see if move at location (a,b) created a win.
+ */
 bool check(int a, int b){
 	int vertical = 1;//(|)
 	int horizontal = 1;//(-)
@@ -53,6 +54,10 @@ bool check(int a, int b){
 	return false;
 }
 
+/*
+* Returns depth of move choice 'b'. Zero is highest placement
+* on board. Returns -1 if move is invalid.
+*/
 int getMoveDepth(int b)
 {
 	if (b >= 0 && b <= 6)
