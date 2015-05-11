@@ -3,14 +3,13 @@
 #include <cstdlib>
 #include <time.h>
 #include "MainHelper.h"
-
 #include "floatfann.h"
 #include "fann_cpp.h"
 
 using namespace std;
 
 // Declared in MainHelper.h
-char place[6][7];	
+vector< vector<char> > place;	
 Player* player;
 int charsPlaced;
 
@@ -50,10 +49,8 @@ int main(int argc, char* argv[])
 	srand(time(NULL));
 
 	// fill place with whitespaces
-	for (int a = 0; a <= 5; a++){
-		for (int b = 0; b <= 6; b++)
-			place[a][b] = ' ';
-	}
+	place.resize(6, vector<char>(7, ' '));
+
 	// initialize two random players
 	RandomPlayer play1 = RandomPlayer(CHAR1);
 	RandomPlayer play2 = RandomPlayer(CHAR2);

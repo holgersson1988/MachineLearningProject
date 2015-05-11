@@ -33,6 +33,8 @@ class Learn {
 public:
 	static FANN::neural_net net;
 	static LearnTuple learnTrainSequence[42];
+	static float explore;
+	static float decay;
 
 
 	/* 
@@ -40,6 +42,8 @@ public:
 	 */
 	Learn(){
 		net = NULL;
+		explore = 0.95;
+		decay = 0.95;
 	};
 
 
@@ -55,14 +59,17 @@ public:
 	/* 
 	 * Assigns the Neural Network used for approximating the Q-Value function.
 	 */
-	void setNet(FANN::neural_net &tNet){
-		net = tNet;
-	}
+	void setNet(FANN::neural_net &tNet){net = tNet;}
+
+	void setDecay(float tDecay){ decay = tDecay; };
+
+	void setExploration(float tExploration) { explore = tExploration; };
+
 	
 	/*
 	 * Convert Game state[a][b] to a bit string for input to the ANN
 	 */
-	bool* getInput(char**);
+	bool* getInput(vector< vector<char> > &gameState);
 
 	
 	/*

@@ -89,7 +89,7 @@ int drop(int b, char player){
 	{
 		return -1;
 	}
-
+	
 }
 
 Player::Player(char tPiece = CHAR1){

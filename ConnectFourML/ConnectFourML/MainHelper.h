@@ -1,7 +1,13 @@
 #pragma once
 
+#include <vector>
 #define CHAR2	15 //char(15)
 #define CHAR1	43 //char(254)
+using namespace std;
+
+extern vector< vector<char> > place;
+extern Player player;
+extern int charsPlaced;
 
 void display();
 
@@ -16,15 +22,12 @@ Checks to see if move at location (a,b) created a win.
 */
 bool check(int a, int b);
 
+
 /*
 Puts 'player' piece in column b if valid move. Returns -1 if error,
 positive integer otherwise.
 */
 int drop(int b, char player);
-
-extern char place[6][7];
-extern Player player;
-extern int charsPlaced;
 
 /*
 Interface class to be extended. When player.getMove() is called, a number

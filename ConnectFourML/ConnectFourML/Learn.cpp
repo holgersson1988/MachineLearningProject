@@ -5,7 +5,7 @@
 /*
 Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
 */
-bool* Learn::getInput(char** gameState)
+bool* Learn::getInput(vector<vector<char>> &gameState)
 {
 	bool* ret = new bool[84];
 
@@ -52,13 +52,13 @@ int Learn::nextState(){
 	int moveChoice = -1;
 	float moveValue = -1;	// Saves values of greedy choice
 	bool* netState;			// for saving the state in NN form
-	char nextPlace[6][7];	// Place holder for next state
+	vector<vector<char>> nextPlace;	// Place holder for next 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
 	
 	// Greedy
-	if (randValue < exploreValue)
+	if (randValue < explore)
 	{
-		int stateValue[7] = { -1 };		// Holds Values of next 7 possible states
+		vector<int> stateValue = vector<int>(7, -1);		// Holds Values of next 7 possible states
 		bool* neuralState;
 
 		for (int i = 0; i < 7; i++)
@@ -66,7 +66,7 @@ int Learn::nextState(){
 			int moveDepth = getMoveDepth(i);
 			if (moveDepth > 0)
 			{
-				std::memcpy(nextPlace, place, sizeof (int)* 6 * 7); // Copies global place array to temporary nextPlace array
+				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
 				neuralState = getInput(nextPlace); // No idea how to pass this. TODO
 				stateValue[i] = net.run(neuralState)[0];
@@ -89,7 +89,7 @@ int Learn::nextState(){
 			moveChoice = rand() % 7;
 			depth = getMoveDepth(moveChoice);
 		}
-		std::memcpy(nextPlace, place, sizeof (int)* 6 * 7);
+		nextPlace = place;
 		nextPlace[depth][moveChoice] = player->getPiece();
 		netState = getInput(nextPlace); // No idea how to pass this
 		moveValue = net.run(netState)[0];
