@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ConnectFour.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="LearnPlayer.cpp" />
   </ItemGroup>
