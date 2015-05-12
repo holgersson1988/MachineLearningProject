@@ -23,6 +23,52 @@ void display(){
 }
 
 /*
+* Prints sequence of game boards
+*/
+void displaySequence(vector<MoveDepth> sequence){
+	vector<vector<char>> board(6, vector<char>(7, ' '));
+	for (vector<MoveDepth>::iterator it = sequence.begin(); it != sequence.end(); ++it){
+		int depth = it->depth;
+		int move = it->move;
+		char player = it->player;
+		board[depth][move] = player;
+		display(board, depth, move);
+	}
+}
+
+/*
+* Prints single game board
+*/
+void display(vector<vector<char>> board, int depth, int move){
+	cout << " 1   2   3   4   5   6   7\n";
+	for (int a = 0; a <= 5; a++)
+	{
+		for (int b = 0; b <= 6; b++){
+			if (a != depth || b != move)
+				cout << char(218) << char(196) << char(191) << " ";
+			else
+				cout << "*" << char(196) << "*" << " ";
+		}
+		cout << '\n';
+		for (int b = 0; b <= 6; b++){
+			//if (a != depth || b != move)
+				cout << char(179) << board[a][b] << char(179) << " ";
+			//else
+			//	cout << '|' << board[a][b] << '|' << " ";
+		}
+		cout << '\n';
+		for (int b = 0; b <= 6; b++){
+			if (a != depth || b != move)
+				cout << char(192) << char(196) << char(217) << " ";
+			else
+				cout << "*" << char(196) << "*" << " ";
+		}
+		cout << '\n';
+	}
+	cout << std::endl;
+}
+
+/*
  * Checks to see if move at location (a,b) created a win.
  */
 bool check(int a, int b){

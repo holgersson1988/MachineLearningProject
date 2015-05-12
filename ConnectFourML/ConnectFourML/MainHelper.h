@@ -9,9 +9,27 @@
 using std::cout;
 using std::vector;
 
+struct MoveDepth
+{
+public:
+	int move;
+	int depth;
+	char player;
+
+	MoveDepth(int tDepth, int tMove, char tPlayer){
+		move = tMove;
+		depth = tDepth;
+		player = tPlayer;
+	}
+	void setMove(int tMove) { move = tMove; }
+	void setDepth(int tDepth) { depth = tDepth; }
+	void setPlayer(char tPlayer) { player = tPlayer; }
+};
 
 
 void display();
+void displaySequence(vector<MoveDepth> sequence);
+void display(vector<vector<char>> board, int depth, int move);
 
 /*
  * Returns depth of move choice 'b'. Zero is highest placement

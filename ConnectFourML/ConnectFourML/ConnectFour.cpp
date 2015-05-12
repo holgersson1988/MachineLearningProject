@@ -11,6 +11,7 @@
 using std::cout;
 using std::vector;
 using std::string;
+
 // Declared in MainHelper.h
 vector< vector<char> > place;	
 Player* player;
@@ -64,7 +65,7 @@ int main(int argc, char* argv[])
 
 
 
-	//r// display();						
+	vector<MoveDepth> gameSequence;
 	int colChoice;					//Will house user row choice
 	int depthChoice = 0;			//will hold drop value
 	charsPlaced = 0;
@@ -90,8 +91,8 @@ int main(int argc, char* argv[])
 		moveHistory[charsPlaced] = colChoice;
 		gamewon = check(depthChoice, colChoice);
 		charsPlaced++;
+		gameSequence.push_back(MoveDepth(depthChoice, colChoice, player->getPiece()));
 		//r// system("cls");						//This clears the screen works with windows, not nesscery to run game
-		//r// display();
 	
 	// End of main game loop
 	}
@@ -111,9 +112,12 @@ int main(int argc, char* argv[])
 		else
 			cout << 1 << ',' << charsPlaced << "\n";
 	}
+
 	// Display board if display flag (-d)
-	if (showBoard)
-		display();
+	if (showBoard){
+		displaySequence(gameSequence);
+	}
+		
 	system("pause");
 
 	return 0;

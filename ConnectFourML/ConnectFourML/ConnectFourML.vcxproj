@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConnectFour.cpp" />
+    <ClCompile Include="Learn.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="LearnPlayer.cpp" />
   </ItemGroup>

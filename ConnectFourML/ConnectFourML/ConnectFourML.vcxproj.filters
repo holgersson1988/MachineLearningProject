@@ -24,6 +24,9 @@
     <ClCompile Include="ConnectFour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Learn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainHelper.h">
