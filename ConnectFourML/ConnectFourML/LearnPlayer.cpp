@@ -1,14 +1,11 @@
 
 #include "LearnPlayer.h"
+#include "Learn.h"
 
-int LearnPlayer::getMove(){
-	int move = LearnObj.nextState(); // <
-	// Get 7 next state values
-		// uses QLearn obj
-		// Send (S, QSA, MaxQSA, r) to QLearn Obj. r is always zero, but will update if win.
-	// Choose explore or greedy
-	// Loop until valid move picked (greedy -> least greedy)
-	// return move
+int LearnPlayer::getMove() {
+	//int move = LearnObj.nextState(); // <
+	//return move;
+	return 0;
 }
 
 void LearnPlayer::hasWon(){

@@ -24,7 +24,7 @@
     <ClCompile Include="LearnPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QLearn.cpp">
+    <ClCompile Include="Learn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

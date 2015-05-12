@@ -5,8 +5,14 @@
  * open source FANN c++ neural network library
  *
  */
+
+#include <iostream>
+#include "MainHelper.h"
 #include "floatfann.h"
 #include "fann_cpp.h"
+#include <vector>
+using std::cout;
+using std::vector;
 
 /*
  * Saves State, Value, and Reward tuples for generating a training sequence
@@ -24,7 +30,7 @@ struct LearnTuple
 		state = tState;
 		value = tValue;
 		reward = tReward;
-	}
+	};
 
 
 };
@@ -52,14 +58,16 @@ public:
 	 */
 	Learn(FANN::neural_net &tNet) {
 		net = tNet;
+		explore = 0.95;
+		decay = 0.95;
 		// Net properties should outside of this function.
-	}
+	};
 
 
 	/* 
 	 * Assigns the Neural Network used for approximating the Q-Value function.
 	 */
-	void setNet(FANN::neural_net &tNet){net = tNet;}
+	void setNet(FANN::neural_net &tNet){ net = tNet; };
 
 	void setDecay(float tDecay){ decay = tDecay; };
 

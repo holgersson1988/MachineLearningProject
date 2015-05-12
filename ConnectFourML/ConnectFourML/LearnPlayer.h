@@ -5,10 +5,12 @@
  * game module. QPlayer utilizes a QLearn object to approximate state Q-values.
  *
  */
+#include <iostream>
 #include "MainHelper.h"
-#include "Learn.h"
+using std::cout;
+using std::vector;
 
-class LearnPlayer : Player
+class LearnPlayer : public Player
 {
 public:
 	Learn LearnObj;
@@ -20,15 +22,15 @@ public:
 		LearnObj = tLearn;
 	};
 
-	int getMove() override;
+	virtual int getMove() override;
 
 	/*
 	Signal to this player that it has won. Used to update reward QTS tuple.
 	*/
-	void hasWon() override;
+	virtual void hasWon() override;
 
 	/*
 	Signal to this player that it has lost. Used to update reward of QTS tuple.
 	*/
-	void hasLost() override;
+	virtual void hasLost() override;
 };

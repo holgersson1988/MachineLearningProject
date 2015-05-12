@@ -2,6 +2,9 @@
 #include "Learn.h"
 #include "MainHelper.h"
 
+using std::cout;
+using std::vector;
+
 /*
 Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
 */
@@ -47,14 +50,14 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 /*
 * Called by LearnPlayer. Returns a next state choice, from a greedy
 * or exploration choice. Also updates learnTrainSequence with choice.
-*/
+
 int Learn::nextState(){
 	int moveChoice = -1;
 	float moveValue = -1;	// Saves values of greedy choice
 	bool* netState;			// for saving the state in NN form
 	vector<vector<char>> nextPlace;	// Place holder for next 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
-	
+
 	// Greedy
 	if (randValue < explore)
 	{
@@ -69,7 +72,8 @@ int Learn::nextState(){
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
 				neuralState = getInput(nextPlace); // No idea how to pass this. TODO
-				stateValue[i] = net.run(neuralState)[0];
+				//stateValue[i] = net.run(neuralState)[0];
+				moveValue = 1;
 				if (stateValue[i] > moveValue)
 				{
 					moveChoice = i;
@@ -77,7 +81,7 @@ int Learn::nextState(){
 					moveValue = stateValue[i];
 				}
 			}
-		} 
+		}
 	}
 
 	// Explore (randValue > exploreValue)
@@ -92,7 +96,8 @@ int Learn::nextState(){
 		nextPlace = place;
 		nextPlace[depth][moveChoice] = player->getPiece();
 		netState = getInput(nextPlace); // No idea how to pass this
-		moveValue = net.run(netState)[0];
+		// moveValue = net.run(netState)[0];
+		moveValue = 1;
 	}
 
 	// Save netState and Value to learnTrainSequence
@@ -100,4 +105,4 @@ int Learn::nextState(){
 
 	// Return moveChoice
 	return moveChoice;
-}
+}*/

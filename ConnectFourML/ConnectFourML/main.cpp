@@ -5,9 +5,12 @@
 #include "MainHelper.h"
 #include "floatfann.h"
 #include "fann_cpp.h"
+#include "Learn.h"
+#include "LearnPlayer.h"
 
-using namespace std;
-
+using std::cout;
+using std::vector;
+using std::string;
 // Declared in MainHelper.h
 vector< vector<char> > place;	
 Player* player;
@@ -21,7 +24,7 @@ int main(int argc, char* argv[])
 		if (string(argv[i]) == "-d")
 			showBoard = true;
 	}
-
+	/*
 #pragma region Create Artificial Neural Network
 
 	FANN::neural_net net;
@@ -44,12 +47,16 @@ int main(int argc, char* argv[])
 	//net.train(FANN::training_data())
 
 #pragma endregion
-
+*/
 	// initialize random seed. Is global.
 	srand(time(NULL));
 
 	// fill place with whitespaces
 	place.resize(6, vector<char>(7, ' '));
+
+
+	// Initialize LearnObject
+	//Learn learnObj = Learn();
 
 	// initialize two random players
 	RandomPlayer play1 = RandomPlayer(CHAR1);
@@ -67,8 +74,7 @@ int main(int argc, char* argv[])
 
 
 	// Main game loop
-	while (!gamewon){
-
+	while (!gamewon && charsPlaced < 42){
 		// Swap current player
 		if (player->getPiece() == CHAR2)
 			player = &play1;
@@ -78,12 +84,11 @@ int main(int argc, char* argv[])
 		// Get current player move
 		// getMove() must only return legal move
 		colChoice = player->getMove(); 
-
 		// Break if game over
 		if (charsPlaced == 42) break;
 		depthChoice = drop(colChoice, player->getPiece());
 		moveHistory[charsPlaced] = colChoice;
-		gamewon = check(depthChoice, colChoice);	
+		gamewon = check(depthChoice, colChoice);
 		charsPlaced++;
 		//r// system("cls");						//This clears the screen works with windows, not nesscery to run game
 		//r// display();

@@ -1,13 +1,15 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
+#include "Learn.h"
+
 #define CHAR2	15 //char(15)
 #define CHAR1	43 //char(254)
-using namespace std;
+using std::cout;
+using std::vector;
 
-extern vector< vector<char> > place;
-extern Player player;
-extern int charsPlaced;
+
 
 void display();
 
@@ -63,3 +65,7 @@ class RandomPlayer : public Player
 		void hasWon() override {};
 		void hasLost() override {};
 };
+
+extern vector< vector<char> > place;
+extern Player *player;
+extern int charsPlaced;
