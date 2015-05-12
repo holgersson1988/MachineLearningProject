@@ -35,6 +35,10 @@ struct LearnTuple
 
 };
 
+/*
+ * Learn Class used for Sarsa/TD style reinforcement learning. Uses a 
+ * FANN neural net to approximate the Value of states.
+ */
 class Learn {
 public:
 	static FANN::neural_net net;
@@ -64,13 +68,8 @@ public:
 	};
 
 
-	/* 
-	 * Assigns the Neural Network used for approximating the Q-Value function.
-	 */
 	void setNet(FANN::neural_net &tNet){ net = tNet; };
-
 	void setDecay(float tDecay){ decay = tDecay; };
-
 	void setExploration(float tExploration) { explore = tExploration; };
 
 	

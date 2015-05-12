@@ -9,6 +9,9 @@
 using std::cout;
 using std::vector;
 
+/*
+ * Used to keep a sequence of board game states for printing.
+ */
 struct MoveDepth
 {
 public:
@@ -26,9 +29,56 @@ public:
 	void setPlayer(char tPlayer) { player = tPlayer; }
 };
 
+/*
+ * Interface class to be extended. When player->getMove() is called, a number
+ * from 0 - 6 is returned as a choice.
+ */
+class Player
+{
+public:
+	char piece;
 
+	// default constructor
+	Player(char tPiece = CHAR1){
+		piece = tPiece;
+	}
+	virtual int getMove() = 0; // virtual signifies that it can be overidden 
+	virtual void hasWon() = 0;
+	virtual void hasLost() = 0;
+	char getPiece(){ return piece; };
+};
+
+/*
+ * Extends Player class. Makes random moves.
+ */
+class RandomPlayer : public Player
+{
+public:
+
+	// default constructor
+	RandomPlayer(char tPiece)
+		: Player(tPiece){};
+	/*
+	Returns random choice from 0-6.
+	*/
+	int getMove() override;
+	void hasWon() override {};
+	void hasLost() override {};
+};
+
+/*
+ * Prints the game board from global variable 'place'
+ */
 void display();
+
+/*
+ * Prints sequence of game boards
+ */
 void displaySequence(vector<MoveDepth> sequence);
+
+/*
+ * Prints single game board
+ */
 void display(vector<vector<char>> board, int depth, int move);
 
 /*
@@ -38,8 +88,8 @@ void display(vector<vector<char>> board, int depth, int move);
 int getMoveDepth(int b);
 
 /*
-Checks to see if move at location (a,b) created a win.
-*/
+ * Check to see if position 'a', 'b' caused a win.
+ */
 bool check(int a, int b);
 
 
@@ -50,40 +100,14 @@ positive integer otherwise.
 int drop(int b, char player);
 
 /*
-Interface class to be extended. When player.getMove() is called, a number
-from 0 - 6 is returned as a choice.
-*/
-class Player
-{
-public:
-	char piece;
-
-	// default constructor
-	Player(char piece);
-	/*
-	Must return ONLY VALID move.
-	*/
-	virtual int getMove() = 0; // virtual signifies that it can be overidden 
-	virtual void hasWon() = 0;
-	virtual void hasLost() = 0;
-	char getPiece(){ return piece; };
-};
-
-class RandomPlayer : public Player
-{
-	public:
-
-		// default constructor
-		RandomPlayer(char tPiece)
-			: Player(tPiece){};
-		/*
-		Returns random choice from 0-6.
-		*/
-		int getMove() override;
-		void hasWon() override {};
-		void hasLost() override {};
-};
-
+ * Global. Saves state of board.
+ */
 extern vector< vector<char> > place;
+/*
+ * Global. Saves current player.
+ */
 extern Player *player;
+/*
+ * Global. Saves number of characters placed on board.
+ */
 extern int charsPlaced;

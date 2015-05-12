@@ -10,6 +10,10 @@
 using std::cout;
 using std::vector;
 
+/*
+ * Extends Player. Uses the Learn class to implement reinforcement learning
+ * game play.
+ */
 class LearnPlayer : public Player
 {
 public:
@@ -25,8 +29,8 @@ public:
 	virtual int getMove() override;
 
 	/*
-	Signal to this player that it has won. Used to update reward QTS tuple.
-	*/
+	 * Signal to this player that it has won. Used to update reward QTS tuple.
+	 */
 	virtual void hasWon() override;
 
 	/*

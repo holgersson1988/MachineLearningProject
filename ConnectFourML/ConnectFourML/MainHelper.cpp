@@ -6,9 +6,6 @@
 using std::cout;
 using std::vector;
 
-/*
- * Prints the game board
- */
 void display(){
 	cout << " 1   2   3   4   5   6   7\n";
 	for (int a = 0; a <= 5; a++)
@@ -22,9 +19,7 @@ void display(){
 	}
 }
 
-/*
-* Prints sequence of game boards
-*/
+
 void displaySequence(vector<MoveDepth> sequence){
 	vector<vector<char>> board(6, vector<char>(7, ' '));
 	for (vector<MoveDepth>::iterator it = sequence.begin(); it != sequence.end(); ++it){
@@ -36,9 +31,7 @@ void displaySequence(vector<MoveDepth> sequence){
 	}
 }
 
-/*
-* Prints single game board
-*/
+
 void display(vector<vector<char>> board, int depth, int move){
 	cout << " 1   2   3   4   5   6   7\n";
 	for (int a = 0; a <= 5; a++)
@@ -68,9 +61,6 @@ void display(vector<vector<char>> board, int depth, int move){
 	cout << std::endl;
 }
 
-/*
- * Checks to see if move at location (a,b) created a win.
- */
 bool check(int a, int b){
 	int vertical = 1;//(|)
 	int horizontal = 1;//(-)
@@ -111,10 +101,6 @@ bool check(int a, int b){
 	return false;
 }
 
-/*
-* Returns depth of move choice 'b'. Zero is highest placement
-* on board. Returns -1 if move is invalid.
-*/
 int getMoveDepth(int b)
 {
 	if (b >= 0 && b <= 6)
@@ -139,6 +125,10 @@ int getMoveDepth(int b)
 		return -1;
 	}
 }
+
+/*
+ * Places 'player' pieces into column 'b'
+ */
 int drop(int b, char player){
 	int depth = getMoveDepth(b);
 	if (depth >= 0)
@@ -153,10 +143,9 @@ int drop(int b, char player){
 	
 }
 
-Player::Player(char tPiece = CHAR1){
-	piece = tPiece;
-}
-
+/*
+ * Returns a valid random move as an int
+ */
 int RandomPlayer::getMove()
 {
 	int column;

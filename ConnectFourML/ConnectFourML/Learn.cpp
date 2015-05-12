@@ -6,7 +6,7 @@ using std::cout;
 using std::vector;
 
 /*
-Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
+ * Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
 */
 bool* Learn::getInput(vector<vector<char>> &gameState)
 {
