@@ -6,6 +6,34 @@
 using std::cout;
 using std::vector;
 
+MoveDepth::MoveDepth(int tDepth, int tMove, char tPlayer){
+	move = tMove;
+	depth = tDepth;
+	player = tPlayer;
+}
+
+Player::Player(char tPiece){
+	piece = tPiece;
+}
+
+/*
+* Returns a valid random move as an int
+*/
+int RandomPlayer::getMove()
+{
+	int column;
+	int depth = -1;
+
+	// Ensures that a valid move is chosen
+	while (depth <= -1)
+	{
+		column = rand() % 7;				// random column
+		depth = getMoveDepth(column);		// Gets depth and validate
+	}
+
+	return column;
+}
+
 void display(){
 	cout << " 1   2   3   4   5   6   7\n";
 	for (int a = 0; a <= 5; a++)
@@ -44,10 +72,7 @@ void display(vector<vector<char>> board, int depth, int move){
 		}
 		cout << '\n';
 		for (int b = 0; b <= 6; b++){
-			//if (a != depth || b != move)
 				cout << char(179) << board[a][b] << char(179) << " ";
-			//else
-			//	cout << '|' << board[a][b] << '|' << " ";
 		}
 		cout << '\n';
 		for (int b = 0; b <= 6; b++){
@@ -126,9 +151,6 @@ int getMoveDepth(int b)
 	}
 }
 
-/*
- * Places 'player' pieces into column 'b'
- */
 int drop(int b, char player){
 	int depth = getMoveDepth(b);
 	if (depth >= 0)
@@ -143,20 +165,4 @@ int drop(int b, char player){
 	
 }
 
-/*
- * Returns a valid random move as an int
- */
-int RandomPlayer::getMove()
-{
-	int column;
-	int depth = -1;
 
-	// Ensures that a valid move is chosen
-	while (depth <= -1)
-	{
-		column = rand() % 7;				// random column
-		depth = getMoveDepth(column);		// Gets depth and validate
-	}
-	
-	return column;
-}

@@ -32,9 +32,4 @@ public:
 	 * Signal to this player that it has won. Used to update reward QTS tuple.
 	 */
 	virtual void hasWon() override;
-
-	/*
-	Signal to this player that it has lost. Used to update reward of QTS tuple.
-	*/
-	virtual void hasLost() override;
 };
