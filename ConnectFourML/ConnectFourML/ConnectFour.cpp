@@ -3,14 +3,11 @@
 #include <cstdlib>
 #include <time.h>
 #include "MainHelper.h"
-#include "floatfann.h"
-#include "fann_cpp.h"
-#include "Learn.h"
 #include "LearnPlayer.h"
 
-using std::cout;
-using std::vector;
-using std::string;
+//using std::cout;
+//using std::vector;
+//using std::string;
 
 // Declared in MainHelper.h
 vector< vector<char> > place;	
@@ -22,7 +19,7 @@ int main(int argc, char* argv[])
 	// parse arguments
 	bool showBoard = false;
 	for (int i = 0; i < argc; i++){
-		if (string(argv[i]) == "-d")
+		if (std::string(argv[i]) == "-d")
 			showBoard = true;
 	}
 	/*
@@ -65,7 +62,7 @@ int main(int argc, char* argv[])
 
 
 
-	vector<MoveDepth> gameSequence;
+	std::vector<MoveDepth> gameSequence;
 	int colChoice;					//Will house user row choice
 	int depthChoice = 0;			//will hold drop value
 	charsPlaced = 0;

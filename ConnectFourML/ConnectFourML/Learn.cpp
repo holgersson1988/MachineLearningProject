@@ -10,16 +10,26 @@ LearnTuple::LearnTuple(bool* tState, float tValue, int tReward){
 	reward = tReward;
 }
 
-TrainPair::TrainPair(bool* tState, float tValue){
+/*TrainPair::TrainPair(bool* tState, float tValue){
 	state = tState;
 	value = tValue;
-}
+}*/
 
 Learn::Learn(){
 	//net = NULL;
 	explore = 0.95;
 	decay = 0.95;
 }
+
+void Learn::setDecay(float tDecay)
+{
+	decay = tDecay;
+}
+void Learn::setExploration(float tExploration)
+{
+	explore = tExploration;
+}
+
 /*
 Learn::Learn(FANN::neural_net &tNet) {
 	net = tNet;
@@ -136,15 +146,16 @@ int Learn::nextState(){
  * the reinforcement learning update algorithm.
  */
 
-vector<TrainPair> getTrainData(){
+/*vector<TrainPair> getTrainData(){
 	vector<TrainPair> blank;
 	return blank;
-}
+}*/
 
 /*
  * Calls getTrainData and then trains ANN.
  */
-void Learn::hasWon(){
+void Learn::hasWon()
+{
 
-	vector<TrainPair> trainSequence = getTrainData();
-	}
+	//vector<TrainPair> trainSequence = getTrainData();
+}

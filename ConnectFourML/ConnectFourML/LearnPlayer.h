@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include "MainHelper.h"
+#include "Learn.h"
 using std::cout;
 using std::vector;
 

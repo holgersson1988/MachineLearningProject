@@ -7,10 +7,8 @@
  */
 
 #include <iostream>
-#include "MainHelper.h"
-#include "floatfann.h"
-#include "fann_cpp.h"
 #include <vector>
+#include "MainHelper.h"
 using std::cout;
 using std::vector;
 
@@ -32,17 +30,17 @@ struct LearnTuple
 
 };
 
-struct TrainPair {
+/*struct TrainPair {
 	bool* state;
 	float value;
 
-	TrainPair(){}
-
+	// Constructors
+	TrainPair();
 	TrainPair(bool* tState, float tValue);
 
 	void setValue(float tValue) { value = tValue; }
 	void setState(bool* tState) { state = tState; }
-};
+};*/
 
 /*
  * Learn Class used for Sarsa/TD style reinforcement learning. Uses a 
@@ -51,9 +49,9 @@ struct TrainPair {
 class Learn {
 public:
 	//static FANN::neural_net net;
-	static vector<LearnTuple> learnSequence;
-	static float explore;
-	static float decay;
+	vector<LearnTuple> learnSequence;
+	float explore;
+	float decay;
 
 	/* 
 	Default constructor 
@@ -63,11 +61,11 @@ public:
 	/*
 	 * Construct Learn Object with a Neural Net.
 	 */
-	Learn(FANN::neural_net &tNet);
+	//Learn(FANN::neural_net &tNet);
 
 //	void setNet(FANN::neural_net &tNet){ net = tNet; };
-	void setDecay(float tDecay){ decay = tDecay; };
-	void setExploration(float tExploration) { explore = tExploration; };
+	void setDecay(float tDecay);
+	void setExploration(float tExploration);
 	
 	/*
 	 * Convert Game state[a][b] to a bit string for input to the ANN
@@ -80,10 +78,7 @@ public:
 	 * or exploration choice.
 	 */
 	int nextState();
-	
 	void hasWon();
-
-	vector<TrainPair> getTrainData();
-
+	//vector<TrainPair> getTrainData();
 	void train();
 };

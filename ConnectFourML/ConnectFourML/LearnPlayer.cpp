@@ -1,6 +1,5 @@
 
 #include "LearnPlayer.h"
-#include "Learn.h"
 
 /*
  * Return a valid move. Calls Learn.nextState() to return a greedy or
