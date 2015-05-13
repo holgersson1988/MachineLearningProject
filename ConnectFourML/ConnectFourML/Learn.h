@@ -42,7 +42,7 @@ struct LearnTuple
 class Learn {
 public:
 	static FANN::neural_net net;
-	static LearnTuple learnTrainSequence[42];
+	static LearnTuple learnSequence[42];
 	static float explore;
 	static float decay;
 

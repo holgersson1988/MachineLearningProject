@@ -44,10 +44,7 @@ void display(vector<vector<char>> board, int depth, int move){
 		}
 		cout << '\n';
 		for (int b = 0; b <= 6; b++){
-			//if (a != depth || b != move)
 				cout << char(179) << board[a][b] << char(179) << " ";
-			//else
-			//	cout << '|' << board[a][b] << '|' << " ";
 		}
 		cout << '\n';
 		for (int b = 0; b <= 6; b++){

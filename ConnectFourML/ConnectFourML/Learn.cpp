@@ -50,7 +50,7 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 /*
 * Called by LearnPlayer. Returns a next state choice, from a greedy
 * or exploration choice. Also updates learnTrainSequence with choice.
-
+*/
 int Learn::nextState(){
 	int moveChoice = -1;
 	float moveValue = -1;	// Saves values of greedy choice
@@ -71,7 +71,7 @@ int Learn::nextState(){
 			{
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
-				neuralState = getInput(nextPlace); // No idea how to pass this. TODO
+				neuralState = getInput(nextPlace); 
 				//stateValue[i] = net.run(neuralState)[0];
 				moveValue = 1;
 				if (stateValue[i] > moveValue)
@@ -95,14 +95,14 @@ int Learn::nextState(){
 		}
 		nextPlace = place;
 		nextPlace[depth][moveChoice] = player->getPiece();
-		netState = getInput(nextPlace); // No idea how to pass this
+		netState = getInput(nextPlace);
 		// moveValue = net.run(netState)[0];
 		moveValue = 1;
 	}
 
 	// Save netState and Value to learnTrainSequence
-	learnTrainSequence[charsPlaced] = LearnTuple(netState, moveValue, 0);
+	learnSequence[charsPlaced] = LearnTuple(netState, moveValue, 0);
 
 	// Return moveChoice
 	return moveChoice;
-}*/
+}
