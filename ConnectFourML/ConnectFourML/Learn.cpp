@@ -50,7 +50,7 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 /*
 * Called by LearnPlayer. Returns a next state choice, from a greedy
 * or exploration choice. Also updates learnTrainSequence with choice.
-*/
+
 int Learn::nextState(){
 	int moveChoice = -1;
 	float moveValue = -1;	// Saves values of greedy choice
@@ -100,9 +100,25 @@ int Learn::nextState(){
 		moveValue = 1;
 	}
 
-	// Save netState and Value to learnTrainSequence
-	learnSequence[charsPlaced] = LearnTuple(netState, moveValue, 0);
+	// Save netState, Value, and reward to learnTrainSequence
+	learnSequence.push_back(LearnTuple(netState, moveValue, 0));
 
 	// Return moveChoice
 	return moveChoice;
-}
+}*/
+
+/*
+ * Returns a sequence of TrainPairs' used to train the ANN. Uses
+ * the reinforcement learning update algorithm.
+ 
+vector<TrainPair> getTrainData(){
+
+}*/
+
+/*
+ * Calls getTrainData and then trains ANN.
+ 
+void Learn::hasWon(){
+
+	vector<TrainPair> trainSequence = getTrainData();
+	}*/
