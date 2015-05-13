@@ -6,7 +6,7 @@
  * exploratory choice.
  */
 int LearnPlayer::getMove() {
-	int move = LearnObj.nextState();
+	int move = LearnObj->nextState();
 	return move;
 }
 
@@ -14,5 +14,5 @@ int LearnPlayer::getMove() {
  * Called by ConnectFour after game is over. Calls Learn.hasWon().
  */
 void LearnPlayer::hasWon(){
-	LearnObj.hasWon();
+	LearnObj->hasWon();
 }

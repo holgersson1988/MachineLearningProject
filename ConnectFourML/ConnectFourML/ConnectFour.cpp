@@ -55,11 +55,11 @@ int main(int argc, char* argv[])
 
 
 	// Initialize LearnObject
-	//Learn learnObj = Learn();
+	Learn learnObj = Learn();
 
 	// initialize two random players
-	LearnPlayer play1 = LearnPlayer(CHAR1);
-	LearnPlayer play2 = LearnPlayer(CHAR2);
+	LearnPlayer play1 = LearnPlayer(CHAR1, &learnObj);
+	LearnPlayer play2 = LearnPlayer(CHAR2, &learnObj);
 
 
 

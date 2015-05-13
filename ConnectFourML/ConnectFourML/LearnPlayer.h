@@ -18,11 +18,11 @@ using std::vector;
 class LearnPlayer : public Player
 {
 public:
-	Learn LearnObj;
+	Learn* LearnObj;
 
 	// default constructor
 	LearnPlayer(char tPiece) : Player(tPiece){};
-	LearnPlayer(char tPiece, Learn &tLearn) 
+	LearnPlayer(char tPiece, Learn* tLearn) 
 		: Player(tPiece)
 	{
 		LearnObj = tLearn;
