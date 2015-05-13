@@ -1,17 +1,21 @@
 
 #include "LearnPlayer.h"
-#include "Learn.h"
 
 /*
  * Return a valid move. Calls Learn.nextState() to return a greedy or
  * exploratory choice.
  */
 int LearnPlayer::getMove() {
+<<<<<<< HEAD
 	int move;
 	LearnTuple stateInfo = LearnObj.nextState(move);
 	learnSequence.push_back(stateInfo);
 	return move;
 	
+=======
+	int move = LearnObj.nextState();
+	return move;
+>>>>>>> origin/ANN-Test
 }
 
 /*

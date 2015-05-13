@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include "MainHelper.h"
+#include "Learn.h"
 using std::cout;
 using std::vector;
 
@@ -22,6 +23,7 @@ public:
 
 
 	// default constructor
+	LearnPlayer(char tPiece) : Player(tPiece){};
 	LearnPlayer(char tPiece, Learn &tLearn) 
 		: Player(tPiece)
 	{

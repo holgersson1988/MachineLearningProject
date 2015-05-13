@@ -3,14 +3,11 @@
 #include <cstdlib>
 #include <time.h>
 #include "MainHelper.h"
-#include "floatfann.h"
-#include "fann_cpp.h"
-#include "Learn.h"
 #include "LearnPlayer.h"
 
-using std::cout;
-using std::vector;
-using std::string;
+//using std::cout;
+//using std::vector;
+//using std::string;
 
 // Declared in MainHelper.h
 vector< vector<char> > place;	
@@ -22,7 +19,7 @@ int main(int argc, char* argv[])
 	// parse arguments
 	bool showBoard = false;
 	for (int i = 0; i < argc; i++){
-		if (string(argv[i]) == "-d")
+		if (std::string(argv[i]) == "-d")
 			showBoard = true;
 	}
 	/*
@@ -52,6 +49,7 @@ int main(int argc, char* argv[])
 	// initialize random seed. Is global.
 	srand(time(NULL));
 
+	
 	// fill place with whitespaces
 	place.resize(6, vector<char>(7, ' '));
 
@@ -60,14 +58,14 @@ int main(int argc, char* argv[])
 	//Learn learnObj = Learn();
 
 	// initialize two random players
-	RandomPlayer play1 = RandomPlayer(CHAR1);
-	RandomPlayer play2 = RandomPlayer(CHAR2);
+	LearnPlayer play1 = LearnPlayer(CHAR1);
+	LearnPlayer play2 = LearnPlayer(CHAR2);
 
 
 
-	vector<MoveDepth> gameSequence;
-	int colChoice;					//Will house user row choice
-	int depthChoice = 0;			//will hold drop value
+	std::vector<MoveDepth> gameSequence;
+	int colChoice;					// Will house user row choice
+	int depthChoice = 0;			// Will hold drop value
 	charsPlaced = 0;
 	bool gamewon = false;
 	int moveHistory[42];
