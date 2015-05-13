@@ -63,8 +63,8 @@ int main(int argc, char* argv[])
 
 
 	std::vector<MoveDepth> gameSequence;
-	int colChoice;					//Will house user row choice
-	int depthChoice = 0;			//will hold drop value
+	int colChoice;					// Will house user row choice
+	int depthChoice = 0;			// Will hold drop value
 	charsPlaced = 0;
 	bool gamewon = false;
 	int moveHistory[42];

@@ -146,16 +146,16 @@ int Learn::nextState(){
  * the reinforcement learning update algorithm.
  */
 
-/*vector<TrainPair> getTrainData(){
+vector<TrainPair> Learn::getTrainData()
+{
 	vector<TrainPair> blank;
 	return blank;
-}*/
+}
 
 /*
  * Calls getTrainData and then trains ANN.
  */
 void Learn::hasWon()
 {
-
-	//vector<TrainPair> trainSequence = getTrainData();
+	vector<TrainPair> trainSequence = getTrainData();
 }

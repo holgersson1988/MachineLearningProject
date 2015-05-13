@@ -30,7 +30,8 @@ struct LearnTuple
 
 };
 
-/*struct TrainPair {
+struct TrainPair 
+{
 	bool* state;
 	float value;
 
@@ -40,13 +41,14 @@ struct LearnTuple
 
 	void setValue(float tValue) { value = tValue; }
 	void setState(bool* tState) { state = tState; }
-};*/
+};
 
 /*
  * Learn Class used for Sarsa/TD style reinforcement learning. Uses a 
  * FANN neural net to approximate the Value of states.
  */
-class Learn {
+class Learn 
+{
 public:
 	//static FANN::neural_net net;
 	vector<LearnTuple> learnSequence;
@@ -79,6 +81,6 @@ public:
 	 */
 	int nextState();
 	void hasWon();
-	//vector<TrainPair> getTrainData();
+	vector<TrainPair> getTrainData();
 	void train();
 };
