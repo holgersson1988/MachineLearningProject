@@ -16,7 +16,8 @@ LearnTuple::LearnTuple(bool* tState, float tValue, int tReward){
 }*/
 
 Learn::Learn(){
-	//net = NULL;
+
+	myNet = ArtificialNeuralNet.getANN();
 	explore = 0.95;
 	decay = 0.95;
 }
@@ -29,15 +30,6 @@ void Learn::setExploration(float tExploration)
 {
 	explore = tExploration;
 }
-
-/*
-Learn::Learn(FANN::neural_net &tNet) {
-	net = tNet;
-	explore = 0.95;
-	decay = 0.95;
-	// Net properties should outside of this function.
-};
-*/
 
 /*
  * Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
@@ -87,11 +79,12 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 /*
 * Called by LearnPlayer. Returns a next state choice, from a greedy
 * or exploration choice. Also updates learnTrainSequence with choice.
-
-int Learn::nextState(){
+*/
+int Learn::nextState()
+{
 	int moveChoice = -1;
 	float moveValue = -1;	// Saves values of greedy choice
-	bool* netState;			// for saving the state in NN form
+	bool* netState = false;			// for saving the state in NN form
 	vector<vector<char>> nextPlace;	// Place holder for next 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
 
@@ -142,7 +135,7 @@ int Learn::nextState(){
 
 	// Return moveChoice
 	return moveChoice;
-}*/
+}
 
 /*
  * Returns a sequence of TrainPairs' used to train the ANN. Uses
