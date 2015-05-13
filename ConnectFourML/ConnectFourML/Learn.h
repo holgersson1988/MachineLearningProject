@@ -12,35 +12,7 @@
 #include "fann_cpp.h"
 #include <vector>
 using std::cout;
-using std::vector;
 
-/*
- * Saves State, Value, and Reward tuples for generating a training sequence
- * for the neural net.
- */
-struct LearnTuple
-{
-	bool* state;
-	float value;
-	int reward;
-	
-	LearnTuple(){};
-
-	LearnTuple(bool* tState, float tValue, int tReward){
-		state = tState;
-		value = tValue;
-		reward = tReward;
-<<<<<<< HEAD
-	};
-=======
-	}
->>>>>>> parent of 0a704c8... Push before branch
-
-
-};
-
-<<<<<<< HEAD
-=======
 struct TrainPair {
 	bool* state;
 	float value;
@@ -55,8 +27,6 @@ struct TrainPair {
 	void setValue(float tValue) { value = tValue; }
 	void setState(bool* tState) { state = tState; }
 };
-
->>>>>>> parent of 0a704c8... Push before branch
 /*
  * Learn Class used for Sarsa/TD style reinforcement learning. Uses a 
  * FANN neural net to approximate the Value of states.
@@ -64,11 +34,7 @@ struct TrainPair {
 class Learn {
 public:
 	static FANN::neural_net net;
-<<<<<<< HEAD
-	static LearnTuple learnSequence[42];
-=======
 	static vector<LearnTuple> learnSequence;
->>>>>>> parent of 0a704c8... Push before branch
 	static float explore;
 	static float decay;
 
@@ -110,18 +76,5 @@ public:
 	 * or exploration choice.
 	 */
 	int nextState();
-	
-
-<<<<<<< HEAD
-	/*
-	updateValues(){
-		// takes global sequence of state-QValue pairs
-		// sends to Neural Net to train
-
-		net.train(stateSequence
-	}
-	*/
-=======
 	void train();
->>>>>>> parent of 0a704c8... Push before branch
 	};
