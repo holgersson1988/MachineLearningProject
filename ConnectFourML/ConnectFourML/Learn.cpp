@@ -1,9 +1,33 @@
 #pragma once
 #include "Learn.h"
-#include "MainHelper.h"
 
 using std::cout;
 using std::vector;
+
+LearnTuple::LearnTuple(bool* tState, float tValue, int tReward){
+	state = tState;
+	value = tValue;
+	reward = tReward;
+}
+
+TrainPair::TrainPair(bool* tState, float tValue){
+	state = tState;
+	value = tValue;
+}
+
+Learn::Learn(){
+	//net = NULL;
+	explore = 0.95;
+	decay = 0.95;
+}
+/*
+Learn::Learn(FANN::neural_net &tNet) {
+	net = tNet;
+	explore = 0.95;
+	decay = 0.95;
+	// Net properties should outside of this function.
+};
+*/
 
 /*
  * Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
@@ -110,15 +134,17 @@ int Learn::nextState(){
 /*
  * Returns a sequence of TrainPairs' used to train the ANN. Uses
  * the reinforcement learning update algorithm.
- 
-vector<TrainPair> getTrainData(){
+ */
 
-}*/
+vector<TrainPair> getTrainData(){
+	vector<TrainPair> blank;
+	return blank;
+}
 
 /*
  * Calls getTrainData and then trains ANN.
- 
+ */
 void Learn::hasWon(){
 
 	vector<TrainPair> trainSequence = getTrainData();
-	}*/
+	}

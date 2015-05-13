@@ -26,11 +26,7 @@ struct LearnTuple
 	
 	LearnTuple(){}
 
-	LearnTuple(bool* tState, float tValue, int tReward){
-		state = tState;
-		value = tValue;
-		reward = tReward;
-	}
+	LearnTuple(bool* tState, float tValue, int tReward);
 
 	void setReward(int r) { reward = r; }
 
@@ -42,10 +38,7 @@ struct TrainPair {
 
 	TrainPair(){}
 
-	TrainPair(bool* tState, float tValue){
-		state = tState;
-		value = tValue;
-	}
+	TrainPair(bool* tState, float tValue);
 
 	void setValue(float tValue) { value = tValue; }
 	void setState(bool* tState) { state = tState; }
@@ -57,7 +50,7 @@ struct TrainPair {
  */
 class Learn {
 public:
-	static FANN::neural_net net;
+	//static FANN::neural_net net;
 	static vector<LearnTuple> learnSequence;
 	static float explore;
 	static float decay;
@@ -65,29 +58,16 @@ public:
 	/* 
 	Default constructor 
 	 */
-	Learn(){
-		net = NULL;
-		explore = 0.95;
-		decay = 0.95;
-	};
-
+	Learn();
 
 	/*
 	 * Construct Learn Object with a Neural Net.
 	 */
-	Learn(FANN::neural_net &tNet) {
-		net = tNet;
-		explore = 0.95;
-		decay = 0.95;
-		// Net properties should outside of this function.
-	};
+	Learn(FANN::neural_net &tNet);
 
-
-	void setNet(FANN::neural_net &tNet){ net = tNet; };
+//	void setNet(FANN::neural_net &tNet){ net = tNet; };
 	void setDecay(float tDecay){ decay = tDecay; };
 	void setExploration(float tExploration) { explore = tExploration; };
-	
-
 	
 	/*
 	 * Convert Game state[a][b] to a bit string for input to the ANN
@@ -106,4 +86,4 @@ public:
 	vector<TrainPair> getTrainData();
 
 	void train();
-	};
+};

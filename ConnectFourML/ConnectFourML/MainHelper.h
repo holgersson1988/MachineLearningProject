@@ -19,11 +19,8 @@ public:
 	int depth;
 	char player;
 
-	MoveDepth(int tDepth, int tMove, char tPlayer){
-		move = tMove;
-		depth = tDepth;
-		player = tPlayer;
-	}
+	MoveDepth(int tDepth, int tMove, char tPlayer);
+
 	void setMove(int tMove) { move = tMove; }
 	void setDepth(int tDepth) { depth = tDepth; }
 	void setPlayer(char tPlayer) { player = tPlayer; }
@@ -38,10 +35,11 @@ class Player
 public:
 	char piece;
 
-	// default constructor
-	Player(char tPiece = CHAR1){
-		piece = tPiece;
-	}
+	Player(char tPiece = CHAR1);
+
+	/*
+	 * Returns interger range 0-7.
+	 */
 	virtual int getMove() = 0; // virtual signifies that it can be overidden 
 	virtual void hasWon() = 0;
 	char getPiece(){ return piece; };
