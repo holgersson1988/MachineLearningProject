@@ -44,9 +44,26 @@ ANN::ANN(unsigned int inputs, unsigned int layers, unsigned int hidden, unsigned
 
 	net.set_activation_function_hidden(FANN::SIGMOID_SYMMETRIC_STEPWISE);
 	net.set_activation_function_output(FANN::SIGMOID_SYMMETRIC_STEPWISE);
-	FANN::training_data test;
+	
 
-	net.init_weights(test);
+	FANN::training_data data;
+	if (data.read_train_from_file("cFour.data"))
+	{
+		net.init_weights(data);
+	}
+	/*
+	int test[84];
+	fann_type* inp[84];
+	fann_type* outp = 10;
+	for (int i = 0; i < 84; i++)
+	{
+		test[i] = rand() % 2;
+		inp[i] = test[i];
+	}
+	FANN::training_data data;
+	data.set_train_data(1, 84, inp, 1, outp);
+	data.set_train_data()
+	net.init_weights(data);*/
 }
 
 ANN::~ANN()
