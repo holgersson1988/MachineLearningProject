@@ -10,6 +10,24 @@ using std::cout;
 using std::vector;
 
 /*
+* Saves State, Value, and Reward tuples for generating a training sequence
+* for the neural net.
+*/
+struct LearnTuple
+{
+	bool* state;
+	float value;
+	int reward;
+
+	LearnTuple(){}
+
+	LearnTuple(bool* tState, float tValue, int tReward);
+
+	void setReward(int r) { reward = r; }
+
+};
+
+/*
  * Used to keep a sequence of board game states for printing.
  */
 struct MoveDepth
@@ -42,6 +60,8 @@ public:
 	 */
 	virtual int getMove() = 0; // virtual signifies that it can be overidden 
 	virtual void hasWon() = 0;
+	virtual void hasLost() = 0;
+	virtual void endGame() = 0;
 	char getPiece(){ return piece; };
 };
 
@@ -60,6 +80,8 @@ public:
 	*/
 	int getMove() override;
 	void hasWon() override {};
+	void hasLost() override {};
+	void endGame() override {};
 };
 
 /*

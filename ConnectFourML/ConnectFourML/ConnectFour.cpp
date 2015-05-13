@@ -104,14 +104,22 @@ int main(int argc, char* argv[])
 	if (charsPlaced == 42)
 		cout << 0 << ',' << charsPlaced << "\n";
 	else{
-		player->hasWon();
 		// Player 2 Won
-		if (player->getPiece() == CHAR2)
+		if (player->getPiece() == CHAR2){
 			cout << 2 << ',' << charsPlaced << "\n";
+			play2.hasWon();
+			play1.hasLost();
+		}
 		// Player 1 won
-		else
+		else{
 			cout << 1 << ',' << charsPlaced << "\n";
+			play1.hasWon();
+			play2.hasLost();
+		}
 	}
+	// Tell Learn that it can update NN
+	play1.endGame();
+	play2.endGame();
 
 	// Display board if display flag (-d)
 	if (showBoard){

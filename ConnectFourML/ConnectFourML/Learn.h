@@ -14,24 +14,6 @@
 using std::cout;
 using std::vector;
 
-/*
- * Saves State, Value, and Reward tuples for generating a training sequence
- * for the neural net.
- */
-struct LearnTuple
-{
-	bool* state;
-	float value;
-	int reward;
-	
-	LearnTuple(){}
-
-	LearnTuple(bool* tState, float tValue, int tReward);
-
-	void setReward(int r) { reward = r; }
-
-};
-
 struct TrainPair {
 	bool* state;
 	float value;
@@ -50,10 +32,12 @@ struct TrainPair {
  */
 class Learn {
 public:
-	//static FANN::neural_net net;
-	static vector<LearnTuple> learnSequence;
-	static float explore;
-	static float decay;
+	static FANN::neural_net net;
+	vector<TrainPair> trainSet;
+	float explore;
+	float decay;
+	float learnRate;
+	bool gameOver;
 
 	/* 
 	Default constructor 
@@ -65,7 +49,7 @@ public:
 	 */
 	Learn(FANN::neural_net &tNet);
 
-//	void setNet(FANN::neural_net &tNet){ net = tNet; };
+	void setNet(FANN::neural_net &tNet){ net = tNet; };
 	void setDecay(float tDecay){ decay = tDecay; };
 	void setExploration(float tExploration) { explore = tExploration; };
 	
@@ -79,11 +63,11 @@ public:
 	 * Called by LearnPlayer. Returns a next state choice, from a greedy
 	 * or exploration choice.
 	 */
-	int nextState();
+	LearnTuple nextState(int &move);
 	
-	void hasWon();
+	void endGame();
 
-	vector<TrainPair> getTrainData();
+	void updateTrainSet(vector<LearnTuple> learnSequence);
 
 	void train();
 };

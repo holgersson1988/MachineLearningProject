@@ -18,6 +18,8 @@ class LearnPlayer : public Player
 {
 public:
 	Learn LearnObj;
+	static vector<LearnTuple> learnSequence;
+
 
 	// default constructor
 	LearnPlayer(char tPiece, Learn &tLearn) 
@@ -32,4 +34,6 @@ public:
 	 * Signal to this player that it has won. Used to update reward QTS tuple.
 	 */
 	virtual void hasWon() override;
+	virtual void hasLost() override;
+	void endGame() override {};
 };

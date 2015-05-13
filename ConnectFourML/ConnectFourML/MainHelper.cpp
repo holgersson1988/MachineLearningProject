@@ -6,6 +6,12 @@
 using std::cout;
 using std::vector;
 
+LearnTuple::LearnTuple(bool* tState, float tValue, int tReward){
+	state = tState;
+	value = tValue;
+	reward = tReward;
+}
+
 MoveDepth::MoveDepth(int tDepth, int tMove, char tPlayer){
 	move = tMove;
 	depth = tDepth;
