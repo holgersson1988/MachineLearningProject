@@ -37,7 +37,7 @@ void Learn::setExploration(float tExploration)
 bool* Learn::getInput(vector<vector<char>> &gameState)
 {
 	// Create return array
-	bool* ret = new bool[84];
+	//bool* ret = new bool[84];
 
 	// Loop through the game board
 	for (int i = 0; i < 6; i++)
@@ -46,17 +46,17 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 		{
 			// Get the char at each slot on the board
 			char val = gameState[i][ii];
-			int returnIndex = i*ii; // 0*0=0, 1*0=0, 0*1=0 ???
+			int returnIndex = ii + i*7;
 			// Check for player 1
 			if ((i*ii) % 2 == 0)
 			{
 				if (val == CHAR1)
 				{
-					ret[returnIndex] = true;
+					inputArray[returnIndex] = true;
 				}
 				else
 				{
-					ret[returnIndex] == false;
+					inputArray[returnIndex] == false;
 				}
 			}
 			// Check for player 2 char
@@ -64,16 +64,16 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 			{
 				if (val == CHAR2)
 				{
-					ret[returnIndex] = true;
+					inputArray[returnIndex] = true;
 				}
 				else
 				{
-					ret[returnIndex] == false;
+					inputArray[returnIndex] == false;
 				}
 			}
 		}
 	}
-	return ret;
+	return inputArray;
 }
 
 /*
@@ -86,13 +86,16 @@ int Learn::nextState()
 	float moveValue = -1;	// Saves values of greedy choice
 	bool* netState = false;			// for saving the state in NN form
 	vector<vector<char>> nextPlace;	// Place holder for next 
-	float randValue = ((float)rand()) / (float)RAND_MAX;
+	
+	float randValue = ((float)rand()) / (float)RAND_MAX; // Generate random value to see if explore
 
+	fann_type fannInput[84];
 	// Greedy
 	if (randValue < explore)
 	{
 		vector<int> stateValue = vector<int>(7, -1);		// Holds Values of next 7 possible states
-		bool* neuralState;
+		//bool* neuralState;
+		//inputArray
 
 		for (int i = 0; i < 7; i++)
 		{
@@ -101,13 +104,18 @@ int Learn::nextState()
 			{
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
-				neuralState = getInput(nextPlace); 
-				//stateValue[i] = net.run(neuralState)[0];
-				moveValue = 1;
+				*inputArray = getInput(nextPlace);
+				// Convert the boolean string to type: "fann_type"
+				for (int f = 0; f < 84; f++)
+				{
+					fannInput[f] = inputArray[f];
+				}
+
+				stateValue[i] = myNet->run(fannInput)[0];
 				if (stateValue[i] > moveValue)
 				{
 					moveChoice = i;
-					netState = neuralState;
+					netState = inputArray;
 					moveValue = stateValue[i];
 				}
 			}
