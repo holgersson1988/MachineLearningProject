@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include "MainHelper.h"
+#include "ANN.h"
 using std::cout;
 using std::vector;
 

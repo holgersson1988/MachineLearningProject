@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
 	// initialize random seed. Is global.
 	srand(time(NULL));
 
+	
 	// fill place with whitespaces
 	place.resize(6, vector<char>(7, ' '));
 

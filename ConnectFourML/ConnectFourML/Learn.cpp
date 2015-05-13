@@ -44,12 +44,15 @@ Learn::Learn(FANN::neural_net &tNet) {
 */
 bool* Learn::getInput(vector<vector<char>> &gameState)
 {
+	// Create return array
 	bool* ret = new bool[84];
 
+	// Loop through the game board
 	for (int i = 0; i < 6; i++)
 	{
 		for (int ii = 0; ii < 7; ii++)
 		{
+			// Get the char at each slot on the board
 			char val = gameState[i][ii];
 			int returnIndex = i*ii; // 0*0=0, 1*0=0, 0*1=0 ???
 			// Check for player 1
