@@ -168,8 +168,7 @@ void Learn::endGame(){
 
 	// endGame() has already been called
 	if (gameOver == true){ return; }
-	else{
-
-	}
+	
+	// Take trainSet and use it to update NN
 	
 }
