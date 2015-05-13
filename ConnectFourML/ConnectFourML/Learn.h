@@ -30,11 +30,33 @@ struct LearnTuple
 		state = tState;
 		value = tValue;
 		reward = tReward;
+<<<<<<< HEAD
 	};
+=======
+	}
+>>>>>>> parent of 0a704c8... Push before branch
 
 
 };
 
+<<<<<<< HEAD
+=======
+struct TrainPair {
+	bool* state;
+	float value;
+
+	TrainPair(){}
+
+	TrainPair(bool* tState, float tValue){
+		state = tState;
+		value = tValue;
+	}
+
+	void setValue(float tValue) { value = tValue; }
+	void setState(bool* tState) { state = tState; }
+};
+
+>>>>>>> parent of 0a704c8... Push before branch
 /*
  * Learn Class used for Sarsa/TD style reinforcement learning. Uses a 
  * FANN neural net to approximate the Value of states.
@@ -42,7 +64,11 @@ struct LearnTuple
 class Learn {
 public:
 	static FANN::neural_net net;
+<<<<<<< HEAD
 	static LearnTuple learnSequence[42];
+=======
+	static vector<LearnTuple> learnSequence;
+>>>>>>> parent of 0a704c8... Push before branch
 	static float explore;
 	static float decay;
 
@@ -86,6 +112,7 @@ public:
 	int nextState();
 	
 
+<<<<<<< HEAD
 	/*
 	updateValues(){
 		// takes global sequence of state-QValue pairs
@@ -94,4 +121,7 @@ public:
 		net.train(stateSequence
 	}
 	*/
+=======
+	void train();
+>>>>>>> parent of 0a704c8... Push before branch
 	};
