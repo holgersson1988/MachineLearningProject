@@ -24,31 +24,15 @@ struct LearnTuple
 	float value;
 	int reward;
 	
-	LearnTuple(){}
+	LearnTuple(){};
 
 	LearnTuple(bool* tState, float tValue, int tReward){
 		state = tState;
 		value = tValue;
 		reward = tReward;
-	}
+	};
 
-	void setReward(int r) { reward = r; }
 
-};
-
-struct TrainPair {
-	bool* state;
-	float value;
-
-	TrainPair(){}
-
-	TrainPair(bool* tState, float tValue){
-		state = tState;
-		value = tValue;
-	}
-
-	void setValue(float tValue) { value = tValue; }
-	void setState(bool* tState) { state = tState; }
 };
 
 /*
@@ -58,7 +42,7 @@ struct TrainPair {
 class Learn {
 public:
 	static FANN::neural_net net;
-	static vector<LearnTuple> learnSequence;
+	static LearnTuple learnSequence[42];
 	static float explore;
 	static float decay;
 
@@ -101,9 +85,13 @@ public:
 	 */
 	int nextState();
 	
-	void hasWon();
 
-	vector<TrainPair> getTrainData();
+	/*
+	updateValues(){
+		// takes global sequence of state-QValue pairs
+		// sends to Neural Net to train
 
-	void train();
+		net.train(stateSequence
+	}
+	*/
 	};
