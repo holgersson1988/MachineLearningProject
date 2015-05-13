@@ -58,8 +58,8 @@ int main(int argc, char* argv[])
 	//Learn learnObj = Learn();
 
 	// initialize two random players
-	RandomPlayer play1 = RandomPlayer(CHAR1);
-	RandomPlayer play2 = RandomPlayer(CHAR2);
+	LearnPlayer play1 = LearnPlayer(CHAR1);
+	LearnPlayer play2 = LearnPlayer(CHAR2);
 
 
 

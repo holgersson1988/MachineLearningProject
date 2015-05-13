@@ -28,7 +28,7 @@ ANN::ANN()
 
 ANN::ANN(unsigned int inputs, unsigned int layers, unsigned int hidden, unsigned int outputs, float learning)
 {
-	// net vatiables
+	// net variables
 	const unsigned int numLayers = layers;
 	const unsigned int numInputs = inputs;
 	const unsigned int numHidden = hidden;
@@ -38,6 +38,15 @@ ANN::ANN(unsigned int inputs, unsigned int layers, unsigned int hidden, unsigned
 
 	net.create_standard(numLayers, numInputs, numHidden, numOutputs);
 	net.set_learning_rate(learningRate);
+
+	//net.set_activation_steepness_hidden(1.0);
+	//net.set_activation_steepness_output(1.0);
+
+	net.set_activation_function_hidden(FANN::SIGMOID_SYMMETRIC_STEPWISE);
+	net.set_activation_function_output(FANN::SIGMOID_SYMMETRIC_STEPWISE);
+	FANN::training_data test;
+
+	net.init_weights(test);
 }
 
 ANN::~ANN()

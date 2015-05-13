@@ -53,6 +53,8 @@ class Learn
 private:
 	ANN ArtificialNeuralNet = ANN(84, 3, 250, 1, 0.95f);
 	FANN::neural_net* myNet;
+
+	bool inputArray[84];
 public:
 	//static FANN::neural_net net;
 	vector<LearnTuple> learnSequence;

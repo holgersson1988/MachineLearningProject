@@ -21,6 +21,7 @@ public:
 	Learn LearnObj;
 
 	// default constructor
+	LearnPlayer(char tPiece) : Player(tPiece){};
 	LearnPlayer(char tPiece, Learn &tLearn) 
 		: Player(tPiece)
 	{
