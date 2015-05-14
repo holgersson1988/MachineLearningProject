@@ -10,7 +10,8 @@ TrainPair::TrainPair(bool* tState, float tValue){
 }
 
 Learn::Learn(){
-	//net = NULL;
+
+	myNet = ArtificialNeuralNet.getANN();
 	explore = 0.95;
 	decay = 0.95;
 	learnRate = 0.95;
@@ -22,33 +23,35 @@ Learn::Learn(FANN::neural_net &tNet) {
 	explore = 0.95;
 	decay = 0.95;
 	learnRate = 0.95;
-	gameOver = 0.95;
+	gameOver = false;
 };
-
 
 /*
  * Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
-*/
+ */
 bool* Learn::getInput(vector<vector<char>> &gameState)
 {
-	bool* ret = new bool[84];
+	// Create return array
+	//bool* ret = new bool[84];
 
+	// Loop through the game board
 	for (int i = 0; i < 6; i++)
 	{
 		for (int ii = 0; ii < 7; ii++)
 		{
+			// Get the char at each slot on the board
 			char val = gameState[i][ii];
-			int returnIndex = i*ii; // 0*0=0, 1*0=0, 0*1=0 ???
+			int returnIndex = ii + i*7;
 			// Check for player 1
 			if ((i*ii) % 2 == 0)
 			{
 				if (val == CHAR1)
 				{
-					ret[returnIndex] = true;
+					inputArray[returnIndex] = true;
 				}
 				else
 				{
-					ret[returnIndex] == false;
+					inputArray[returnIndex] == false;
 				}
 			}
 			// Check for player 2 char
@@ -56,16 +59,16 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 			{
 				if (val == CHAR2)
 				{
-					ret[returnIndex] = true;
+					inputArray[returnIndex] = true;
 				}
 				else
 				{
-					ret[returnIndex] == false;
+					inputArray[returnIndex] == false;
 				}
 			}
 		}
 	}
-	return ret;
+	return inputArray;
 }
 
 /*
@@ -78,6 +81,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 	vector<vector<char>> nextPlace;	// Place holder for next state. Presented to net for Value. 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
 
+	fann_type fannInput[84];
 	// Greedy
 	if (randValue < explore)
 	{
@@ -92,15 +96,19 @@ LearnTuple Learn::nextState(int &moveChoice){
 			{
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
-				bool* neuralState = getInput(nextPlace);
-				//stateValue[i] = net.run(neuralState)[0];
-				stateValue[i] = 1; // <-- Temporary until net works
+				*inputArray = getInput(nextPlace);
+				//bool* neuralState = getInput(nextPlace);
+				// Convert the boolean string to type: "fann_type"
+				for (int f = 0; f < 84; f++)
+				{
+					fannInput[f] = inputArray[f];
+				}
+
+				stateValue[i] = myNet->run(fannInput)[0];
 				if (stateValue[i] > moveValue)
 				{
 					moveChoice = i;
-
-					// netState and moveValue will be saved in the LearnTuple
-					netState = neuralState;
+					netState = inputArray;
 					moveValue = stateValue[i];
 				}
 			}
@@ -169,7 +177,7 @@ void Learn::endGame(){
 	// endGame() has already been called
 	if (gameOver == true){ return; }
 	else{
-
+		// TODO
 	}
 	
 }

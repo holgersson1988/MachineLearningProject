@@ -1,8 +1,8 @@
 #pragma once
-
-#include <vector>
 #include <iostream>
-#include "Learn.h"
+#include <cstdlib>
+#include <time.h>
+#include <vector>
 
 #define CHAR2	15 //char(15)
 #define CHAR1	43 //char(254)

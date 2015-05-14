@@ -1,7 +1,5 @@
+#pragma once
 #include "MainHelper.h"
-#include <iostream>
-#include <cstdlib>
-#include <time.h>
 
 using std::cout;
 using std::vector;

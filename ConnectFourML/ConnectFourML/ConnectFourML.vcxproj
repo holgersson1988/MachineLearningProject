@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ANN.cpp" />
     <ClCompile Include="ConnectFour.cpp" />
     <ClCompile Include="Learn.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="LearnPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ANN.h" />
     <ClInclude Include="Learn.h" />
     <ClInclude Include="LearnPlayer.h" />
     <ClInclude Include="MainHelper.h" />
@@ -50,9 +52,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\FANN-2.2.0-Source\src\include;C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\src\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\FANN-2.2.0-Source\src\include;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(SolutionDir)\FANN-2.2.0-Source\bin\;C:\Users\Rsandhu\Programming\MachineLearningProject\ConnectFourML\FANN-2.2.0-Source\bin;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\FANN-2.2.0-Source\bin\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -62,6 +64,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>fanndoubled.lib;fannfixedd.lib;fannfloatd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -1,6 +1,5 @@
 
 #include "LearnPlayer.h"
-#include "Learn.h"
 
 /*
  * Return a valid move. Calls Learn.nextState() to return a greedy or
@@ -8,10 +7,10 @@
  */
 int LearnPlayer::getMove() {
 	int move;
-	LearnTuple stateInfo = LearnObj.nextState(move);
+	LearnTuple stateInfo = LearnObj->nextState(move);
 	learnSequence.push_back(stateInfo);
 	return move;
-	
+
 }
 
 /*
@@ -19,10 +18,10 @@ int LearnPlayer::getMove() {
  */
 void LearnPlayer::hasWon(){
 	learnSequence.back().setReward(1);
-	LearnObj.updateTrainSet(learnSequence);
+	LearnObj->updateTrainSet(learnSequence);
 }
 
 void LearnPlayer::hasLost(){
 	learnSequence.back().setReward(-1);
-	LearnObj.updateTrainSet(learnSequence);
+	LearnObj->updateTrainSet(learnSequence);
 }

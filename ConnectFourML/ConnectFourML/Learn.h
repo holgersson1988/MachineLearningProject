@@ -7,10 +7,9 @@
  */
 
 #include <iostream>
-#include "MainHelper.h"
-#include "floatfann.h"
-#include "fann_cpp.h"
 #include <vector>
+#include "MainHelper.h"
+#include "ANN.h"
 using std::cout;
 using std::vector;
 
@@ -18,8 +17,8 @@ struct TrainPair {
 	bool* state;
 	float value;
 
-	TrainPair(){}
-
+	// Constructors
+	TrainPair();
 	TrainPair(bool* tState, float tValue);
 
 	void setValue(float tValue) { value = tValue; }
@@ -30,7 +29,13 @@ struct TrainPair {
  * Learn Class used for Sarsa/TD style reinforcement learning. Uses a 
  * FANN neural net to approximate the Value of states.
  */
-class Learn {
+class Learn 
+{
+private:
+	ANN ArtificialNeuralNet = ANN(84, 3, 250, 1, 0.95f);
+	FANN::neural_net* myNet;
+
+	bool inputArray[84];
 public:
 	static FANN::neural_net net;
 	vector<TrainPair> trainSet;
@@ -38,6 +43,7 @@ public:
 	float decay;
 	float learnRate;
 	bool gameOver;
+
 
 	/* 
 	Default constructor 
@@ -52,6 +58,7 @@ public:
 	void setNet(FANN::neural_net &tNet){ net = tNet; };
 	void setDecay(float tDecay){ decay = tDecay; };
 	void setExploration(float tExploration) { explore = tExploration; };
+
 	
 	/*
 	 * Convert Game state[a][b] to a bit string for input to the ANN

@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include "MainHelper.h"
+#include "Learn.h"
 using std::cout;
 using std::vector;
 
@@ -17,12 +18,12 @@ using std::vector;
 class LearnPlayer : public Player
 {
 public:
-	Learn LearnObj;
+	Learn* LearnObj;
 	static vector<LearnTuple> learnSequence;
 
-
 	// default constructor
-	LearnPlayer(char tPiece, Learn &tLearn) 
+	LearnPlayer(char tPiece) : Player(tPiece){};
+	LearnPlayer(char tPiece, Learn* tLearn) 
 		: Player(tPiece)
 	{
 		LearnObj = tLearn;
