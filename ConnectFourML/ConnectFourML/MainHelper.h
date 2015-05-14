@@ -117,6 +117,8 @@ positive integer otherwise.
 */
 int drop(int b, char player);
 
+int ConnectFour(bool showBoard);
+
 /*
  * Global. Saves state of board.
  */

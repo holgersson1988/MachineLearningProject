@@ -75,7 +75,7 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 * or exploration choice. Also updates learnTrainSequence with choice.
 */
 LearnTuple Learn::nextState(int &moveChoice){
-	float moveValue = -1;	// Saves values of greedy choice
+	float moveValue = -2;	// Saves values of greedy choice
 	bool* netState;			// for saving the state in NN form
 	vector<vector<char>> nextPlace;	// Place holder for next state. Presented to net for Value. 
 	float randValue = ((float)rand()) / (float)RAND_MAX;

@@ -14,14 +14,8 @@ vector< vector<char> > place;
 Player* player;
 int charsPlaced;
 
-int main(int argc, char* argv[])
+int ConnectFour(bool showBoard)
 {
-	// parse arguments
-	bool showBoard = false;
-	for (int i = 0; i < argc; i++){
-		if (std::string(argv[i]) == "-d")
-			showBoard = true;
-	}
 	/*
 #pragma region Create Artificial Neural Network
 
@@ -101,6 +95,10 @@ int main(int argc, char* argv[])
 
 
 	// End of game
+	// Display board if display flag (-d)
+	if (showBoard){
+		displaySequence(gameSequence);
+	}
 
 	// Tie
 	if (charsPlaced == 42)
@@ -123,10 +121,7 @@ int main(int argc, char* argv[])
 	play1.endGame();
 	play2.endGame();
 
-	// Display board if display flag (-d)
-	if (showBoard){
-		displaySequence(gameSequence);
-	}
+	
 		
 	system("pause");
 
