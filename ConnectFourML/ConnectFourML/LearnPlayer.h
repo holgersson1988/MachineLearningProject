@@ -5,6 +5,7 @@
  * game module. QPlayer utilizes a QLearn object to approximate state Q-values.
  *
  */
+
 #include <iostream>
 #include "MainHelper.h"
 #include "Learn.h"
@@ -19,7 +20,7 @@ class LearnPlayer : public Player
 {
 public:
 	Learn* LearnObj;
-	static vector<LearnTuple> learnSequence;
+	vector<LearnTuple> learnSequence;
 
 	// default constructor
 	LearnPlayer(char tPiece) : Player(tPiece){};

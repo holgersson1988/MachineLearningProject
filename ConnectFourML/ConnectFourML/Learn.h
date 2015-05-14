@@ -32,12 +32,9 @@ struct TrainPair {
 class Learn 
 {
 private:
-	ANN ArtificialNeuralNet = ANN(84, 3, 250, 1, 0.95f);
-	FANN::neural_net* myNet;
-
 	bool inputArray[84];
 public:
-	static FANN::neural_net net;
+	FANN::neural_net* net;
 	vector<TrainPair> trainSet;
 	float explore;
 	float decay;
@@ -53,9 +50,9 @@ public:
 	/*
 	 * Construct Learn Object with a Neural Net.
 	 */
-	Learn(FANN::neural_net &tNet);
+	Learn(FANN::neural_net* tNet);
 
-	void setNet(FANN::neural_net &tNet){ net = tNet; };
+	void setNet(FANN::neural_net* tNet){ net = tNet; };
 	void setDecay(float tDecay){ decay = tDecay; };
 	void setExploration(float tExploration) { explore = tExploration; };
 

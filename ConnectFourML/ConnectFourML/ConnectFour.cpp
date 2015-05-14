@@ -53,9 +53,13 @@ int main(int argc, char* argv[])
 	// fill place with whitespaces
 	place.resize(6, vector<char>(7, ' '));
 
-
+	// Initialize net
+	ANN ArtificialNeuralNet = ANN(84, 3, 250, 1, 0.95f);
+	FANN::neural_net* net = ArtificialNeuralNet.getANN();
+	
 	// Initialize LearnObject
 	Learn learnObj = Learn();
+	learnObj.setNet(net);
 
 	// initialize two random players
 	LearnPlayer play1 = LearnPlayer(CHAR1, &learnObj);

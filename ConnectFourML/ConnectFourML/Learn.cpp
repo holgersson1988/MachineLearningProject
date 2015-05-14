@@ -11,14 +11,13 @@ TrainPair::TrainPair(bool* tState, float tValue){
 
 Learn::Learn(){
 
-	myNet = ArtificialNeuralNet.getANN();
 	explore = 0.95;
 	decay = 0.95;
 	learnRate = 0.95;
 	gameOver = false;
 }
 /**/
-Learn::Learn(FANN::neural_net &tNet) {
+Learn::Learn(FANN::neural_net* tNet) {
 	net = tNet;
 	explore = 0.95;
 	decay = 0.95;
@@ -104,7 +103,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 					fannInput[f] = inputArray[f];
 				}
 
-				stateValue[i] = myNet->run(fannInput)[0];
+				stateValue[i] = net->run(fannInput)[0];
 				if (stateValue[i] > moveValue)
 				{
 					moveChoice = i;
