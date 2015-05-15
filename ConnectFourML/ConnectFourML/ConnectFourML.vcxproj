@@ -17,12 +17,17 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="LearnPlayer.cpp" />
+    <ClCompile Include="TestFANN.cpp" />
+    <ClCompile Include="xor_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANN.h" />
     <ClInclude Include="Learn.h" />
     <ClInclude Include="LearnPlayer.h" />
     <ClInclude Include="MainHelper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="xor.data" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E2BFD35E-E4A3-42BB-8E61-E08B19626B91}</ProjectGuid>

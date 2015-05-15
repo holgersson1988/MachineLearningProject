@@ -33,6 +33,7 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 	// Create return array
 	//bool* ret = new bool[84];
 
+	bool inputArray[84];
 	// Loop through the game board
 	for (int i = 0; i < 6; i++)
 	{
@@ -95,7 +96,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 			{
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
-				*inputArray = getInput(nextPlace);
+				bool *inputArray = getInput(nextPlace);
 				//bool* neuralState = getInput(nextPlace);
 				// Convert the boolean string to type: "fann_type"
 				for (int f = 0; f < 84; f++)

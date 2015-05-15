@@ -1,5 +1,12 @@
 #include "MainHelper.h"
 #include <string>
+#include <ios>
+#include <iostream>
+#include <iomanip>
+
+// Forward Dec. Remove.
+void testFANN();
+void xor_test();
 
 int main(int argc, char* argv[])
 {
@@ -11,4 +18,18 @@ int main(int argc, char* argv[])
 	}
 
 	ConnectFour(showBoard);
+	//testFANN();
+	/*
+	try
+	{
+		std::ios::sync_with_stdio(); // Syncronize cout and printf output
+		xor_test();
+	}
+	catch (...)
+	{
+		std::cerr << std::endl << "Abnormal exception." << std::endl;
+	}
+	system("pause");*/
+	return 0;
+
 }

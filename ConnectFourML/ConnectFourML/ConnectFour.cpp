@@ -123,7 +123,7 @@ int ConnectFour(bool showBoard)
 
 	
 		
-	system("pause");
+	//system("pause");
 
 	return 0;
 }

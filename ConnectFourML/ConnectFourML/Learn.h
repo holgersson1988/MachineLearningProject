@@ -31,8 +31,6 @@ struct TrainPair {
  */
 class Learn 
 {
-private:
-	bool inputArray[84];
 public:
 	FANN::neural_net* net;
 	vector<TrainPair> trainSet;
