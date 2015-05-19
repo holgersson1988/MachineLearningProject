@@ -10,19 +10,21 @@
 #include <vector>
 #include "MainHelper.h"
 #include "ANN.h"
+#include "floatfann.h"
+#include "fann_cpp.h"
 using std::cout;
 using std::vector;
 
 struct TrainPair {
-	bool* state;
-	float value;
+	fann_type* state;
+	fann_type value;
 
 	// Constructors
 	TrainPair();
-	TrainPair(bool* tState, float tValue);
+	TrainPair(fann_type* tState, fann_type tValue);
 
-	void setValue(float tValue) { value = tValue; }
-	void setState(bool* tState) { state = tState; }
+	void setValue(fann_type tValue) { value = tValue; }
+	void setState(fann_type* tState) { state = tState; }
 };
 
 /*
@@ -58,7 +60,7 @@ public:
 	/*
 	 * Convert Game state[a][b] to a bit string for input to the ANN
 	 */
-	bool* getInput(vector< vector<char> > &gameState);
+	fann_type* getInput(vector< vector<char> > &gameState);
 
 	
 	/*

@@ -4,7 +4,7 @@
 using std::cout;
 using std::vector;
 
-LearnTuple::LearnTuple(bool* tState, float tValue, int tReward){
+LearnTuple::LearnTuple(fann_type* tState, fann_type tValue, int tReward){
 	state = tState;
 	value = tValue;
 	reward = tReward;

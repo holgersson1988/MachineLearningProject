@@ -4,7 +4,7 @@
 using std::cout;
 using std::vector;
 
-TrainPair::TrainPair(bool* tState, float tValue){
+TrainPair::TrainPair(fann_type* tState, fann_type tValue){
 	state = tState;
 	value = tValue;
 }
@@ -28,12 +28,12 @@ Learn::Learn(FANN::neural_net* tNet) {
 /*
  * Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
  */
-bool* Learn::getInput(vector<vector<char>> &gameState)
+fann_type* Learn::getInput(vector<vector<char>> &gameState)
 {
 	// Create return array
 	//bool* ret = new bool[84];
 
-	bool inputArray[84];
+	fann_type inputArray[84];
 	// Loop through the game board
 	for (int i = 0; i < 6; i++)
 	{
@@ -77,7 +77,7 @@ bool* Learn::getInput(vector<vector<char>> &gameState)
 */
 LearnTuple Learn::nextState(int &moveChoice){
 	float moveValue = -2;	// Saves values of greedy choice
-	bool* netState;			// for saving the state in NN form
+	fann_type* netState;			// for saving the state in NN form
 	vector<vector<char>> nextPlace;	// Place holder for next state. Presented to net for Value. 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
 
@@ -96,7 +96,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 			{
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
-				bool *inputArray = getInput(nextPlace);
+				fann_type *inputArray = getInput(nextPlace);
 				//bool* neuralState = getInput(nextPlace);
 				// Convert the boolean string to type: "fann_type"
 				for (int f = 0; f < 84; f++)
@@ -113,6 +113,24 @@ LearnTuple Learn::nextState(int &moveChoice){
 				}
 			}
 		}
+
+		// Select between ties
+		std::vector<int> ties;
+		int numTies = 0;
+		for (int i = 0; i < 7; i++)
+		{
+			// For each tie, save its index in the vector
+			if (stateValue[i] == stateValue[moveChoice])
+			{
+				ties.push_back(i);
+				numTies++;
+			}
+		}
+		// Select a random winner from the vector of ties
+		int winner = rand() % numTies;
+		// Get the value from the vector that represents the choice made
+		moveChoice = ties[winner];
+
 	}
 
 	// Explore (randValue > exploreValue)
@@ -163,7 +181,7 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 			v_s_p = (rit - 1)->value;
 		}
 
-		float newV = v_s + learnRate * (reward + decay * v_s_p - v_s);
+		fann_type newV = v_s + learnRate * (reward + decay * v_s_p - v_s);
 		TrainPair pair = TrainPair(rit->state, newV);
 		trainSet.push_back(pair);
 	}
@@ -178,6 +196,11 @@ void Learn::endGame(){
 	if (gameOver == true){ return; }
 	else{
 		// TODO
+		// Send train set to the ANN
+		for (int i = 0; i < trainSet.size(); i++)
+		{
+			net->train(trainSet[i].state, &trainSet[i].value);
+		}
 	}
 	
 }

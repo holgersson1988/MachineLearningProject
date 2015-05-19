@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <time.h>
 #include <vector>
+#include "floatfann.h"
+#include "fann_cpp.h"
 
 #define CHAR2	15 //char(15)
 #define CHAR1	43 //char(254)
@@ -15,13 +17,13 @@ using std::vector;
 */
 struct LearnTuple
 {
-	bool* state;
-	float value;
+	fann_type* state;
+	fann_type value;
 	int reward;
 
 	LearnTuple(){}
 
-	LearnTuple(bool* tState, float tValue, int tReward);
+	LearnTuple(fann_type* tState, fann_type tValue, int tReward);
 
 	void setReward(int r) { reward = r; }
 
