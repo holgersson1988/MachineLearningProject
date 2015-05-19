@@ -135,7 +135,7 @@ void xor_test()
 
 /* Startup function. Syncronizes C and C++ output, calls the test function
 and reports any exceptions */
-int main(int argc, char **argv)
+int main2(int argc, char **argv)
 {
 	try
 	{
