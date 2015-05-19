@@ -8,7 +8,7 @@
 void testFANN();
 void xor_test();
 
-int main(int argc, char* argv[])
+int main2(int argc, char* argv[])
 {
 	// parse arguments
 	bool showBoard = false;
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 			showBoard = true;
 	}
 
-	ConnectFour(showBoard);
+	//ConnectFour(showBoard);
 	//testFANN();
 	/*
 	try

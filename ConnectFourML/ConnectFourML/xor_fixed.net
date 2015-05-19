@@ -1,5 +1,5 @@
 FANN_FIX_2.0
-decimal_point=12
+decimal_point=13
 num_layers=3
 learning_rate=0.700000
 connection_rate=1.000000
@@ -24,13 +24,13 @@ cascade_min_out_epochs=50
 cascade_max_cand_epochs=150
 cascade_min_cand_epochs=50
 cascade_num_candidate_groups=2
-bit_fail_limit=1434
-cascade_candidate_limit=4096000
-cascade_weight_multiplier=1638
+bit_fail_limit=2867
+cascade_candidate_limit=8192000
+cascade_weight_multiplier=3277
 cascade_activation_functions_count=10
 cascade_activation_functions=3 5 7 8 10 11 14 15 16 17 
 cascade_activation_steepnesses_count=4
-cascade_activation_steepnesses=1024 2048 3072 4096 
+cascade_activation_steepnesses=2048 4096 6144 8192 
 layer_sizes=3 4 2 
-neurons (num_inputs, activation_function, activation_steepness)=(0, 0, 0) (0, 0, 0) (0, 0, 0) (3, 6, 2048) (3, 6, 2048) (3, 6, 2048) (0, 6, 0) (4, 0, 2048) (0, 0, 0) 
-connections (connected_to_neuron, weight)=(0, 19379) (1, 19769) (2, 21385) (0, 1745) (1, 1774) (2, 1672) (0, 20252) (1, 21150) (2, 20932) (3, 12557) (4, -47250) (5, 5302) (6, -749) 
+neurons (num_inputs, activation_function, activation_steepness)=(0, 0, 0) (0, 0, 0) (0, 0, 0) (3, 6, 4096) (3, 6, 4096) (3, 6, 4096) (0, 6, 0) (4, 6, 4096) (0, 6, 0) 
+connections (connected_to_neuron, weight)=(0, -31167) (1, 30630) (2, -24325) (0, -35154) (1, 38525) (2, 36472) (0, 6977) (1, 14946) (2, 25471) (3, 41747) (4, -40143) (5, 13306) (6, 24024) 
