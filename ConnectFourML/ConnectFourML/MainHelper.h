@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <time.h>
 #include <vector>
+#include <sstream>
 
 #define CHAR2	15 //char(15)
 #define CHAR1	43 //char(254)

@@ -23,6 +23,9 @@ struct TrainPair {
 
 	void setValue(float tValue) { value = tValue; }
 	void setState(bool* tState) { state = tState; }
+
+	float getValue() { return value; };
+	bool* getState() { return state; }
 };
 
 /*
@@ -73,3 +76,8 @@ public:
 
 	void train();
 };
+
+/*
+ * Transform the trainSet into file saveable string. 
+ */
+//void trainSetToString(vector<TrainPair> &tSet, std::string &string);

@@ -4,11 +4,9 @@
 #include <iostream>
 #include <iomanip>
 
-// Forward Dec. Remove.
-void testFANN();
-void xor_test();
 
-int main2(int argc, char* argv[])
+
+int main(int argc, char* argv[])
 {
 	// parse arguments
 	bool showBoard = false;
@@ -17,19 +15,19 @@ int main2(int argc, char* argv[])
 			showBoard = true;
 	}
 
-	//ConnectFour(showBoard);
-	//testFANN();
-	/*
-	try
-	{
-		std::ios::sync_with_stdio(); // Syncronize cout and printf output
-		xor_test();
-	}
-	catch (...)
-	{
-		std::cerr << std::endl << "Abnormal exception." << std::endl;
-	}
-	system("pause");*/
+#pragma region test trainSetToStringy
+	vector<TrainPair> trainSet;
+	bool input[84] = { 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+	trainSet.push_back(TrainPair(input, 0.98));
+	std::string str;
+	trainSetToString(trainSet, str);
+	std::cout << str;
+#pragma endregion
+	//ConnectFour();
+	system("pause");
 	return 0;
 
 }

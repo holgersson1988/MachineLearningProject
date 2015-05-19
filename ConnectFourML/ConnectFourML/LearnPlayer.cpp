@@ -25,3 +25,7 @@ void LearnPlayer::hasLost(){
 	learnSequence.back().setReward(-1);
 	LearnObj->updateTrainSet(learnSequence);
 }
+
+void LearnPlayer::endGame(){
+	// TODO
+}

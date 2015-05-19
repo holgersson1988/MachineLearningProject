@@ -147,7 +147,7 @@ LearnTuple Learn::nextState(int &moveChoice){
  * V(s) <- V(s) + n[ R + decay * V(s') - V(s)]
  */
 void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
-	vector<LearnTuple> pas = learnSequence;
+	vector<LearnTuple> pas = learnSequence; // pas stands for 'Player Action Sequence'
 	
 	int exp = 0;
 	// for reverse_iterator, ++ moves the index towards 0.
@@ -175,9 +175,31 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 void Learn::endGame(){
 
 	// endGame() has already been called
-	if (gameOver == true){ return; }
+	if (gameOver == true){}
 	else{
-		// TODO
+		gameOver == true;
+		// TODO. Start training network.
+
 	}
 	
+	return;
+}
+
+
+void trainSetToString(vector<TrainPair> &tSet, std::string &string){
+	// numPairs 84 1
+	std::stringstream stream;
+	stream << tSet.size() << " 84 1\n";
+	for (std::vector<TrainPair>::iterator it = tSet.begin(); it != tSet.end(); it++){
+		// 0 1 0 0 0 1 0 1 1 0 1 1 0 1 1 ...
+		for (int i = 0; i < 84; i++){
+			stream << it->getState()[i] ? "1" : "0";
+			stream << ' '; 
+		}
+		stream << '\n';
+		// 0.89
+		stream << it->getValue() << '\n';
+
+	}
+	string = stream.str();
 }
