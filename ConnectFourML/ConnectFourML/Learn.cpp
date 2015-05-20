@@ -205,8 +205,35 @@ void Learn::endGame(){
 		unsigned int num_data, num_input = 84, num_output = 1;
 		num_data = static_cast<int>(trainSet.size());
 
-		//data.set_train_data(num_data, num_input, 
-		//					input, num_output, output);
+		
+		vector<float*> inputDataContainer;
+		for (int i = 0; i < num_data; i++)
+		{
+			inputDataContainer.push_back(new float);
+
+		}
+		vector<vector<float>> tempFannStates;
+		for (int j = 0; j < num_data; j++)
+		{
+			float* inputData = new[] float[84];
+			for (int i = 0; i < 84; i++)
+			{
+				inputData[i] = (trainSet[0].getState()[i]);
+			}
+			inputDataContainer.push_back(inputData);
+		}
+
+		vector<vector<float>> tempFannValue;
+		for (int i = 0; i < 84; i++)
+		{
+			vector<float> values;
+			values.push_back((float)trainSet[0].getValue());
+			tempFannValue.push_back(values);
+		}
+		//data.set_train_data()
+		vector<float> floatVec = vector<float>();
+		data.set_train_data(num_data, num_input, 
+			&inputDataContainer[0], num_output, &inputDataContainer[0]);
 
 		
 //		net->train_on_data(data);
