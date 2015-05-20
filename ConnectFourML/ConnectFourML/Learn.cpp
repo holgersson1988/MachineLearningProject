@@ -196,8 +196,7 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 void Learn::endGame(){
 
 	// endGame() has already been called
-	if (gameOver == true){}
-	else
+	if (gameOver != true)
 	{
 		gameOver == true;
 		// TODO
@@ -252,6 +251,7 @@ void Learn::endGame(){
 			delete inputDataContainer[i];
 			delete outputDataContainer[i];
 		}
+		data = FANN::training_data();
 	}
 }
 
