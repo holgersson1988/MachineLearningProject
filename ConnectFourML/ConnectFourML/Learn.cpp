@@ -114,10 +114,8 @@ LearnTuple Learn::nextState(int &moveChoice){
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
 				fannInput = getInput(nextPlace);
-				//std::memcpy(fannInput2, fannInput, sizeof fannInput2);
 				states_values[i].setValue(  net->run(&fannInput[0])[0]  );
 				states_values[i].setState(fannInput);
-				//stateValue[i] = net->run(fannInput)[0];
 
 				// if this state value is greater than previous known best
 				// Saves best: state, choice, and value
@@ -142,22 +140,6 @@ LearnTuple Learn::nextState(int &moveChoice){
 			moveChoice = ties[tieBreaker];
 		}
 
-		//std::vector<int> ties;
-		//int numties = 0;
-		//for (int i = 0; i < 7; i++)
-		//{
-		//	// for each tie, save its index in the vector
-		//	if (statevalue[i] == statevalue[movechoice])
-		//	{
-		//		ties.push_back(i);
-		//		numties++;
-		//	}
-		//}
-		//// select a random winner from the vector of ties
-		//int winner = rand() % numties;
-		//// get the value from the vector that represents the choice made
-		//movechoice = ties[winner];
-
 	}
 
 	// Explore (randValue > exploreValue)
@@ -179,11 +161,6 @@ LearnTuple Learn::nextState(int &moveChoice){
 	// Save bestState, Value, and reward to learnTrainSequence
 	return states_values[moveChoice];
 }
-
-/*
- * Returns a sequence of TrainPairs' used to train the ANN. Uses
- * the reinforcement learning update algorithm.
- */
 
 /*
  * Updates Learn.trainSet to create (state, value) pairs with which we
