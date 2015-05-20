@@ -21,8 +21,8 @@ ANN::ANN()
 	net.set_activation_steepness_hidden(1.0);
 	net.set_activation_steepness_output(1.0);
 
-	net.set_activation_function_hidden(FANN::SIGMOID);
-	net.set_activation_function_output(FANN::LINEAR);
+	net.set_activation_function_hidden(FANN::SIGMOID_STEPWISE);
+	net.set_activation_function_output(FANN::SIGMOID_STEPWISE);
 
 }
 

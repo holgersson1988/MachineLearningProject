@@ -94,7 +94,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 	vector<fann_type> fannInput;
 	vector<vector<char>> nextPlace;	// Place holder for next state. Presented to net for Value. 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
-	std::vector<int> ties;
+	vector<int> ties;
 
 	vector<LearnTuple> states_values;
 	states_values.resize(7, LearnTuple());
@@ -202,13 +202,15 @@ void Learn::endGame(){
 		// TODO
 		// Send train set to the ANN
 		FANN::training_data data;
-		unsigned int num_data, num_input, num_output;
-		num_data =static_cast<int>(trainSet.size());
+		unsigned int num_data, num_input = 84, num_output = 1;
+		num_data = static_cast<int>(trainSet.size());
 
-		/*data.set_train_data(num_data, num_input, 
-							input, num_ouput, output);*/
+		//data.set_train_data(num_data, num_input, 
+		//					input, num_output, output);
 
 		
+//		net->train_on_data(data);
+
 		for (std::vector<TrainPair>::iterator it = trainSet.begin();
 			it != trainSet.end(); it++)
 		{
