@@ -13,7 +13,7 @@ Learn::Learn(){
 
 	explore = 0.95;
 	decay = 0.95;
-	learnRate = 0.95;
+	learnRate = 0.7;
 	gameOver = false;
 }
 /**/
@@ -171,6 +171,7 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 	vector<LearnTuple> pas = learnSequence; // pas stands for 'Player Action Sequence'
 	
 	int exp = 0;
+	fann_type newV;
 	// for reverse_iterator, ++ moves the index towards 0.
 	for (vector<LearnTuple>::reverse_iterator rit = pas.rbegin(); rit != pas.rend(); rit++){
 		float v_s = rit->value; // V(s)
@@ -181,12 +182,14 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 		if (exp == 0)
 			v_s_p = 0;
 		else{
-			v_s_p = (rit - 1)->value;
+			/*v_s_p = (rit - 1)->getValue();*/
+			v_s_p = newV;
 		}
 
-		fann_type newV = v_s + learnRate * (reward + decay * v_s_p - v_s);
+		newV = v_s + learnRate * (reward + decay * v_s_p - v_s);
 		TrainPair pair = TrainPair(rit->state, newV);
 		trainSet.push_back(pair);
+		exp++;
 	}
 }
 
@@ -198,7 +201,7 @@ void Learn::endGame(){
 	// endGame() has already been called
 	if (gameOver != true)
 	{
-		gameOver == true;
+		gameOver = true;
 		// TODO
 		// Send train set to the ANN
 		FANN::training_data data;
