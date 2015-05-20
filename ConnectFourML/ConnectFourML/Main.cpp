@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 			showBoard = true;
 	}
 
-	//ConnectFour();
+	ConnectFour(showBoard);
 	system("pause");
 	return 0;
 

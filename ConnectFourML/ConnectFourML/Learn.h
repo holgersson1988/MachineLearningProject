@@ -24,7 +24,7 @@ struct TrainPair {
 	TrainPair(fann_type* tState, fann_type tValue);
 
 	void setValue(float tValue) { value = tValue; }
-	void setState(bool* tState) { state = tState; }
+	void setState(fann_type* tState) { state = tState; }
 
 	float getValue() { return value; };
 	fann_type* getState() { return state; }
