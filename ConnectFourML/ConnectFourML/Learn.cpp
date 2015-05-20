@@ -197,7 +197,8 @@ void Learn::endGame(){
 
 	// endGame() has already been called
 	if (gameOver == true){}
-	else{
+	else
+	{
 		gameOver == true;
 		// TODO
 		// Send train set to the ANN
@@ -207,11 +208,12 @@ void Learn::endGame(){
 
 		
 		vector<float*> inputDataContainer;
-		for (int i = 0; i < num_data; i++)
+		vector<float*> outputDataContainer;
+	/*	for (int i = 0; i < num_data; i++)
 		{
 			inputDataContainer.push_back(new float);
 
-		}
+		}*/
 
 		for (int j = 0; j < num_data; j++)
 		{
@@ -223,7 +225,7 @@ void Learn::endGame(){
 			inputDataContainer.push_back(inputData);
 		
 
-			vector<float*> outputDataContainer;
+			
 			float* outputData = new float[1];
 			for (int i = 0; i < 1; i++)
 			{
@@ -234,20 +236,23 @@ void Learn::endGame(){
 		//data.set_train_data()
 		vector<float> floatVec = vector<float>();
 		data.set_train_data(num_data, num_input, 
-			&inputDataContainer[0], num_output, &inputDataContainer[0]);
+			&inputDataContainer[0], num_output, &outputDataContainer[0]);
 
 		
 //		net->train_on_data(data);
 
-		for (std::vector<TrainPair>::iterator it = trainSet.begin();
-			it != trainSet.end(); it++)
+//		for (std::vector<TrainPair>::iterator it = trainSet.begin();
+//			it != trainSet.end(); it++)
+//		{
+////			net->train(, &trainSet[i].value);
+//		}
+		net->train_on_data(data,1000, 100, 0.01);
+		for (int i = 0; i < inputDataContainer.size(); i++)
 		{
-//			net->train(, &trainSet[i].value);
+			delete inputDataContainer[i];
+			delete outputDataContainer[i];
 		}
-
 	}
-	
-	return;
 }
 
 
