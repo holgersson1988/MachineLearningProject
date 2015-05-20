@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <cstdlib>
 #include <time.h>
 #include "MainHelper.h"
 #include "LearnPlayer.h"
@@ -14,15 +13,8 @@ vector< vector<char> > place;
 Player* player;
 int charsPlaced;
 
-int ConnectFour(bool showBoard)
+int ConnectFour(bool showBoard, FANN::neural_net* net)
 {
-	// initialize random seed. Is global.
-	srand(time(NULL));
-
-	// Initialize net
-	ANN ArtificialNeuralNet = ANN(84, 3, 250, 1, 0.95f);
-	FANN::neural_net* net = ArtificialNeuralNet.getANN();
-
 
 	std::vector<MoveDepth> gameSequence;
 	int colChoice;					// Will house user row choice
@@ -30,67 +22,68 @@ int ConnectFour(bool showBoard)
 	charsPlaced = 0;
 	bool gamewon = false;
 
-		// fill place with whitespaces
-		place.resize(6, vector<char>(7, ' '));
+	// fill place with whitespaces
+	place.clear();
+	place.resize(6, vector<char>(7, ' '));
 
-		// Initialize LearnObject. TODO: do this in Main.
-		Learn learnObj = Learn();
-		learnObj.setNet(net);
+	// Initialize LearnObject. TODO: do this in Main.
+	Learn learnObj = Learn();
+	learnObj.setNet(net);
 
-		// initialize two random players
-		LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
-		LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
+	// initialize two random players
+	LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
+	LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
 
-		player = play2;		//start as player 2, will change back to player 1
+	player = play2;		//start as player 2, will change back to player 1
 
-		// Main game loop
-		while (!gamewon && charsPlaced < 42){
-			// Swap current player
-			if (player->getPiece() == CHAR2)
-				player = play1;
-			else
-				player = play2;
+	// Main game loop
+	while (!gamewon && charsPlaced < 42){
+		// Swap current player
+		if (player->getPiece() == CHAR2)
+			player = play1;
+		else
+			player = play2;
 
-			// Get current player move
-			// getMove() must only return legal move
-			colChoice = player->getMove();
-			// Break if game over
-			if (charsPlaced == 42) break;
-			depthChoice = drop(colChoice, player->getPiece());
-			gamewon = check(depthChoice, colChoice);
-			charsPlaced++;
-			gameSequence.push_back(MoveDepth(depthChoice, colChoice, player->getPiece()));
-			//r// system("cls");						//This clears the screen works with windows, not nesscery to run game
+		// Get current player move
+		// getMove() must only return legal move
+		colChoice = player->getMove();
+		// Break if game over
+		if (charsPlaced == 42) break;
+		depthChoice = drop(colChoice, player->getPiece());
+		gamewon = check(depthChoice, colChoice);
+		charsPlaced++;
+		gameSequence.push_back(MoveDepth(depthChoice, colChoice, player->getPiece()));
+		//r// system("cls");						//This clears the screen works with windows, not nesscery to run game
 
-			// End of main game loop
+		// End of main game loop
+	}
+
+	// End of a game
+	// Display board if display flag (-d)
+	if (showBoard){
+		displaySequence(gameSequence);
+	}
+
+	// Tie
+	if (charsPlaced == 42)
+		cout << 0 << ',' << charsPlaced << "\n";
+	else{
+		// Player 2 Won
+		if (player->getPiece() == CHAR2){
+			cout << 2 << ',' << charsPlaced << "\n";
+			play2->hasWon();
+			play1->hasLost();
 		}
-
-		// End of a game
-		// Display board if display flag (-d)
-		if (showBoard){
-			displaySequence(gameSequence);
-		}
-
-		// Tie
-		if (charsPlaced == 42)
-			cout << 0 << ',' << charsPlaced << "\n";
+		// Player 1 won
 		else{
-			// Player 2 Won
-			if (player->getPiece() == CHAR2){
-				cout << 2 << ',' << charsPlaced << "\n";
-				play2->hasWon();
-				play1->hasLost();
-			}
-			// Player 1 won
-			else{
-				cout << 1 << ',' << charsPlaced << "\n";
-				play1->hasWon();
-				play2->hasLost();
-			}
+			cout << 1 << ',' << charsPlaced << "\n";
+			play1->hasWon();
+			play2->hasLost();
 		}
-		// Tell Learn that it can update NN
-		play1->endGame();
-		play2->endGame();
+	}
+	// Tell Learn that it can update NN
+	play1->endGame();
+	play2->endGame();
 
 	return 0;
 }

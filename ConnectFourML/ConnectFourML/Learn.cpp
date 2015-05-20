@@ -21,7 +21,7 @@ Learn::Learn(FANN::neural_net* tNet) {
 	net = tNet;
 	explore = 0.95;
 	decay = 0.95;
-	learnRate = 0.95;
+	learnRate = 0.7;
 	gameOver = false;
 };
 
@@ -248,7 +248,7 @@ void Learn::endGame(){
 //		{
 ////			net->train(, &trainSet[i].value);
 //		}
-		net->train_on_data(data,1000, 100, 0.01);
+		net->train_on_data(data,1000, 100, 0.001);
 		for (int i = 0; i < inputDataContainer.size(); i++)
 		{
 			delete inputDataContainer[i];

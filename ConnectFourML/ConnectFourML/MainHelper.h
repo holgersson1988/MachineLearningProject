@@ -6,6 +6,7 @@
 #include <sstream>
 #include "floatfann.h"
 #include "fann_cpp.h"
+#include "ANN.h"
 
 #define CHAR2	15 //char(15)
 #define CHAR1	43 //char(254)
@@ -127,7 +128,7 @@ positive integer otherwise.
 */
 int drop(int b, char player);
 
-int ConnectFour(bool showBoard);
+int ConnectFour(bool showBoard, FANN::neural_net* net);
 
 /*
  * Global. Saves state of board.

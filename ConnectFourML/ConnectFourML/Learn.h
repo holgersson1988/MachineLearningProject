@@ -9,7 +9,6 @@
 #include <iostream>
 #include <vector>
 #include "MainHelper.h"
-#include "ANN.h"
 #include "floatfann.h"
 #include "fann_cpp.h"
 using std::cout;

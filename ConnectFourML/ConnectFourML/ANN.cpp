@@ -26,7 +26,7 @@ ANN::ANN()
 
 }
 
-ANN::ANN(unsigned int inputs, unsigned int layers, unsigned int hidden, unsigned int outputs, float learning)
+ANN::ANN(unsigned int layers, unsigned int inputs,  unsigned int hidden, unsigned int outputs, float learning)
 {
 	// net variables
 	const unsigned int numLayers = layers;
