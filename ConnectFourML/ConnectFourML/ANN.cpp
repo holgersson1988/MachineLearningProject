@@ -39,19 +39,19 @@ ANN::ANN(unsigned int inputs, unsigned int layers, unsigned int hidden, unsigned
 	net.create_standard(numLayers, numInputs, numHidden, numOutputs);
 	net.set_learning_rate(learningRate);
 
-	//net.set_activation_steepness_hidden(1.0);
-	//net.set_activation_steepness_output(1.0);
+	net.set_activation_steepness_hidden(1.0);
+	net.set_activation_steepness_output(1.0);
 
 	net.set_activation_function_hidden(FANN::SIGMOID_SYMMETRIC_STEPWISE);
 	net.set_activation_function_output(FANN::SIGMOID_SYMMETRIC_STEPWISE);
 	
-
+/*
 	FANN::training_data data;
 	if (data.read_train_from_file("cFour.data"))
 	{
 		net.init_weights(data);
 	}
-	/*
+	
 	int test[84];
 	fann_type* inp[84];
 	fann_type* outp = 10;

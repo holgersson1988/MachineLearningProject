@@ -100,7 +100,7 @@ void xor_test()
     if (data.read_train_from_file("xor.data"))
     {
         // Initialize and train the network with the data
-        net.init_weights(data);
+        
 
         cout << "Max Epochs " << setw(8) << max_iterations << ". "
             << "Desired Error: " << left << desired_error << right << endl;
