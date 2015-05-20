@@ -16,18 +16,18 @@ using std::cout;
 using std::vector;
 
 struct TrainPair {
-	fann_type* state;
+	vector<fann_type> state;
 	fann_type value;
 
 	// Constructors
 	TrainPair();
-	TrainPair(fann_type* tState, fann_type tValue);
+	TrainPair(vector<fann_type> tState, fann_type tValue);
 
 	void setValue(float tValue) { value = tValue; }
-	void setState(fann_type* tState) { state = tState; }
+	void setState(vector<fann_type> tState) { state = tState; }
 
 	float getValue() { return value; };
-	fann_type* getState() { return state; }
+	vector<fann_type> getState() { return state; }
 };
 
 /*
@@ -63,7 +63,7 @@ public:
 	/*
 	 * Convert Game state[a][b] to a bit string for input to the ANN
 	 */
-	fann_type* getInput(vector< vector<char> > &gameState);
+	vector<fann_type> getInput(vector< vector<char> > &gameState);
 
 	
 	/*
@@ -82,4 +82,4 @@ public:
 /*
  * Transform the trainSet into file saveable string. 
  */
-//void trainSetToString(vector<TrainPair> &tSet, std::string &string);
+void trainSetToString(vector<TrainPair> &tSet, std::string &string);

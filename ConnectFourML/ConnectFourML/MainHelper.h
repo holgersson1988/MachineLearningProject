@@ -18,16 +18,23 @@ using std::vector;
 */
 struct LearnTuple
 {
-	fann_type* state;
+	vector<fann_type> state;
 	fann_type value;
 	int reward;
 
-	LearnTuple(){}
+	LearnTuple(){ 
+		reward = 0; 
+		value = -2; 
+		state.resize(84, 0.0); }
 
-	LearnTuple(fann_type* tState, fann_type tValue, int tReward);
+	LearnTuple(vector<fann_type> tState, fann_type tValue, int tReward);
+
+	vector<fann_type> getState(){ return state; }
+	fann_type getValue(){ return value; }
 
 	void setReward(int r) { reward = r; }
-
+	void setState(vector<fann_type> tState){ state = tState; }
+	void setValue(fann_type tValue){ value = tValue; }
 };
 
 /*

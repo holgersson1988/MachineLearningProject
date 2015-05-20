@@ -29,22 +29,11 @@ int ConnectFour(bool showBoard)
 	int depthChoice = 0;			// Will hold drop value
 	charsPlaced = 0;
 	bool gamewon = false;
-	int moveHistory[42];
 
-	
-	int maxGames = 10;
-	int game = 0;
-	while (game < maxGames)
-	{
-		game++;
-
-		// Initialize new game parameters
 		// fill place with whitespaces
 		place.resize(6, vector<char>(7, ' '));
 
-
-
-		// Initialize LearnObject
+		// Initialize LearnObject. TODO: do this in Main.
 		Learn learnObj = Learn();
 		learnObj.setNet(net);
 
@@ -52,17 +41,7 @@ int ConnectFour(bool showBoard)
 		LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
 		LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
 
-
-
-		std::vector<MoveDepth> gameSequence;
-		depthChoice = 0;			// Will hold drop value
-		charsPlaced = 0;
-		gamewon = false;
-		gameSequence.clear();
 		player = play2;		//start as player 2, will change back to player 1
-
-		// GAME SETUP COMPLETE
-
 
 		// Main game loop
 		while (!gamewon && charsPlaced < 42){
@@ -78,7 +57,6 @@ int ConnectFour(bool showBoard)
 			// Break if game over
 			if (charsPlaced == 42) break;
 			depthChoice = drop(colChoice, player->getPiece());
-			moveHistory[charsPlaced] = colChoice;
 			gamewon = check(depthChoice, colChoice);
 			charsPlaced++;
 			gameSequence.push_back(MoveDepth(depthChoice, colChoice, player->getPiece()));
@@ -113,15 +91,6 @@ int ConnectFour(bool showBoard)
 		// Tell Learn that it can update NN
 		play1->endGame();
 		play2->endGame();
-
-
-		// Clean up
-		delete play1;
-		delete play2;
-		//delete &learnObj;
-	}
-			
-	system("pause");
 
 	return 0;
 }

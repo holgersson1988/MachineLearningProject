@@ -4,7 +4,7 @@
 using std::cout;
 using std::vector;
 
-TrainPair::TrainPair(fann_type* tState, fann_type tValue){
+TrainPair::TrainPair(vector<fann_type> tState, fann_type tValue){
 	state = tState;
 	value = tValue;
 }
@@ -27,45 +27,59 @@ Learn::Learn(FANN::neural_net* tNet) {
 
 /*
  * Returns a bitstring to use as input for the ANN from the gameState array in Connect 4
+ * 0 1 represents current player. We always want to represent the player who is choosing
+ * a move as the same 'input' sequence to the array. Because of this, both player1 and
+ * player2 represent themselves as '0 1' to the neural net.
  */
-fann_type* Learn::getInput(vector<vector<char>> &gameState)
+vector<fann_type> Learn::getInput(vector<vector<char>> &gameState)
 {
 	// Create return array
 	//bool* ret = new bool[84];
 
-	fann_type inputArray[84];
+	vector<fann_type> inputArray(84, 0.0);
+	char curPlayer = player->getPiece();
 	// Loop through the game board
-	for (int i = 0; i < 6; i++)
+	for (int y = 0; y < 6; y++)
 	{
-		for (int ii = 0; ii < 7; ii++)
+		for (int x = 0; x < 7; x++)
 		{
 			// Get the char at each slot on the board
-			char val = gameState[i][ii];
-			int returnIndex = ii + i*7;
+			char val = gameState[y][x];
+			if (val == CHAR1 || val == CHAR2)
+			{
+				int returnIndex = y * 14 + x * 2;
+
+				if (val == curPlayer)
+					returnIndex++;
+
+				inputArray[returnIndex] = 1.0;
+			}
+
+
 			// Check for player 1
-			if ((i*ii) % 2 == 0)
-			{
-				if (val == CHAR1)
-				{
-					inputArray[returnIndex] = true;
-				}
-				else
-				{
-					inputArray[returnIndex] == false;
-				}
-			}
-			// Check for player 2 char
-			else
-			{
-				if (val == CHAR2)
-				{
-					inputArray[returnIndex] = true;
-				}
-				else
-				{
-					inputArray[returnIndex] == false;
-				}
-			}
+			//if ((y*x) % 2 == 0)
+			//{
+			//	if (val == CHAR1)
+			//	{
+			//		inputArray[returnIndex] = true;
+			//	}
+			//	else
+			//	{
+			//		inputArray[returnIndex] == false;
+			//	}
+			//}
+			//// Check for player 2 char
+			//else
+			//{
+			//	if (val == CHAR2)
+			//	{
+			//		inputArray[returnIndex] = true;
+			//	}
+			//	else
+			//	{
+			//		inputArray[returnIndex] == false;
+			//	}
+			//}
 		}
 	}
 	return inputArray;
@@ -76,13 +90,17 @@ fann_type* Learn::getInput(vector<vector<char>> &gameState)
 * or exploration choice. Also updates learnTrainSequence with choice.
 */
 LearnTuple Learn::nextState(int &moveChoice){
-	float moveValue = -2;	// Saves values of greedy choice
-	fann_type* netState;			// for saving the state in NN form
+	float bestValue = -2;	// Saves values of greedy choice
+	vector<fann_type> fannInput;
 	vector<vector<char>> nextPlace;	// Place holder for next state. Presented to net for Value. 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
+	std::vector<int> ties;
 
-	fann_type fannInput[84];
+	vector<LearnTuple> states_values;
+	states_values.resize(7, LearnTuple());
+
 	// Greedy
+	fann_type *tempBestState;
 	if (randValue < explore)
 	{
 		vector<int> stateValue = vector<int>(7, -1);		// Holds Values of next 7 possible state
@@ -92,44 +110,53 @@ LearnTuple Learn::nextState(int &moveChoice){
 			int moveDepth = getMoveDepth(i);
 
 			// If move was valid:
-			if (moveDepth > 0)
-			{
+			if (moveDepth > 0){
 				nextPlace = place;
 				nextPlace[moveDepth][i] = player->getPiece();
-				fann_type *inputArray = getInput(nextPlace);
-				//bool* neuralState = getInput(nextPlace);
-				// Convert the boolean string to type: "fann_type"
-				for (int f = 0; f < 84; f++)
-				{
-					fannInput[f] = inputArray[f];
-				}
+				fannInput = getInput(nextPlace);
+				//std::memcpy(fannInput2, fannInput, sizeof fannInput2);
+				states_values[i].setValue(  net->run(&fannInput[0])[0]  );
+				states_values[i].setState(fannInput);
+				//stateValue[i] = net->run(fannInput)[0];
 
-				stateValue[i] = net->run(fannInput)[0];
-				if (stateValue[i] > moveValue)
-				{
+				// if this state value is greater than previous known best
+				// Saves best: state, choice, and value
+				if (states_values[i].getValue() > bestValue){
 					moveChoice = i;
-					netState = inputArray;
-					moveValue = stateValue[i];
+					bestValue = states_values[i].getValue();
 				}
 			}
+
+
+		}
+		//bestState = tempBestState;
+		// Find tie indices
+		for (int i = 0; i < 7; i++){
+			if (states_values[i].getValue() == bestValue)
+				ties.push_back(i);
 		}
 
-		// Select between ties
-		std::vector<int> ties;
-		int numTies = 0;
-		for (int i = 0; i < 7; i++)
-		{
-			// For each tie, save its index in the vector
-			if (stateValue[i] == stateValue[moveChoice])
-			{
-				ties.push_back(i);
-				numTies++;
-			}
+		// More than 1 state has bestValue
+		if (ties.size() > 1){
+			int tieBreaker = rand() % ties.size();
+			moveChoice = ties[tieBreaker];
 		}
-		// Select a random winner from the vector of ties
-		int winner = rand() % numTies;
-		// Get the value from the vector that represents the choice made
-		moveChoice = ties[winner];
+
+		//std::vector<int> ties;
+		//int numties = 0;
+		//for (int i = 0; i < 7; i++)
+		//{
+		//	// for each tie, save its index in the vector
+		//	if (statevalue[i] == statevalue[movechoice])
+		//	{
+		//		ties.push_back(i);
+		//		numties++;
+		//	}
+		//}
+		//// select a random winner from the vector of ties
+		//int winner = rand() % numties;
+		//// get the value from the vector that represents the choice made
+		//movechoice = ties[winner];
 
 	}
 
@@ -144,14 +171,13 @@ LearnTuple Learn::nextState(int &moveChoice){
 		}
 		nextPlace = place;
 		nextPlace[depth][moveChoice] = player->getPiece();
-		netState = getInput(nextPlace);
-		// moveValue = net.run(netState)[0];
-		moveValue = 1; // temporary until net works
+		fannInput = getInput(nextPlace);
+		states_values[moveChoice].setState(  fannInput  );
+		states_values[moveChoice].setValue(  net->run(&fannInput[0])[0]  );
 	}
 
-	// Save netState, Value, and reward to learnTrainSequence
-	LearnTuple returnTuple(netState, moveValue, 0);
-	return returnTuple;
+	// Save bestState, Value, and reward to learnTrainSequence
+	return states_values[moveChoice];
 }
 
 /*
@@ -198,9 +224,18 @@ void Learn::endGame(){
 		gameOver == true;
 		// TODO
 		// Send train set to the ANN
-		for (int i = 0; i < trainSet.size(); i++)
+		FANN::training_data data;
+		unsigned int num_data, num_input, num_output;
+		num_data =static_cast<int>(trainSet.size());
+
+		/*data.set_train_data(num_data, num_input, 
+							input, num_ouput, output);*/
+
+		
+		for (std::vector<TrainPair>::iterator it = trainSet.begin();
+			it != trainSet.end(); it++)
 		{
-			net->train(trainSet[i].state, &trainSet[i].value);
+//			net->train(, &trainSet[i].value);
 		}
 
 	}

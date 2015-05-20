@@ -27,5 +27,5 @@ void LearnPlayer::hasLost(){
 }
 
 void LearnPlayer::endGame(){
-	// TODO
+	LearnObj->endGame();
 }
