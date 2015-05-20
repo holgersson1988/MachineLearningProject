@@ -212,23 +212,24 @@ void Learn::endGame(){
 			inputDataContainer.push_back(new float);
 
 		}
-		vector<vector<float>> tempFannStates;
+
 		for (int j = 0; j < num_data; j++)
 		{
-			float* inputData = new[] float[84];
+			float* inputData = new float[84];
 			for (int i = 0; i < 84; i++)
 			{
-				inputData[i] = (trainSet[0].getState()[i]);
+				inputData[i] = (trainSet[j].getState()[i]);
 			}
 			inputDataContainer.push_back(inputData);
-		}
+		
 
-		vector<vector<float>> tempFannValue;
-		for (int i = 0; i < 84; i++)
-		{
-			vector<float> values;
-			values.push_back((float)trainSet[0].getValue());
-			tempFannValue.push_back(values);
+			vector<float*> outputDataContainer;
+			float* outputData = new float[1];
+			for (int i = 0; i < 1; i++)
+			{
+				outputData[i] = (trainSet[0].getValue());
+			}
+			outputDataContainer.push_back(outputData);
 		}
 		//data.set_train_data()
 		vector<float> floatVec = vector<float>();
