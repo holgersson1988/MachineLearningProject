@@ -231,14 +231,27 @@ void Learn::endGame(){
 			float* outputData = new float[1];
 			for (int i = 0; i < 1; i++)
 			{
-				outputData[i] = (trainSet[0].getValue());
+				outputData[i] = (trainSet[j].getValue());
 			}
 			outputDataContainer.push_back(outputData);
 		}
+
 		//data.set_train_data()
-		vector<float> floatVec = vector<float>();
 		data.set_train_data(num_data, num_input, 
 			&inputDataContainer[0], num_output, &outputDataContainer[0]);
+
+////// Pre Train Values ///////////////////////////////////////////
+		//for (unsigned int i = 0; i < data.length_train_data(); ++i)
+		//{
+		//	// Run the network on the test data
+		//	fann_type *calc_out = net->run(data.get_input()[i]);
+
+		//	cout << "C4 test (" << std::showpos << i << ") -> " << *calc_out
+		//		<< ", should be " << data.get_output()[i][0] << ", "
+		//		<< "difference = " << std::noshowpos
+		//		<< fann_abs(*calc_out - data.get_output()[i][0]) << std::endl;
+		//}
+/////////////////////////////////////////////////////////////
 
 		
 //		net->train_on_data(data);
@@ -249,6 +262,20 @@ void Learn::endGame(){
 ////			net->train(, &trainSet[i].value);
 //		}
 		net->train_on_data(data,1000, 100, 0.001);
+
+////// Post Train Values ///////////////////////////////////////////
+		//for (unsigned int i = 0; i < data.length_train_data(); ++i)
+		//{
+		//	// Run the network on the test data
+		//	fann_type *calc_out = net->run(data.get_input()[i]);
+
+		//	cout << "C4 test (" << std::showpos << i << ") -> " << *calc_out
+		//		<< ", should be " << data.get_output()[i][0] << ", "
+		//		<< "difference = " << std::noshowpos
+		//		<< fann_abs(*calc_out - data.get_output()[i][0]) << std::endl;
+		//}
+/////////////////////////////////////////////////////////////
+
 		for (int i = 0; i < inputDataContainer.size(); i++)
 		{
 			delete inputDataContainer[i];

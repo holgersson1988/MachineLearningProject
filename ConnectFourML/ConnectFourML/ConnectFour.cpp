@@ -22,13 +22,19 @@ int ConnectFour(bool showBoard, FANN::neural_net* net)
 	charsPlaced = 0;
 	bool gamewon = false;
 
-	// fill place with whitespaces
+//////////// fill place with whitespaces////////////////////////
 	place.clear();
 	place.resize(6, vector<char>(7, ' '));
+////////////////////////////////////////////////////////////////
 
-	// Initialize LearnObject. TODO: do this in Main.
+///////////// Initialize LearnObject. TODO: do this in Main ////
+	float learn_decay = 0.7;
+	float learn_learnRate = 0.7;
 	Learn learnObj = Learn();
 	learnObj.setNet(net);
+	learnObj.setDecay(learn_decay);
+	learnObj.setLearn(learn_learnRate);
+////////////////////////////////////////////////////////////////
 
 	// initialize two random players
 	LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
