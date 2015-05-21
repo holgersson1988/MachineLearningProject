@@ -100,10 +100,10 @@ bool check(int a, int b){
 	int ii;//horizontal
 
 	// vector -> array
-	for (int a = 0; a < 6; a++)
+	for (int y = 0; y < 6; y++)
 	{
-		for (int b = 0; b < 7; b++){
-			tPlace[a][b] = place[a][b];
+		for (int x = 0; x < 7; x++){
+			tPlace[y][x] = place[y][x];
 		}
 	}
 	char player = tPlace[a][b];

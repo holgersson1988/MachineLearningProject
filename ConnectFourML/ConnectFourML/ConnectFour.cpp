@@ -13,7 +13,7 @@ vector< vector<char> > place;
 Player* player;
 int charsPlaced;
 
-int ConnectFour(bool showBoard, FANN::neural_net* net)
+Connect4Result ConnectFour(bool showBoard, FANN::neural_net* net)
 {
 
 	std::vector<MoveDepth> gameSequence;
@@ -31,8 +31,8 @@ int ConnectFour(bool showBoard, FANN::neural_net* net)
 	learnObj.setNet(net);
 
 	// initialize two random players
-	LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
-	RandomPlayer* play2 = new RandomPlayer(CHAR2);// , &learnObj);
+	RandomPlayer* play1 = new RandomPlayer(CHAR1);// , &learnObj);
+	LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
 
 	player = play2;		//start as player 2, will change back to player 1
 
@@ -65,6 +65,7 @@ int ConnectFour(bool showBoard, FANN::neural_net* net)
 	}
 
 	// Tie
+	Connect4Result ret;
 	if (charsPlaced == 42)
 		cout << 0 << ',' << charsPlaced << "\n";
 	else{
@@ -73,17 +74,21 @@ int ConnectFour(bool showBoard, FANN::neural_net* net)
 			cout << 2 << ',' << charsPlaced << "\n";
 			play2->hasWon();
 			play1->hasLost();
+			ret.winner = 2;
+			ret.moves = charsPlaced;
 		}
 		// Player 1 won
 		else{
 			cout << 1 << ',' << charsPlaced << "\n";
 			play1->hasWon();
 			play2->hasLost();
+			ret.winner = 1;
+			ret.moves = charsPlaced;
 		}
 	}
 	// Tell Learn that it can update NN
 	play1->endGame();
 	play2->endGame();
 
-	return 0;
+	return ret;
 }
