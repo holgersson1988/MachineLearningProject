@@ -32,7 +32,7 @@ int ConnectFour(bool showBoard, FANN::neural_net* net)
 
 	// initialize two random players
 	LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
-	LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
+	RandomPlayer* play2 = new RandomPlayer(CHAR2);// , &learnObj);
 
 	player = play2;		//start as player 2, will change back to player 1
 

@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 	if (loadNet){
 		net->create_from_file(netFile);
 	}
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 1000; i++)
 		ConnectFour(showBoard, net);
 	// Save NN
 	net->save(netFile);
