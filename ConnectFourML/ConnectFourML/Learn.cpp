@@ -11,17 +11,17 @@ TrainPair::TrainPair(vector<fann_type> tState, fann_type tValue){
 
 Learn::Learn(){
 
-	explore = 0.95;
-	decay = 0.95;
-	learnRate = 0.7;
+	explore = 0.95f;
+	decay = 0.95f;
+	learnRate = 0.7f;
 	gameOver = false;
 }
 /**/
 Learn::Learn(FANN::neural_net* tNet) {
 	net = tNet;
-	explore = 0.95;
-	decay = 0.95;
-	learnRate = 0.7;
+	explore = 0.95f;
+	decay = 0.95f;
+	learnRate = 0.7f;
 	gameOver = false;
 };
 
@@ -100,7 +100,6 @@ LearnTuple Learn::nextState(int &moveChoice){
 	states_values.resize(7, LearnTuple());
 
 	// Greedy
-	fann_type *tempBestState;
 	if (randValue < explore)
 	{
 		vector<int> stateValue = vector<int>(7, -1);		// Holds Values of next 7 possible state
@@ -217,7 +216,7 @@ void Learn::endGame(){
 
 		}*/
 
-		for (int j = 0; j < num_data; j++)
+		for (unsigned int j = 0; j < num_data; j++)
 		{
 			float* inputData = new float[84];
 			for (int i = 0; i < 84; i++)
@@ -253,15 +252,7 @@ void Learn::endGame(){
 		//}
 /////////////////////////////////////////////////////////////
 
-		
-//		net->train_on_data(data);
-
-//		for (std::vector<TrainPair>::iterator it = trainSet.begin();
-//			it != trainSet.end(); it++)
-//		{
-////			net->train(, &trainSet[i].value);
-//		}
-		net->train_on_data(data,1000, 100, 0.001);
+		net->train_on_data(data,100, 100, 0.001f); // TODO - Decide epochs
 
 ////// Post Train Values ///////////////////////////////////////////
 		//for (unsigned int i = 0; i < data.length_train_data(); ++i)
@@ -276,8 +267,7 @@ void Learn::endGame(){
 		//}
 /////////////////////////////////////////////////////////////
 
-		for (int i = 0; i < inputDataContainer.size(); i++)
-		{
+		for (unsigned int i = 0; i < inputDataContainer.size(); i++){
 			delete inputDataContainer[i];
 			delete outputDataContainer[i];
 		}

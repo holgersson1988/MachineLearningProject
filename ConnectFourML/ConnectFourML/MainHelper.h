@@ -56,6 +56,16 @@ public:
 };
 
 /*
+
+
+*/
+struct Connect4Result
+{
+	int winner;
+	int moves;
+};
+
+/*
  * Interface class to be extended. When player->getMove() is called, a number
  * from 0 - 6 is returned as a choice.
  */
@@ -128,7 +138,7 @@ positive integer otherwise.
 */
 int drop(int b, char player);
 
-int ConnectFour(bool showBoard, FANN::neural_net* net);
+Connect4Result ConnectFour(bool showBoard, FANN::neural_net* net);
 
 /*
  * Global. Saves state of board.
