@@ -4,6 +4,8 @@
 using std::cout;
 using std::vector;
 
+//Globals globals = Globals();
+
 LearnTuple::LearnTuple(vector<fann_type> tState, fann_type tValue, int tReward){
 	state = tState;
 	value = tValue;

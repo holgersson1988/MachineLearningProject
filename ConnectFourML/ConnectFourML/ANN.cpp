@@ -23,6 +23,7 @@ ANN::ANN()
 
 	net.set_activation_function_hidden(FANN::SIGMOID_STEPWISE);
 	net.set_activation_function_output(FANN::SIGMOID_STEPWISE);
+	net.set_training_algorithm(FANN::TRAIN_INCREMENTAL);
 
 }
 
@@ -33,7 +34,6 @@ ANN::ANN(unsigned int layers, unsigned int inputs,  unsigned int hidden, unsigne
 	const unsigned int numInputs = inputs;
 	const unsigned int numHidden = hidden;
 	const unsigned int numOutputs = outputs;
-
 	const float learningRate = learning;
 
 	net.create_standard(numLayers, numInputs, numHidden, numOutputs);
@@ -44,6 +44,7 @@ ANN::ANN(unsigned int layers, unsigned int inputs,  unsigned int hidden, unsigne
 
 	net.set_activation_function_hidden(FANN::SIGMOID_SYMMETRIC_STEPWISE);
 	net.set_activation_function_output(FANN::SIGMOID_SYMMETRIC_STEPWISE);
+	net.set_training_algorithm(FANN::TRAIN_INCREMENTAL);
 	
 /*
 	FANN::training_data data;

@@ -1,6 +1,8 @@
 
 #include "LearnPlayer.h"
 
+//Globals globals = Globals();
+
 /*
  * Return a valid move. Calls Learn.nextState() to return a greedy or
  * exploratory choice.
@@ -14,7 +16,7 @@ int LearnPlayer::getMove() {
 }
 
 /*
- * Called by ConnectFour after game is over. Calls Learn.hasWon().
+ * Called by ConnectFour after game is over. 
  */
 void LearnPlayer::hasWon(){
 	learnSequence.back().setReward(1);
@@ -23,6 +25,12 @@ void LearnPlayer::hasWon(){
 
 void LearnPlayer::hasLost(){
 	learnSequence.back().setReward(-1);
+	LearnObj->updateTrainSet(learnSequence);
+}
+
+void LearnPlayer::hasTied(){
+	Globals globals;
+	learnSequence.back().setReward(globals.RL_REWARD_TIE);
 	LearnObj->updateTrainSet(learnSequence);
 }
 

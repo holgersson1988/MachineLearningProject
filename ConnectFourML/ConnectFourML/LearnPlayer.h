@@ -39,5 +39,6 @@ public:
 	 */
 	virtual void hasWon() override;
 	virtual void hasLost() override;
+	virtual void hasTied() override;
 	void endGame() override;
 };

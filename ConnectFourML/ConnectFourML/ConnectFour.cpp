@@ -8,6 +8,8 @@
 //using std::vector;
 //using std::string;
 
+//Globals globals = Globals();
+
 // Declared in MainHelper.h
 vector< vector<char> > place;	
 Player* player;
@@ -36,7 +38,7 @@ Connect4Result ConnectFour(bool showBoard, FANN::neural_net* net)
 	learnObj.setLearn(learn_learnRate);
 ////////////////////////////////////////////////////////////////
 
-	// initialize two random players
+	// initialize two players
 	RandomPlayer* play1 = new RandomPlayer(CHAR1);// , &learnObj);
 	LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
 
@@ -72,8 +74,13 @@ Connect4Result ConnectFour(bool showBoard, FANN::neural_net* net)
 
 	// Tie
 	Connect4Result ret;
-	if (charsPlaced == 42)
+	if (charsPlaced == 42){
 		cout << 0 << ',' << charsPlaced << "\n";
+		play1->hasTied();
+		play2->hasTied();
+		ret.winner = 0;
+		ret.moves = charsPlaced;
+	}
 	else{
 		// Player 2 Won
 		if (player->getPiece() == CHAR2){

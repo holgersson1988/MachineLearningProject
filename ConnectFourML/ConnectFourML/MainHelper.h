@@ -4,6 +4,7 @@
 #include <time.h>
 #include <vector>
 #include <sstream>
+#include <fstream>
 #include "floatfann.h"
 #include "fann_cpp.h"
 #include "ANN.h"
@@ -13,96 +14,118 @@
 using std::cout;
 using std::vector;
 
+
+struct Globals{
+public:
+	// Neural Network //
+	unsigned int NN_LAYERS = 3;
+	unsigned int NN_INPUTS = 84;
+	unsigned int NN_HIDDEN_NODES = 250;
+	unsigned int NN_OUPUTS = 1;
+	float NN_LEARNRATE = 0.3f;
+
+	// RL Learning //
+	float RL_REWARD_TIE = -1;
+
+	// Training //
+	unsigned int episodes = 14000000;
+
+
+};
+
 /*
-* Saves State, Value, and Reward tuples for generating a training sequence
-* for the neural net.
-*/
+	* Saves State, Value, and Reward tuples for generating a training sequence
+	* for the neural net.
+	*/
 struct LearnTuple
 {
 	vector<fann_type> state;
 	fann_type value;
 	int reward;
 
-	LearnTuple(){ 
-		reward = 0; 
-		value = -2; 
-		state.resize(84, 0.0); }
+	LearnTuple(){
+		reward = 0;
+		value = -2;
+		state.resize(84, 0.0);
+ }
 
-	LearnTuple(vector<fann_type> tState, fann_type tValue, int tReward);
+		LearnTuple(vector<fann_type> tState, fann_type tValue, int tReward);
 
-	vector<fann_type> getState(){ return state; }
-	fann_type getValue(){ return value; }
+		vector<fann_type> getState(){ return state; }
+		fann_type getValue(){ return value; }
 
-	void setReward(int r) { reward = r; }
-	void setState(vector<fann_type> tState){ state = tState; }
-	void setValue(fann_type tValue){ value = tValue; }
-};
-
-/*
- * Used to keep a sequence of board game states for printing.
- */
-struct MoveDepth
-{
-public:
-	int move;
-	int depth;
-	char player;
-
-	MoveDepth(int tDepth, int tMove, char tPlayer);
-
-	void setMove(int tMove) { move = tMove; }
-	void setDepth(int tDepth) { depth = tDepth; }
-	void setPlayer(char tPlayer) { player = tPlayer; }
-};
-
-/*
-
-
-*/
-struct Connect4Result
-{
-	int winner;
-	int moves;
-};
-
-/*
- * Interface class to be extended. When player->getMove() is called, a number
- * from 0 - 6 is returned as a choice.
- */
-class Player
-{
-public:
-	char piece;
-
-	Player(char tPiece = CHAR1);
+		void setReward(int r) { reward = r; }
+		void setState(vector<fann_type> tState){ state = tState; }
+		void setValue(fann_type tValue){ value = tValue; }
+	};
 
 	/*
-	 * Returns interger range 0-7.
-	 */
-	virtual int getMove() = 0; // virtual signifies that it can be overidden 
-	virtual void hasWon() = 0;
-	virtual void hasLost() = 0;
-	virtual void endGame() = 0;
-	char getPiece(){ return piece; };
-};
+		* Used to keep a sequence of board game states for printing.
+		*/
+	struct MoveDepth
+	{
+	public:
+		int move;
+		int depth;
+		char player;
 
-/*
- * Extends Player class. Makes random moves.
- */
-class RandomPlayer : public Player
-{
-public:
+		MoveDepth(int tDepth, int tMove, char tPlayer);
 
-	// default constructor
-	RandomPlayer(char tPiece)
-		: Player(tPiece){};
+		void setMove(int tMove) { move = tMove; }
+		void setDepth(int tDepth) { depth = tDepth; }
+		void setPlayer(char tPlayer) { player = tPlayer; }
+	};
+
 	/*
-	Returns random choice from 0-6.
-	*/
-	int getMove() override;
-	void hasWon() override {};
-	void hasLost() override {};
-	void endGame() override {};
+
+
+		*/
+	struct Connect4Result
+	{
+		int winner;
+		int moves;
+	};
+
+	/*
+		* Interface class to be extended. When player->getMove() is called, a number
+		* from 0 - 6 is returned as a choice.
+		*/
+	class Player
+	{
+	public:
+		char piece;
+
+		Player(char tPiece = CHAR1);
+
+		/*
+		* Returns interger range 0-7.
+		*/
+		virtual int getMove() = 0; // virtual signifies that it can be overidden 
+		virtual void hasWon() = 0;
+		virtual void hasLost() = 0;
+		virtual void hasTied() = 0;
+		virtual void endGame() = 0;
+		char getPiece(){ return piece; };
+	};
+
+	/*
+		* Extends Player class. Makes random moves.
+		*/
+	class RandomPlayer : public Player
+	{
+	public:
+
+		// default constructor
+		RandomPlayer(char tPiece)
+			: Player(tPiece){};
+		/*
+		Returns random choice from 0-6.
+		*/
+		int getMove() override;
+		void hasWon() override {};
+		void hasLost() override {};
+		void hasTied() override {};
+		void endGame() override {};
 };
 
 /*
@@ -152,3 +175,4 @@ extern Player *player;
  * Global. Saves number of characters placed on board.
  */
 extern int charsPlaced;
+

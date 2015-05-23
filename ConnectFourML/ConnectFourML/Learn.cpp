@@ -4,6 +4,8 @@
 using std::cout;
 using std::vector;
 
+//Globals globals = Globals();
+
 TrainPair::TrainPair(vector<fann_type> tState, fann_type tValue){
 	state = tState;
 	value = tValue;
@@ -168,11 +170,13 @@ LearnTuple Learn::nextState(int &moveChoice){
  */
 void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 	vector<LearnTuple> pas = learnSequence; // pas stands for 'Player Action Sequence'
-	
+	int pas_size = pas.size();
 	int exp = 0;
 	fann_type newV;
 	// for reverse_iterator, ++ moves the index towards 0.
-	for (vector<LearnTuple>::reverse_iterator rit = pas.rbegin(); rit != pas.rend(); rit++){
+	for (vector<LearnTuple>::reverse_iterator rit = pas.rbegin(); 
+		rit != pas.rend(); rit++)
+	{
 		float v_s = rit->value; // V(s)
 		float v_s_p;			// V(s')
 		int reward = rit->reward;
@@ -190,8 +194,12 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 		trainSet.push_back(pair);
 		exp++;
 	}
-}
-
+	int setSize = trainSet.size();
+	// debug
+	// printf("<<<<<<<<<<<<<<<<<<<<<<< Learn::updateTrainSet() trainSet.size(): %i \n", setSize);
+	printf(" trainSet.size(): %i ||| LearnPlayer::learnSequence.size(): %i ||| pas.size(): %i ", 
+						trainSet.size(),				learnSequence.size(),			pas.size());
+	}
 /*
  * Calls getTrainData and then trains ANN.
  */
@@ -203,19 +211,13 @@ void Learn::endGame(){
 		gameOver = true;
 		// TODO
 		// Send train set to the ANN
-		FANN::training_data data;
 		unsigned int num_data, num_input = 84, num_output = 1;
 		num_data = static_cast<int>(trainSet.size());
+		FANN::training_data data;
 
 		
 		vector<float*> inputDataContainer;
 		vector<float*> outputDataContainer;
-	/*	for (int i = 0; i < num_data; i++)
-		{
-			inputDataContainer.push_back(new float);
-
-		}*/
-
 		for (unsigned int j = 0; j < num_data; j++)
 		{
 			float* inputData = new float[84];
@@ -224,14 +226,9 @@ void Learn::endGame(){
 				inputData[i] = (trainSet[j].getState()[i]);
 			}
 			inputDataContainer.push_back(inputData);
-		
 
-			
 			float* outputData = new float[1];
-			for (int i = 0; i < 1; i++)
-			{
-				outputData[i] = (trainSet[j].getValue());
-			}
+			outputData[0] = (trainSet[j].getValue());
 			outputDataContainer.push_back(outputData);
 		}
 
@@ -252,7 +249,7 @@ void Learn::endGame(){
 		//}
 /////////////////////////////////////////////////////////////
 
-		net->train_on_data(data,100, 100, 0.001f); // TODO - Decide epochs
+		net->train_on_data(data, 1000, 100, 0.001f); // TODO - Decide epochs
 
 ////// Post Train Values ///////////////////////////////////////////
 		//for (unsigned int i = 0; i < data.length_train_data(); ++i)
