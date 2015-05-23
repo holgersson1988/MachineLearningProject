@@ -67,29 +67,48 @@ void displaySequence(vector<MoveDepth> sequence){
 
 
 void display(vector<vector<char>> board, int depth, int move){
-	cout << " 1   2   3   4   5   6   7\n";
+	cout << "|=====================|\n";
+	cout << "| 1  2  3  4  5  6  7 |\n";
 	for (int a = 0; a <= 5; a++)
 	{
-		for (int b = 0; b <= 6; b++){
+		cout << "|";
+		/*for (int b = 0; b <= 6; b++){
 			if (a != depth || b != move)
 				cout << char(218) << char(196) << char(191) << " ";
 			else
 				cout << "*" << char(196) << "*" << " ";
 		}
-		cout << '\n';
+		cout << '\n';*/
 		for (int b = 0; b <= 6; b++){
-				cout << char(179) << board[a][b] << char(179) << " ";
+			char play = board[a][b];
+			if (play == CHAR1){
+				play = 'x';
+				if (a == depth && b == move)
+					play = 'X';
+			}
+			else if (play == CHAR2){
+				play = 'o';
+				if (a == depth && b == move)
+					play = 'O';
+			}
+			else
+				play = '-';
+
+			//cout << char(179) << board[a][b] << char(179) << " ";
+			cout << " " << play << " ";
 		}
-		cout << '\n';
+		cout << "|";
+		/*cout << '\n';
 		for (int b = 0; b <= 6; b++){
 			if (a != depth || b != move)
 				cout << char(192) << char(196) << char(217) << " ";
 			else
 				cout << "*" << char(196) << "*" << " ";
-		}
+		}*/
 		cout << '\n';
-	}
-	cout << std::endl;
+	}	
+	cout << "|=====================|\n\n";
+
 }
 
 bool check(int a, int b){

@@ -15,10 +15,10 @@ vector< vector<char> > place;
 Player* player;
 int charsPlaced;
 
-Connect4Result ConnectFour(bool showBoard, FANN::neural_net* net)
+Connect4Result ConnectFour(FANN::neural_net* net)
 {
 
-	std::vector<MoveDepth> gameSequence;
+	std::vector<MoveDepth> gameSequence = globals.gameSequence;
 	int colChoice;					// Will house user row choice
 	int depthChoice = 0;			// Will hold drop value
 	charsPlaced = 0;
@@ -30,16 +30,16 @@ Connect4Result ConnectFour(bool showBoard, FANN::neural_net* net)
 ////////////////////////////////////////////////////////////////
 
 ///////////// Initialize LearnObject. TODO: do this in Main ////
-	float learn_decay = 0.7;
-	float learn_learnRate = 0.7;
+
 	Learn learnObj = Learn();
 	learnObj.setNet(net);
-	learnObj.setDecay(learn_decay);
-	learnObj.setLearn(learn_learnRate);
+	learnObj.setDecay(globals.RL_DECAY);
+	learnObj.setLearn(globals.RL_LEARNFACTOR);
 ////////////////////////////////////////////////////////////////
 
 	// initialize two players
-	RandomPlayer* play1 = new RandomPlayer(CHAR1);// , &learnObj);
+	//RandomPlayer* play1 = new RandomPlayer(CHAR1);// , &learnObj);
+	LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
 	LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
 
 	player = play2;		//start as player 2, will change back to player 1
@@ -60,17 +60,44 @@ Connect4Result ConnectFour(bool showBoard, FANN::neural_net* net)
 		depthChoice = drop(colChoice, player->getPiece());
 		gamewon = check(depthChoice, colChoice);
 		charsPlaced++;
-		gameSequence.push_back(MoveDepth(depthChoice, colChoice, player->getPiece()));
-		//r// system("cls");						//This clears the screen works with windows, not nesscery to run game
+		if (player->getPiece() == CHAR2);
+		{
+			gameSequence.push_back(MoveDepth(depthChoice, colChoice, player->getPiece()));
+
+		}		//r// system("cls");						//This clears the screen works with windows, not nesscery to run game
 
 		// End of main game loop
 	}
 
 	// End of a game
 	// Display board if display flag (-d)
-	if (showBoard){
+	if (globals.showBoard){
 		displaySequence(gameSequence);
 	}
+
+ 	if (globals.saveBoard){
+		int game_range = globals.episodes / 10;      
+		std::stringstream ss;
+		ss << "train_gameNum_" << globals.gamesPlayed << ".txt";
+		std::string gameFileName = ss.str();
+		if (globals.gamesPlayed % game_range == 0)
+		{
+			//////////////////// Print a Game ///////////////////////////////
+			std::ofstream out(gameFileName, std::ofstream::out);
+			auto coutbuf = std::cout.rdbuf(out.rdbuf()); //save and redirect
+			std::string sType = typeid(play1).name();
+			cout << "Player1 (x) is " << sType << std::endl;
+			sType = typeid(play2).name();
+			cout << "Player2 (o) is " << sType << std::endl;
+
+			displaySequence(gameSequence);
+			out.flush();
+			out.close();
+			cout.rdbuf(coutbuf);
+			////////////////////////////////////////////////////////////////// 
+		}
+	}
+		
 
 	// Tie
 	Connect4Result ret;

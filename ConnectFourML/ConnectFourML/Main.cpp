@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+
 #include "MainHelper.h"
 //Globals globals;
 
@@ -11,12 +12,13 @@ Globals globals;
 int main(int argc, char* argv[])
 {
 	// parse arguments
-	bool showBoard = false, loadNet = false;
-	std::string netFile = "IncTrain.net";
+	bool loadNet = false;
+	std::string netFile = "train_net.net",
+		saveToFile = "train_results.txt";
 	for (int i = 0; i < argc; i++){
 		// Display Board
 		if (std::string(argv[i]) == "-d")
-			showBoard = true;
+			globals.showBoard = true;
 	}
 
 	// initialize random seed. Is global.
@@ -31,7 +33,7 @@ int main(int argc, char* argv[])
 	float nn_learn_rate = 0.3f;*/
 
 	FANN::neural_net* net;
-	ANN ArtificialNeuralNet = ANN(globals.NN_LAYERS, globals.NN_INPUTS, globals.NN_HIDDEN_NODES, 
+	ANN ArtificialNeuralNet = ANN(globals.NN_LAYERS, globals.NN_INPUTS, globals.NN_HIDDEN_NODES,
 		globals.NN_OUPUTS, globals.NN_LEARNRATE);
 	net = ArtificialNeuralNet.getANN();
 	if (loadNet)
@@ -47,11 +49,11 @@ int main(int argc, char* argv[])
 	double p1Percent[10];
 	double p2Percent[10];
 
-///////// Redirect cin //////////
-//	std::ofstream saveFile("saveFile.txt");
-//	std::streambuf *coutbuf = std::cout.rdbuf();
-//	std::cout.rdbuf(saveFile.rdbuf());
-//////////////////////////////////
+	///////// Redirect cin //////////
+	//	std::ofstream saveFile("saveFile.txt");
+	//	std::streambuf *coutbuf = std::cout.rdbuf();
+	//	std::cout.rdbuf(saveFile.rdbuf());
+	//////////////////////////////////
 
 
 #pragma region Play_N_Games
@@ -64,27 +66,33 @@ int main(int argc, char* argv[])
 		//std::streambuf* cout_sbuf = std::cout.rdbuf();
 		//std::ifstream fake;
 		//cout.rdbuf(fake.rdbuf());
+		try {
+			Connect4Result result = ConnectFour(net);
 
-		Connect4Result result = ConnectFour(showBoard, net);
-
-		// Evaluate and store the result
-		if (result.winner == 1)
-		{
-			p1NumWins++;
-			p1NumWinMoves += result.moves;
+			// Evaluate and store the result
+			if (result.winner == 1)
+			{
+				p1NumWins++;
+				p1NumWinMoves += result.moves;
+			}
+			else if (result.winner == 2)
+			{
+				p2NumWins++;
+				p2NumWinMoves += result.moves;
+			}
+			if (globals.episodes > 100)
+			{
+				// if we have played a multiple of 10% of the games, then store the win/loss ratios
+				int game_range = globals.episodes / 10;
+				if (i % (game_range) == 0){
+					p1Percent[percentile] = p1NumWins / (p1NumWins + p2NumWins);
+					p2Percent[percentile] = p2NumWins / (p1NumWins + p2NumWins);
+					percentile++;
+				}
+			}
 		}
-		else if (result.winner == 2)
-		{
-			p2NumWins++;
-			p2NumWinMoves += result.moves;
-		}
-		// if we have played a multiple of 10% of the games, then store the win/loss ratios
-		int game_range = globals.episodes / 10;
-		if (i % (game_range) == 0){
-			p1Percent[percentile] = p1NumWins / (p1NumWins + p2NumWins);
-			p2Percent[percentile] = p2NumWins / (p1NumWins + p2NumWins);
-			percentile++;
-		}
+		catch (const std::exception e){}
+		globals.gamesPlayed++;
 	}
 
 #pragma endregion
@@ -92,7 +100,7 @@ int main(int argc, char* argv[])
 
 	net->save(netFile);
 	std::streambuf* cout_sbuf = std::cout.rdbuf();
-	std::ofstream fout("NN_LearnRate-050.txt");
+	std::ofstream fout(saveToFile);
 	cout.rdbuf(fout.rdbuf());
 	std::cerr.rdbuf(fout.rdbuf());
 
@@ -117,7 +125,7 @@ int main(int argc, char* argv[])
 #pragma endregion
 
 
-	system("pause");
+	//system("pause");
 	
 	return 0;
 }

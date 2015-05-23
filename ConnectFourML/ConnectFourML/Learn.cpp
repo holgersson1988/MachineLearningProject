@@ -92,6 +92,7 @@ vector<fann_type> Learn::getInput(vector<vector<char>> &gameState)
 */
 LearnTuple Learn::nextState(int &moveChoice){
 	float bestValue = -2;	// Saves values of greedy choice
+	int depth;
 	vector<fann_type> fannInput;
 	vector<vector<char>> nextPlace;	// Place holder for next state. Presented to net for Value. 
 	float randValue = ((float)rand()) / (float)RAND_MAX;
@@ -107,12 +108,12 @@ LearnTuple Learn::nextState(int &moveChoice){
 
 		for (int i = 0; i < 7; i++)
 		{
-			int moveDepth = getMoveDepth(i);
+			depth = getMoveDepth(i);
 
 			// If move was valid:
-			if (moveDepth > 0){
+			if (depth > 0){
 				nextPlace = place;
-				nextPlace[moveDepth][i] = player->getPiece();
+				nextPlace[depth][i] = player->getPiece();
 				fannInput = getInput(nextPlace);
 				states_values[i].setValue(  net->run(&fannInput[0])[0]  );
 				states_values[i].setState(fannInput);
@@ -145,7 +146,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 	// Explore (randValue > exploreValue)
 	else
 	{
-		int depth = -1;
+		depth = -1;
 		while (depth == -1)
 		{
 			moveChoice = rand() % 7;
@@ -195,8 +196,6 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 	int setSize = trainSet.size();
 	// debug
 	// printf("<<<<<<<<<<<<<<<<<<<<<<< Learn::updateTrainSet() trainSet.size(): %i \n", setSize);
-	printf(" trainSet.size(): %i ||| LearnPlayer::learnSequence.size(): %i ||| pas.size(): %i ", 
-						trainSet.size(),				learnSequence.size(),			pas.size());
 	}
 /*
  * Calls getTrainData and then trains ANN.

@@ -17,8 +17,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="LearnPlayer.cpp" />
-    <ClCompile Include="TestFANN.cpp" />
-    <ClCompile Include="xor_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANN.h" />
