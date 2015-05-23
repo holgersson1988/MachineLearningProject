@@ -22,17 +22,21 @@ public:
 	unsigned int NN_INPUTS = 84;
 	unsigned int NN_HIDDEN_NODES = 250;
 	unsigned int NN_OUPUTS = 1;
-	float NN_LEARNRATE = 0.3f;
+	float NN_LEARNRATE = 0.5f;
+	std::string NN_TRAINMETHOD = "";
 
 	// RL Learning //
 	float RL_REWARD_TIE = -1;
+	float RL_EXPLORATION = 0.7;
+	float RL_DECAY = 0.97;
+	float RL_LEARNFACTOR = 0.5;
 
 	// Training //
-	unsigned int episodes = 14000000;
+	unsigned int episodes = 100;
 
 
 };
-
+extern Globals globals;
 /*
 	* Saves State, Value, and Reward tuples for generating a training sequence
 	* for the neural net.
