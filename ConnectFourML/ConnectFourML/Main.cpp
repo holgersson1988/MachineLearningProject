@@ -1,17 +1,17 @@
-#include "MainHelper.h"
 #include <string>
 #include <ios>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-//Globals globals = Globals();
-Globals globals;
+#include "MainHelper.h"
+//Globals globals;
 
+Globals globals;
 int main(int argc, char* argv[])
 {
 	// parse arguments
-	bool showBoard = false, loadNet = true;
+	bool showBoard = false, loadNet = false;
 	std::string netFile = "IncTrain.net";
 	for (int i = 0; i < argc; i++){
 		// Display Board
@@ -53,7 +53,6 @@ int main(int argc, char* argv[])
 //	std::cout.rdbuf(saveFile.rdbuf());
 //////////////////////////////////
 
-	fclose(stdout);
 
 #pragma region Play_N_Games
 
@@ -61,6 +60,11 @@ int main(int argc, char* argv[])
 	{
 		// Play a game
 		printf("Game: %i\n", i);
+
+		//std::streambuf* cout_sbuf = std::cout.rdbuf();
+		//std::ifstream fake;
+		//cout.rdbuf(fake.rdbuf());
+
 		Connect4Result result = ConnectFour(showBoard, net);
 
 		// Evaluate and store the result
@@ -75,7 +79,8 @@ int main(int argc, char* argv[])
 			p2NumWinMoves += result.moves;
 		}
 		// if we have played a multiple of 10% of the games, then store the win/loss ratios
-		if (i % (globals.episodes / 10) == (globals.episodes / 10) - 1){
+		int game_range = globals.episodes / 10;
+		if (i % (game_range) == 0){
 			p1Percent[percentile] = p1NumWins / (p1NumWins + p2NumWins);
 			p2Percent[percentile] = p2NumWins / (p1NumWins + p2NumWins);
 			percentile++;
@@ -84,18 +89,17 @@ int main(int argc, char* argv[])
 
 #pragma endregion
 
-	_fdopen(1, "w");
 
 	net->save(netFile);
-
-	std::ofstream outputFile;
-	outputFile.open(".txt");
+	std::streambuf* cout_sbuf = std::cout.rdbuf();
+	std::ofstream fout("NN_LearnRate-050.txt");
+	cout.rdbuf(fout.rdbuf());
+	std::cerr.rdbuf(fout.rdbuf());
 
 #pragma region Print_Outcome
 	net->print_parameters();
 
 	double total_won_p1 = 0.0;
-	cout << "\n\n\n\n\n\n\n\n\n";
 	for (int i = 0; i < 10; i++){
 		total_won_p1 += p1Percent[i];
 		int game_range = globals.episodes / 10;

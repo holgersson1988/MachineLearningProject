@@ -1,4 +1,0 @@
-
-Creating network.
-XOR test (+0, -1.875) -> +0.00878049, should be +0, difference = 0.00878049
-XOR test (+0, -1.875) -> +7.20742e-025, should be +0, difference = 7.20742e-025

@@ -4,7 +4,6 @@
 using std::cout;
 using std::vector;
 
-//Globals globals = Globals();
 
 TrainPair::TrainPair(vector<fann_type> tState, fann_type tValue){
 	state = tState;
@@ -15,7 +14,7 @@ Learn::Learn(){
 
 	explore = 0.95f;
 	decay = 0.95f;
-	learnRate = 0.7f;
+	learnFactor = globals.RL_LEARNFACTOR;
 	gameOver = false;
 }
 /**/
@@ -23,7 +22,7 @@ Learn::Learn(FANN::neural_net* tNet) {
 	net = tNet;
 	explore = 0.95f;
 	decay = 0.95f;
-	learnRate = 0.7f;
+	learnFactor = globals.RL_LEARNFACTOR;
 	gameOver = false;
 };
 
@@ -188,8 +187,7 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 			/*v_s_p = (rit - 1)->getValue();*/
 			v_s_p = newV;
 		}
-
-		newV = v_s + learnRate * (reward + decay * v_s_p - v_s);
+		newV = v_s + learnFactor * (reward + decay * v_s_p - v_s);
 		TrainPair pair = TrainPair(rit->state, newV);
 		trainSet.push_back(pair);
 		exp++;

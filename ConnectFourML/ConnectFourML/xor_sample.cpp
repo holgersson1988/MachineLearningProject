@@ -146,7 +146,7 @@ int main2(int argc, char **argv)
 	{
 		cerr << endl << "Abnormal exception." << endl;
 	}
-	system("pause");
+	//system("pause");
 	return 0;
 }
 

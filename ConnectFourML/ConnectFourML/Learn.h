@@ -40,7 +40,7 @@ public:
 	vector<TrainPair> trainSet;
 	float explore;
 	float decay;
-	float learnRate;
+	float learnFactor;
 	bool gameOver;
 
 
@@ -57,7 +57,7 @@ public:
 	void setNet(FANN::neural_net* tNet){ net = tNet; };
 	void setDecay(float tDecay){ decay = tDecay; };
 	void setExploration(float tExploration) { explore = tExploration; };
-	void setLearn(float tLearn) { tLearn = learnRate; }
+	void setLearn(float tLearn) { tLearn = learnFactor; }
 
 	
 	/*
