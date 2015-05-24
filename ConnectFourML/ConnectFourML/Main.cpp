@@ -1,6 +1,5 @@
 #include <string>
 #include <ios>
-#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -12,31 +11,18 @@ Globals globals;
 int main(int argc, char* argv[])
 {
 	// parse arguments
-	bool loadNet = false;
-
 	for (int i = 0; i < argc; i++){
 		// Display Board
 		if (std::string(argv[i]) == "-d")
 			globals.showBoard = true;
 	}
 
+	globals = Globals();
+
 	// initialize random seed. Is global.
 	srand(time(NULL));
 
-
-	/* Initialize NN
-	unsigned int layers = 3;
-	unsigned int inputs = 84;
-	unsigned int num_nodes = 250;
-	unsigned int outputs = 1;
-	float nn_learn_rate = 0.3f;*/
-
-	FANN::neural_net* net;
-	ANN ArtificialNeuralNet = ANN(globals.NN_LAYERS, globals.NN_INPUTS, globals.NN_HIDDEN_NODES,
-		globals.NN_OUPUTS, globals.NN_LEARNRATE);
-	net = ArtificialNeuralNet.getANN();
-	if (loadNet)
-		net->create_from_file(globals.netLoadFile + ".net");
+	//globals = Globals();
 
 	// Stats to save
 	double p1NumWins = 0;
@@ -47,26 +33,42 @@ int main(int argc, char* argv[])
 	int percentile = 0;
 	double p1Percent[10];
 	double p2Percent[10];
-
-	///////// Redirect cin //////////
-	//	std::ofstream saveFile("saveFile.txt");
-	//	std::streambuf *coutbuf = std::cout.rdbuf();
-	//	std::cout.rdbuf(saveFile.rdbuf());
-	//////////////////////////////////
-
+	std::stringstream stream_randGames;
+	stream_randGames << "// LearnPlayWins RandPlayWins\n//Plays " << globals.randPlayAmount << " each test";
+	int game_range = globals.episodes / 10;
 
 #pragma region Play_N_Games
 
 	for (int i = 0; i < globals.episodes; i++)
 	{
+		// Training: 1000 games against random //
+		if (globals.isTraining && ((i+1)%(game_range) == 0)){
+			globals.playRandomPlayer = true;
+			globals.isTraining = false;
+			int learnWins = 0, randWins = 0;
+			int game_range_upper = i + 1;
+			int game_range_lower = game_range_upper - game_range;
+
+			for (int c = 0; c < globals.randPlayAmount; c++){
+				Connect4Result result = ConnectFour();
+				(result.winner == 1) ? learnWins++: randWins++;
+			}
+			stream_randGames << "//" << game_range_lower << "-> " << game_range_upper<< "\n"
+				<< learnWins << " "<< randWins << '\n';
+			
+			
+			globals.playRandomPlayer = false;
+			globals.isTraining = true;
+		}
+		
+		/////////////////////////////////////////
+
+
 		// Play a game
 		printf("Game: %i\n", i);
 
-		//std::streambuf* cout_sbuf = std::cout.rdbuf();
-		//std::ifstream fake;
-		//cout.rdbuf(fake.rdbuf());
 		try {
-			Connect4Result result = ConnectFour(net);
+			Connect4Result result = ConnectFour();
 
 			// Evaluate and store the result
 			if (result.winner == 1)
@@ -81,9 +83,8 @@ int main(int argc, char* argv[])
 			}
 			if (globals.episodes >= 100)
 			{
-				// if we have played a multiple of 10% of the games, then store the win/loss ratios
-				int game_range = globals.episodes / 10;
-				if ((i + 1) % (game_range ) == 0){
+				// if we have played a  multiple of 10% of the games, then store the win/loss ratios
+				if ( (i+1) % (game_range) == 0){
 					p1Percent[percentile] = p1NumWins / (p1NumWins + p2NumWins);
 					p2Percent[percentile] = p2NumWins / (p1NumWins + p2NumWins);
 					percentile++;
@@ -96,18 +97,22 @@ int main(int argc, char* argv[])
 
 #pragma endregion
 
+	// Print Stats to a file
+	
+	// Print randPlayStats to File
+	std::ofstream randPlayOut(globals.saveRandPlay + ".txt", std::ofstream::ate);
+	randPlayOut << stream_randGames.str();
 
-	net->save(globals.netLoadFile + ".net");
+	globals.net1->save(globals.netFile1 + ".net");
 	std::streambuf* cout_sbuf = std::cout.rdbuf();
-	std::ofstream fout(globals.resultSaveFile + ".txt");
+	std::ofstream fout(globals.saveToFile + ".txt");
 	cout.rdbuf(fout.rdbuf());
 	std::cerr.rdbuf(fout.rdbuf());
 
 #pragma region Print_Outcome
-	net->print_parameters();
+	globals.net1->print_parameters();
 
 	double total_won_p1 = 0.0;
-		int game_range = globals.episodes / 10;
 	for (int i = 0; i < 10; i++){
 		int game_range_lower = i * game_range;
 		int game_range_upper = (i + 1) * game_range - 1;

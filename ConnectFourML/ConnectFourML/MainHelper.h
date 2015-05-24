@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include "floatfann.h"
 #include "fann_cpp.h"
+#include <cstdlib>
 #include "ANN.h"
 
 #define CHAR2	15 //char(15)
@@ -145,7 +146,7 @@ positive integer otherwise.
 */
 int drop(int b, char player);
 
-Connect4Result ConnectFour(FANN::neural_net* net);
+Connect4Result ConnectFour();
 
 /*
  * Global. Saves state of board.
@@ -162,10 +163,22 @@ extern int charsPlaced;
 
 struct Globals{
 public:
+	// Loading and saving net 
+	FANN::neural_net* net1;// = new FANN::neural_net(); // Create two nets
+	FANN::neural_net* net2;//
+	bool player1Learning = true; // Set if learning or random
+	bool player2Learning = true;
+	bool loadNet1 = false; // Load net 1 from file?
+	bool loadNet2 = false; // Load net 2 from file? Otherwise it does not exist.
+	std::string netFile1 = "train_net1",
+		netFile2 = "train_net2",
+		saveToFile = "train_results",
+		saveRandPlay = "train_randPlay";
+
 	// Neural Network //
 	unsigned int NN_LAYERS = 3,
 		NN_INPUTS = 84,
-		NN_HIDDEN_NODES = 250,
+		NN_HIDDEN_NODES = 80,
 		NN_OUPUTS = 1,
 		NN_MAXEPOCHS = 1000,
 		NN_REPORTEVERY = 1001;
@@ -173,22 +186,48 @@ public:
 		NN_DESIREDERROR = 0.001;
 
 	// RL Learning //
-	float RL_REWARD_TIE = -1,
-		RL_EXPLORATION = 0.7,
-		RL_DECAY = 0.97,
-		RL_LEARNFACTOR = 0.5;
+	float RL_REWARD_TIE = -1.0f,
+		RL_EXPLORATION = 0.7f,
+		RL_DECAY = 0.97f,
+		RL_LEARNFACTOR = 0.5f;
+
+	// Stats
+	int p1OpeningMoves[7];// = { 0, 0, 0, 0, 0, 0, 0 };
+	int p2OpeningMoves[7];// = { 0, 0, 0, 0, 0, 0, 0 };
 
 	// Training //
 	unsigned int episodes = 1000;
+	unsigned int randPlayAmount = 100;
 
 	// Other //
 	bool isTraining = true,
 		showBoard = false,
-		saveBoard = true;
-	std::vector<MoveDepth> gameSequence;
+		saveBoard = true,
+		playRandomPlayer = false; // Dont't set to true here.
 	int gamesPlayed = 0;
-	std::string netLoadFile = "train_net",
-		resultSaveFile = "train_results";
 
+
+Globals()
+	{
+		// Create net 1
+		ANN ArtificialNeuralNet = ANN(NN_LAYERS, NN_INPUTS, NN_HIDDEN_NODES,
+			NN_OUPUTS, NN_LEARNRATE);
+		net1 = ArtificialNeuralNet.getANN();
+
+		if (loadNet1)
+		{
+			net1->create_from_file(netFile1 + ".net");
+		}
+		if (loadNet2)
+		{
+			net2->create_from_file(netFile2 + ".net");
+		}
+
+		for (int i = 0; i < 7; i++)
+		{
+			p1OpeningMoves[i] = 0;
+			p2OpeningMoves[i] = 0;
+		}
+	}
 };
 extern Globals globals;

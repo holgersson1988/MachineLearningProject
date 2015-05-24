@@ -101,8 +101,8 @@ LearnTuple Learn::nextState(int &moveChoice){
 	vector<LearnTuple> states_values;
 	states_values.resize(7, LearnTuple());
 
-	// Greedy
-	if (randValue < explore)
+	// Greedy or not training
+	if (randValue < explore || globals.isTraining == false)
 	{
 		vector<int> stateValue = vector<int>(7, -1);		// Holds Values of next 7 possible state
 

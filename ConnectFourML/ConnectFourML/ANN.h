@@ -8,7 +8,7 @@
 class ANN
 {
 private:
-	FANN::neural_net net;
+	FANN::neural_net* net = new FANN::neural_net();
 public:
 	ANN();
 	ANN(unsigned int layers, unsigned int inputs, 

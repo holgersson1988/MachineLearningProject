@@ -15,12 +15,12 @@ vector< vector<char> > place;
 Player* player;
 int charsPlaced;
 
-Connect4Result ConnectFour(FANN::neural_net* net)
+Connect4Result ConnectFour()
 {
 
-	std::vector<MoveDepth> gameSequence = globals.gameSequence;
-	int colChoice;					// Will house user row choice
-	int depthChoice = 0;			// Will hold drop value
+	std::vector<MoveDepth> gameSequence;// = globals.gameSequence;
+	int colChoice;				// Will house user row choice
+	int depthChoice = 0;		// Will hold drop value
 	charsPlaced = 0;
 	bool gamewon = false;
 
@@ -29,20 +29,61 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 	place.resize(6, vector<char>(7, ' '));
 ////////////////////////////////////////////////////////////////
 
-///////////// Initialize LearnObject. TODO: do this in Main ////
+	FANN::neural_net* net1 = globals.net1;
+	FANN::neural_net* net2 = globals.net2;
+
+///////////// Initialize LearnObject ///////////////////////////
 
 	Learn learnObj = Learn();
-	learnObj.setNet(net);
+	learnObj.setNet(net1);
 	learnObj.setDecay(globals.RL_DECAY);
 	learnObj.setLearn(globals.RL_LEARNFACTOR);
+
+	Learn learnObj2 = Learn();
+	learnObj2.setNet(net2);
+	learnObj2.setDecay(globals.RL_DECAY);
+	learnObj2.setLearn(globals.RL_LEARNFACTOR);
 ////////////////////////////////////////////////////////////////
 
 	// initialize two players
-	//RandomPlayer* play1 = new RandomPlayer(CHAR1);// , &learnObj);
-	LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
-	LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
+	Player* play1;
+	Player* play2;
 
-	player = play2;		//start as player 2, will change back to player 1
+	// Check what type of player Player 1 is
+	if (globals.player1Learning){
+		play1 = &LearnPlayer(CHAR1, &learnObj);
+	}
+	else{
+		play1 = &RandomPlayer(CHAR1);
+	}
+	// Check what type of player Player 2 is
+	if (globals.player2Learning){
+		if (globals.loadNet2){
+			play2 = &LearnPlayer(CHAR2, &learnObj2);
+		}
+		else{
+			play2 = &LearnPlayer(CHAR2, &learnObj);
+		}
+	}
+	else{
+		play2 = &RandomPlayer(CHAR2);
+	}
+
+	if (globals.playRandomPlayer)
+		play2 = &RandomPlayer(CHAR2);
+	
+	//LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
+	//LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
+
+	if (globals.gamesPlayed % 2 == 0)
+	{
+		player = play2;		//start as player 2, will change back to player 1
+	}
+	else
+	{
+		player = play1;
+	}
+	
 
 	// Main game loop
 	while (!gamewon && charsPlaced < 42){
@@ -86,9 +127,10 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 			// Print a Game //
 			std::ofstream out(gameFileName, std::ofstream::out);
 			auto coutbuf = std::cout.rdbuf(out.rdbuf()); //save and redirect
-			std::string sType = typeid(play1).name();
+			std::string sType = typeid(*play1).name();
+			cout << "Game " << globals.gamesPlayed + 1;
 			cout << "Player1 (x) is " << sType << std::endl;
-			sType = typeid(play2).name();
+			sType = typeid(*play2).name();
 			cout << "Player2 (o) is " << sType << std::endl;
 			displaySequence(gameSequence);
 			out.flush();
@@ -97,24 +139,19 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 			
 			// Save every 1/10 net //
 			std::stringstream ss2;
-			ss2 << globals.netLoadFile << "_game_"
+			ss2 << globals.netFile1 << "_game_"
 									<< globals.gamesPlayed + 1 << ".net";
 			std::string file = ss2.str();
-				net->save(file);
+			net1->save(file);
 		}
-	////////////////////////////////////////////////////////////////////
 
 	
-	}
-	
-	if (globals.saveBoard){
-
 	}
 
 	// Tie
 	Connect4Result ret;
 	if (charsPlaced == 42){
-		cout << 0 << ',' << charsPlaced << "\n";
+		//cout << 0 << ',' << charsPlaced << "\n";
 		play1->hasTied();
 		play2->hasTied();
 		ret.winner = 0;
@@ -123,7 +160,7 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 	else{
 	// Player 2 Won
 		if (player->getPiece() == CHAR2){
-			cout << 2 << ',' << charsPlaced << "\n";
+			//cout << 2 << ',' << charsPlaced << "\n";
 			play2->hasWon();
 			play1->hasLost();
 			ret.winner = 2;
@@ -131,7 +168,7 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 		}
 	// Player 1 won
 		else{
-			cout << 1 << ',' << charsPlaced << "\n";
+			//cout << 1 << ',' << charsPlaced << "\n";
 			play1->hasWon();
 			play2->hasLost();
 			ret.winner = 1;
