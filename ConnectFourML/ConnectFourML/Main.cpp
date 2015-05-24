@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	double p1Percent[10];
 	double p2Percent[10];
 	std::stringstream stream_randGames;
-	stream_randGames << "// LearnPlayWins RandPlayWins\n//Plays " << globals.randPlayAmount << " each test";
+	stream_randGames << "// LearnPlayWins RandPlayWins\n//Plays " << globals.randPlayAmount << " each test\n";
 	int game_range = globals.episodes / 10;
 
 #pragma region Play_N_Games
@@ -88,6 +88,13 @@ int main(int argc, char* argv[])
 					p1Percent[percentile] = p1NumWins / (p1NumWins + p2NumWins);
 					p2Percent[percentile] = p2NumWins / (p1NumWins + p2NumWins);
 					percentile++;
+
+					if (globals.NN_LEARNRATE_DECAY_BOOL && globals.isTraining)
+					{
+						globals.NN_LEARNRATE_DECAY = 1.0 - ((i + 1) / game_range) * 0.1;
+						float newLearnRate = globals.NN_LEARNRATE * globals.NN_LEARNRATE_DECAY;
+						globals.net1->set_learning_rate(newLearnRate);
+					}
 				}
 			}
 		}

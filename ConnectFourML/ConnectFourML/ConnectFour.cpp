@@ -116,6 +116,8 @@ Connect4Result ConnectFour()
 		displaySequence(gameSequence);
 	}
 
+
+
  	if (globals.isTraining){
 	/////////////////// Save every 1/10 while traing
 		int game_range = globals.episodes / 10;      
@@ -128,7 +130,7 @@ Connect4Result ConnectFour()
 			std::ofstream out(gameFileName, std::ofstream::out);
 			auto coutbuf = std::cout.rdbuf(out.rdbuf()); //save and redirect
 			std::string sType = typeid(*play1).name();
-			cout << "Game " << globals.gamesPlayed + 1;
+			cout << "Game " << globals.gamesPlayed + 1 << "\n";
 			cout << "Player1 (x) is " << sType << std::endl;
 			sType = typeid(*play2).name();
 			cout << "Player2 (o) is " << sType << std::endl;

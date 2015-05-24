@@ -183,7 +183,9 @@ public:
 		NN_MAXEPOCHS = 1000,
 		NN_REPORTEVERY = 1001;
 	float NN_LEARNRATE = 0.5f,
+		NN_LEARNRATE_DECAY = 1.0,
 		NN_DESIREDERROR = 0.001;
+	bool NN_LEARNRATE_DECAY_BOOL = false;
 
 	// RL Learning //
 	float RL_REWARD_TIE = -1.0f,
@@ -196,13 +198,12 @@ public:
 	int p2OpeningMoves[7];// = { 0, 0, 0, 0, 0, 0, 0 };
 
 	// Training //
-	unsigned int episodes = 1000;
-	unsigned int randPlayAmount = 100;
+	unsigned int episodes = 50000;
+	unsigned int randPlayAmount = 1000;
 
 	// Other //
 	bool isTraining = true,
 		showBoard = false,
-		saveBoard = true,
 		playRandomPlayer = false; // Dont't set to true here.
 	int gamesPlayed = 0;
 
