@@ -30,13 +30,6 @@ int main(int argc, char* argv[])
 	unsigned int outputs = 1;
 	float nn_learn_rate = 0.3f;*/
 
-	//FANN::neural_net* net;
-	//ANN ArtificialNeuralNet = ANN(globals.NN_LAYERS, globals.NN_INPUTS, globals.NN_HIDDEN_NODES,
-	//	globals.NN_OUPUTS, globals.NN_LEARNRATE);
-	//net = ArtificialNeuralNet.getANN();
-	//if (loadNet)
-	//	net->create_from_file(netFile);
-
 	// Stats to save
 	double p1NumWins = 0;
 	double p2NumWins = 0;

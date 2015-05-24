@@ -60,8 +60,10 @@ void displaySequence(vector<MoveDepth> sequence){
 		int depth = it->depth;
 		int move = it->move;
 		char player = it->player;
-		board[depth][move] = player;
-		display(board, depth, move);
+		if (depth != -1) {
+			board[depth][move] = player;
+			display(board, depth, move);
+		}
 	}
 }
 

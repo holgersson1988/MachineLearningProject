@@ -111,7 +111,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 			depth = getMoveDepth(i);
 
 			// If move was valid:
-			if (depth >= 0){
+			if (depth != -1){
 				nextPlace = place;
 				nextPlace[depth][i] = player->getPiece();
 				fannInput = getInput(nextPlace);
@@ -194,8 +194,6 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 		exp++;
 	}
 	int setSize = trainSet.size();
-	// debug
-	// printf("<<<<<<<<<<<<<<<<<<<<<<< Learn::updateTrainSet() trainSet.size(): %i \n", setSize);
 	}
 /*
  * Calls getTrainData and then trains ANN.
@@ -245,9 +243,11 @@ void Learn::endGame(){
 		//		<< fann_abs(*calc_out - data.get_output()[i][0]) << std::endl;
 		//}
 /////////////////////////////////////////////////////////////
+
 		if (globals.isTraining)
 		{
-			net->train_on_data(data, 1000, 100, 0.001f); // TODO - Decide epochs
+			net->train_on_data(data, globals.NN_MAXEPOCHS,
+				globals.NN_REPORTEVERY, globals.NN_DESIREDERROR);
 		}
 ////// Post Train Values ///////////////////////////////////////////
 		//for (unsigned int i = 0; i < data.length_train_data(); ++i)

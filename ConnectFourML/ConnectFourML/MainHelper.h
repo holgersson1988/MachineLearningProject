@@ -177,11 +177,15 @@ public:
 		saveToFile = "train_results.txt";
 
 	// Neural Network //
-	unsigned int NN_LAYERS = 3;
-	unsigned int NN_INPUTS = 84;
-	unsigned int NN_HIDDEN_NODES = 250;
-	unsigned int NN_OUPUTS = 1;
-	float NN_LEARNRATE = 0.5f;
+	unsigned int NN_LAYERS = 3,
+		NN_INPUTS = 84,
+		NN_HIDDEN_NODES = 250,
+		NN_OUPUTS = 1,
+		NN_MAXEPOCHS = 1000,
+		NN_REPORTEVERY = 1001;
+
+	float NN_LEARNRATE = 0.5f,
+		NN_DESIREDERROR = 0.001;
 	std::string NN_TRAINMETHOD = "";
 
 	// Stats
@@ -226,6 +230,8 @@ public:
 		saveBoard = true;
 	std::vector<MoveDepth> gameSequence;
 	int gamesPlayed = 0;
+	std::string netLoadFile = "train_net",
+		resultSaveFile = "train_results";
 
 
 
