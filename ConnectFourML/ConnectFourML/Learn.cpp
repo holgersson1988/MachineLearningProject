@@ -194,8 +194,6 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 		exp++;
 	}
 	int setSize = trainSet.size();
-	// debug
-	// printf("<<<<<<<<<<<<<<<<<<<<<<< Learn::updateTrainSet() trainSet.size(): %i \n", setSize);
 	}
 /*
  * Calls getTrainData and then trains ANN.
@@ -246,9 +244,11 @@ void Learn::endGame(){
 		//}
 /////////////////////////////////////////////////////////////
 
-		net->train_on_data(data, globals.NN_MAXEPOCHS, 
-						globals.NN_REPORTEVERY, globals.NN_DESIREDERROR);
-
+		if (globals.isTraining)
+		{
+			net->train_on_data(data, globals.NN_MAXEPOCHS,
+				globals.NN_REPORTEVERY, globals.NN_DESIREDERROR);
+		}
 ////// Post Train Values ///////////////////////////////////////////
 		//for (unsigned int i = 0; i < data.length_train_data(); ++i)
 		//{
