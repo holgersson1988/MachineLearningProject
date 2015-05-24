@@ -107,6 +107,6 @@ Player2 (o) is class LearnPlayer *
 | -  -  o  -  -  -  - |
 | -  -  x  -  -  -  - |
 | o  -  o  -  -  -  - |
-| o  -  x  x  x  X  - |
+| o  X  x  x  x  -  - |
 |=====================|
 

@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
 #pragma endregion
 
 
-	//system("pause");
+	system("pause");
 	
 	return 0;
 }
