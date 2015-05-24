@@ -15,7 +15,7 @@ vector< vector<char> > place;
 Player* player;
 int charsPlaced;
 
-Connect4Result ConnectFour(FANN::neural_net* net)
+Connect4Result ConnectFour()
 {
 
 	std::vector<MoveDepth> gameSequence = globals.gameSequence;
@@ -29,20 +29,56 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 	place.resize(6, vector<char>(7, ' '));
 ////////////////////////////////////////////////////////////////
 
+	FANN::neural_net* net1 = globals.net1;
+	FANN::neural_net* net2 = globals.net2;
 ///////////// Initialize LearnObject. TODO: do this in Main ////
 
 	Learn learnObj = Learn();
-	learnObj.setNet(net);
+	learnObj.setNet(net1);
 	learnObj.setDecay(globals.RL_DECAY);
 	learnObj.setLearn(globals.RL_LEARNFACTOR);
+
+	Learn learnObj2 = Learn();
+	learnObj2.setNet(net2);
+	learnObj2.setDecay(globals.RL_DECAY);
+	learnObj2.setLearn(globals.RL_LEARNFACTOR);
 ////////////////////////////////////////////////////////////////
 
 	// initialize two players
-	//RandomPlayer* play1 = new RandomPlayer(CHAR1);// , &learnObj);
-	LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
-	LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
+	Player* play1;
+	Player* play2;
+	// Check what type of player Player 1 is
+	if (globals.player1Learning){
+		play1 = &LearnPlayer(CHAR1, &learnObj);
+	}
+	else{
+		play1 = &RandomPlayer(CHAR1);
+	}
+	// Check what type of player Player 2 is
+	if (globals.player2Learning){
+		if (globals.loadNet2){
+			play2 = &LearnPlayer(CHAR2, &learnObj2);
+		}
+		else{
+			play2 = &LearnPlayer(CHAR2, &learnObj);
+		}
+	}
+	else{
+		play2 = &RandomPlayer(CHAR2);
+	}
+	
+	//LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
+	//LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
 
-	player = play2;		//start as player 2, will change back to player 1
+	if (globals.gamesPlayed % 2 == 0)
+	{
+		player = play2;		//start as player 2, will change back to player 1
+	}
+	else
+	{
+		player = play1;
+	}
+	
 
 	// Main game loop
 	while (!gamewon && charsPlaced < 42){

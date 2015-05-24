@@ -1,6 +1,5 @@
 #include <string>
 #include <ios>
-#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -11,10 +10,8 @@
 Globals globals;
 int main(int argc, char* argv[])
 {
+	globals = Globals();
 	// parse arguments
-	bool loadNet = false;
-	std::string netFile = "train_net.net",
-		saveToFile = "train_results.txt";
 	for (int i = 0; i < argc; i++){
 		// Display Board
 		if (std::string(argv[i]) == "-d")
@@ -24,6 +21,7 @@ int main(int argc, char* argv[])
 	// initialize random seed. Is global.
 	srand(time(NULL));
 
+	//globals = Globals();
 
 	/* Initialize NN
 	unsigned int layers = 3;
@@ -32,12 +30,12 @@ int main(int argc, char* argv[])
 	unsigned int outputs = 1;
 	float nn_learn_rate = 0.3f;*/
 
-	FANN::neural_net* net;
-	ANN ArtificialNeuralNet = ANN(globals.NN_LAYERS, globals.NN_INPUTS, globals.NN_HIDDEN_NODES,
-		globals.NN_OUPUTS, globals.NN_LEARNRATE);
-	net = ArtificialNeuralNet.getANN();
-	if (loadNet)
-		net->create_from_file(netFile);
+	//FANN::neural_net* net;
+	//ANN ArtificialNeuralNet = ANN(globals.NN_LAYERS, globals.NN_INPUTS, globals.NN_HIDDEN_NODES,
+	//	globals.NN_OUPUTS, globals.NN_LEARNRATE);
+	//net = ArtificialNeuralNet.getANN();
+	//if (loadNet)
+	//	net->create_from_file(netFile);
 
 	// Stats to save
 	double p1NumWins = 0;
@@ -67,7 +65,7 @@ int main(int argc, char* argv[])
 		//std::ifstream fake;
 		//cout.rdbuf(fake.rdbuf());
 		try {
-			Connect4Result result = ConnectFour(net);
+			Connect4Result result = ConnectFour();
 
 			// Evaluate and store the result
 			if (result.winner == 1)
@@ -84,7 +82,7 @@ int main(int argc, char* argv[])
 			{
 				// if we have played a multiple of 10% of the games, then store the win/loss ratios
 				int game_range = globals.episodes / 10;
-				if (i % (game_range) == 0){
+				if ( (i+1) % (game_range) == 0){
 					p1Percent[percentile] = p1NumWins / (p1NumWins + p2NumWins);
 					p2Percent[percentile] = p2NumWins / (p1NumWins + p2NumWins);
 					percentile++;
@@ -97,15 +95,26 @@ int main(int argc, char* argv[])
 
 #pragma endregion
 
+	// Print Stats to a file
+	/*std::ofstream outputMoves("stats.txt");
+	std::string sType = typeid(play1).name();
+	cout << "Player1 (x) is " << sType << std::endl;
+	sType = typeid(play2).name();
+	cout << "Player2 (o) is " << sType << std::endl;
+	outputMoves << 
+	for (int i = 0; i < 7; i++)
+	{
+		
+	}*/
 
-	net->save(netFile);
+	globals.net1->save(globals.netFile1);
 	std::streambuf* cout_sbuf = std::cout.rdbuf();
-	std::ofstream fout(saveToFile);
+	std::ofstream fout(globals.saveToFile);
 	cout.rdbuf(fout.rdbuf());
 	std::cerr.rdbuf(fout.rdbuf());
 
 #pragma region Print_Outcome
-	net->print_parameters();
+	globals.net1->print_parameters();
 
 	double total_won_p1 = 0.0;
 	for (int i = 0; i < 10; i++){
