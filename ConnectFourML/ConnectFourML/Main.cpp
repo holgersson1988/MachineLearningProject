@@ -79,11 +79,11 @@ int main(int argc, char* argv[])
 				p2NumWins++;
 				p2NumWinMoves += result.moves;
 			}
-			if (globals.episodes > 100)
+			if (globals.episodes >= 100)
 			{
 				// if we have played a multiple of 10% of the games, then store the win/loss ratios
 				int game_range = globals.episodes / 10;
-				if (i % (game_range) == 0){
+				if ((i + 1) % (game_range ) == 0){
 					p1Percent[percentile] = p1NumWins / (p1NumWins + p2NumWins);
 					p2Percent[percentile] = p2NumWins / (p1NumWins + p2NumWins);
 					percentile++;
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 #pragma endregion
 
 
-	net->save(globals.netLoadFile + ".txt");
+	net->save(globals.netLoadFile + ".net");
 	std::streambuf* cout_sbuf = std::cout.rdbuf();
 	std::ofstream fout(globals.resultSaveFile + ".txt");
 	cout.rdbuf(fout.rdbuf());
@@ -107,11 +107,11 @@ int main(int argc, char* argv[])
 	net->print_parameters();
 
 	double total_won_p1 = 0.0;
-	for (int i = 0; i < 10; i++){
-		total_won_p1 += p1Percent[i];
 		int game_range = globals.episodes / 10;
+	for (int i = 0; i < 10; i++){
 		int game_range_lower = i * game_range;
 		int game_range_upper = (i + 1) * game_range - 1;
+		total_won_p1 += p1Percent[i];
 		cout << "Games: " << game_range_lower << " -> " << game_range_upper << std::endl;
 		cout << "P1: " << p1Percent[i] * 100 << "%" << std::endl;
 		cout << "P2: " << p2Percent[i] * 100 << "%" << std::endl;

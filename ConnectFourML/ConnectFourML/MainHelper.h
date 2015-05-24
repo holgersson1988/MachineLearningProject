@@ -181,10 +181,10 @@ public:
 		RL_LEARNFACTOR = 0.5;
 
 	// Training //
-	unsigned int episodes = 1000;
+	unsigned int episodes = 100;
 
 	// Other //
-	bool isTraining = false,
+	bool isTraining = true,
 		showBoard = false,
 		saveBoard = true;
 	std::vector<MoveDepth> gameSequence;

@@ -75,29 +75,41 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 		displaySequence(gameSequence);
 	}
 
- 	if (globals.saveBoard){
+ 	if (globals.isTraining){
+	/////////////////// Save every 1/10 while traing
 		int game_range = globals.episodes / 10;      
 		std::stringstream ss;
-		ss << "train_gameNum_" << globals.gamesPlayed << ".txt";
+		ss << "train_gameNum_" << (globals.gamesPlayed + 1) << ".txt";
 		std::string gameFileName = ss.str();
-		if (globals.gamesPlayed % game_range == 0)
+		if ((globals.gamesPlayed + 1) % game_range == 0)
 		{
-			//////////////////// Print a Game ///////////////////////////////
+			// Print a Game //
 			std::ofstream out(gameFileName, std::ofstream::out);
 			auto coutbuf = std::cout.rdbuf(out.rdbuf()); //save and redirect
 			std::string sType = typeid(play1).name();
 			cout << "Player1 (x) is " << sType << std::endl;
 			sType = typeid(play2).name();
 			cout << "Player2 (o) is " << sType << std::endl;
-
 			displaySequence(gameSequence);
 			out.flush();
 			out.close();
 			cout.rdbuf(coutbuf);
-			////////////////////////////////////////////////////////////////// 
+			
+			// Save every 1/10 net //
+			std::stringstream ss2;
+			ss2 << globals.netLoadFile << "_game_"
+									<< globals.gamesPlayed + 1 << ".net";
+			std::string file = ss2.str();
+				net->save(file);
 		}
+	////////////////////////////////////////////////////////////////////
+
+	
 	}
-		
+	
+	if (globals.saveBoard){
+
+	}
 
 	// Tie
 	Connect4Result ret;
@@ -109,7 +121,7 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 		ret.moves = charsPlaced;
 	}
 	else{
-		// Player 2 Won
+	// Player 2 Won
 		if (player->getPiece() == CHAR2){
 			cout << 2 << ',' << charsPlaced << "\n";
 			play2->hasWon();
@@ -117,7 +129,7 @@ Connect4Result ConnectFour(FANN::neural_net* net)
 			ret.winner = 2;
 			ret.moves = charsPlaced;
 		}
-		// Player 1 won
+	// Player 1 won
 		else{
 			cout << 1 << ',' << charsPlaced << "\n";
 			play1->hasWon();
