@@ -111,7 +111,7 @@ LearnTuple Learn::nextState(int &moveChoice){
 			depth = getMoveDepth(i);
 
 			// If move was valid:
-			if (depth > 0){
+			if (depth != -1){
 				nextPlace = place;
 				nextPlace[depth][i] = player->getPiece();
 				fannInput = getInput(nextPlace);
@@ -246,7 +246,8 @@ void Learn::endGame(){
 		//}
 /////////////////////////////////////////////////////////////
 
-		net->train_on_data(data, 1000, 100, 0.001f); // TODO - Decide epochs
+		net->train_on_data(data, globals.NN_MAXEPOCHS, 
+						globals.NN_REPORTEVERY, globals.NN_DESIREDERROR);
 
 ////// Post Train Values ///////////////////////////////////////////
 		//for (unsigned int i = 0; i < data.length_train_data(); ++i)

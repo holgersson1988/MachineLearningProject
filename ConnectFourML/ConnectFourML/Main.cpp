@@ -13,8 +13,7 @@ int main(int argc, char* argv[])
 {
 	// parse arguments
 	bool loadNet = false;
-	std::string netFile = "train_net.net",
-		saveToFile = "train_results.txt";
+
 	for (int i = 0; i < argc; i++){
 		// Display Board
 		if (std::string(argv[i]) == "-d")
@@ -37,7 +36,7 @@ int main(int argc, char* argv[])
 		globals.NN_OUPUTS, globals.NN_LEARNRATE);
 	net = ArtificialNeuralNet.getANN();
 	if (loadNet)
-		net->create_from_file(netFile);
+		net->create_from_file(globals.netLoadFile + ".txt");
 
 	// Stats to save
 	double p1NumWins = 0;
@@ -98,9 +97,9 @@ int main(int argc, char* argv[])
 #pragma endregion
 
 
-	net->save(netFile);
+	net->save(globals.netLoadFile + ".txt");
 	std::streambuf* cout_sbuf = std::cout.rdbuf();
-	std::ofstream fout(saveToFile);
+	std::ofstream fout(globals.resultSaveFile + ".txt");
 	cout.rdbuf(fout.rdbuf());
 	std::cerr.rdbuf(fout.rdbuf());
 
