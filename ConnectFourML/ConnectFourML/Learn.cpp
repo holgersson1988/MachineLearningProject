@@ -195,6 +195,44 @@ void Learn::updateTrainSet(vector<LearnTuple> learnSequence){
 	}
 	int setSize = trainSet.size();
 	}
+
+vector<fann_type> Learn::flipState(vector<fann_type> oldState){
+	vector<fann_type> newState;
+	newState.resize(84, 0.0);
+	int fLeft, fRight;
+	for (int y = 0; y < 6; y++){
+		fLeft = 0;
+		fRight = 6;
+		for (int x = 0; x < 7; x++){
+
+			int oldIndex = (y * 14) + (fLeft * 2);
+			int newIndex = (y * 14) + (fRight * 2);
+
+			newState[newIndex] = oldState[oldIndex];
+			newState[newIndex + 1] = oldState[oldIndex + 1];
+
+			fLeft++;
+			fRight--;
+		}
+	}
+	return newState;
+}
+
+void Learn::doubleTrainSet(){
+	vector<fann_type> oldState;
+	vector<fann_type> newState;
+	fann_type oldValue;
+	unsigned int num_data = trainSet.size();
+	for (int i = 0; i < num_data; i++)
+	{
+		oldState = trainSet[i].getState();
+		newState = flipState(oldState);
+		oldValue = trainSet[i].getValue();
+		TrainPair tp(newState, oldValue);
+		trainSet.push_back(tp);
+	}
+}
+
 /*
  * Calls getTrainData and then trains ANN.
  */
@@ -204,7 +242,8 @@ void Learn::endGame(){
 	if (gameOver != true)
 	{
 		gameOver = true;
-		// TODO
+		// double trainSet.size()
+		doubleTrainSet();
 		// Send train set to the ANN
 		unsigned int num_data, num_input = 84, num_output = 1;
 		num_data = static_cast<int>(trainSet.size());

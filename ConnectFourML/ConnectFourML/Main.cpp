@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 		globals.NN_OUPUTS, globals.NN_LEARNRATE);
 	net = ArtificialNeuralNet.getANN();
 	if (loadNet)
-		net->create_from_file(globals.netLoadFile + ".txt");
+		net->create_from_file(globals.netLoadFile + ".net");
 
 	// Stats to save
 	double p1NumWins = 0;

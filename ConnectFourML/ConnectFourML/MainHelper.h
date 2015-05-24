@@ -169,10 +169,8 @@ public:
 		NN_OUPUTS = 1,
 		NN_MAXEPOCHS = 1000,
 		NN_REPORTEVERY = 1001;
-
 	float NN_LEARNRATE = 0.5f,
 		NN_DESIREDERROR = 0.001;
-	std::string NN_TRAINMETHOD = "";
 
 	// RL Learning //
 	float RL_REWARD_TIE = -1,
@@ -181,7 +179,7 @@ public:
 		RL_LEARNFACTOR = 0.5;
 
 	// Training //
-	unsigned int episodes = 100;
+	unsigned int episodes = 1000;
 
 	// Other //
 	bool isTraining = true,

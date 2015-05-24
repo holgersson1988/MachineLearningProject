@@ -76,6 +76,10 @@ public:
 
 	void updateTrainSet(vector<LearnTuple> learnSequence);
 
+	vector<fann_type> flipState(vector<fann_type> oldState);
+
+	void doubleTrainSet();
+
 	void train();
 };
 
