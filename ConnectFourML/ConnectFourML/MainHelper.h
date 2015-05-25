@@ -170,11 +170,11 @@ public:
 		randPlayFile = "train_randPlay";	// 0 99 450 550 677 223
 		
 	// Comp //
-	std::string 
-		netFile1 = ".\\Results\\250Nodes_07Exp_05Learn\\train_net1",			//  comp. Dont include the ".net"
-		netFile2 = ".\\Results\\80Nodes_07Exp_05Learn\\train_net1",			// comp. Dont include the ".net"
-		play1Name = "250Nodes_07Exp_05Learn",				// comp
-		play2Name = "80Nodes_07Exp_05Learn";		// comp
+	std::string
+		play1Name = "250Nodes_07Exp_01Learn",				// comp
+		play2Name = "250Nodes_07Exp_05-01Learn",		// comp
+		netFile1 = ".\\Results\\" + play1Name + "\\train_net1",			//  comp. Dont include the ".net"
+		netFile2 = ".\\Results\\" + play2Name + "\\train_net1";			// comp. Dont include the ".net"
 
 	// Neural Network //
 	unsigned int 
@@ -198,7 +198,7 @@ public:
 		RL_LEARNFACTOR = 0.5f;
 
 	// Training //
-	unsigned int episodes = 100;		// For results set at 50000 comp train
+	unsigned int episodes = 10000;		// For results set at 50000 for train, 10000 for comp
 	unsigned int randPlayAmount = 10;	// For results set at 1000 train
 	bool isTraining = false,			// train comp
 		isCompetition = true;			// train comp

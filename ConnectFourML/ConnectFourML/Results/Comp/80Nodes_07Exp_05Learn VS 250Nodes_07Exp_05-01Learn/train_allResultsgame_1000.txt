@@ -1,0 +1,3 @@
+TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand avgTrainGameLength avgRandGameLength
+80Nodes_07Exp_05Learn 250Nodes_07Exp_05-01Learn
+0 999 0 999 0 0 18 0
