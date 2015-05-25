@@ -171,8 +171,8 @@ public:
 		
 	// Comp //
 	std::string
-		play1Name = "250Nodes_07Exp_01Learn",				// comp
-		play2Name = "250Nodes_07Exp_05-01Learn",		// comp
+		play1Name = "1000Nodes_07Exp_05Learn", 				// comp
+		play2Name = "250Nodes_07Exp_01Learn",		// comp
 		netFile1 = ".\\Results\\" + play1Name + "\\train_net1",			//  comp. Dont include the ".net"
 		netFile2 = ".\\Results\\" + play2Name + "\\train_net1";			// comp. Dont include the ".net"
 
