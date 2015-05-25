@@ -198,7 +198,7 @@ public:
 		RL_LEARNFACTOR = 0.5f;
 
 	// Training //
-	unsigned int episodes = 10000;		// For results set at 50000 comp train
+	unsigned int episodes = 100;		// For results set at 50000 comp train
 	unsigned int randPlayAmount = 10;	// For results set at 1000 train
 	bool isTraining = false,			// train comp
 		isCompetition = true;			// train comp

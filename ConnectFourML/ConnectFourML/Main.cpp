@@ -31,15 +31,21 @@ int main(int argc, char* argv[])
 		play1TotalWins = 0,
 		play2TotalWins = 0,
 		play1RandWins = 0,
-		play2RandWins = 0, 
-		learnWins = 0, 
-		randWins = 0;
+		play2RandWins = 0,
+		learnWins = 0,
+		randWins = 0,
+		moves = 0,
+		totalMoves = 0,
+		randMoves = 0,
+		totalRandMoves = 0,
+		avgMoves = 0,
+		avgRandMoves = 0;
 
 	int percentile = 0;
 	double p1Percent[10];
 	double p2Percent[10];
 	std::stringstream str_allResults;
-	str_allResults << "TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand\n";
+	str_allResults << "TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand avgTrainGameLength avgRandGameLength\n";
 	if (globals.isCompetition)
 		str_allResults << globals.play1Name << ' ' << globals.play2Name << '\n';
 	else
@@ -67,24 +73,29 @@ int main(int argc, char* argv[])
 				globals.isTraining = false;
 				for (int c = 0; c < globals.randPlayAmount; c++){
 					Connect4Result result = ConnectFour();
+					randMoves += result.moves;
+					totalRandMoves += result.moves;
 					if (result.winner == 1) {
 						learnWins++;
 						play1RandWins++;}
 					else {
 						randWins++;
 						play2RandWins++;}}
+				avgRandMoves = randMoves / game_range;
 			}
+			avgMoves = moves / game_range;
 
-			if (globals.isCompetition) 
-
-			str_allResults << game_range_lower << " " << game_range_upper << " " << play1Wins << " " << play2Wins << " " << learnWins << " " << randWins << "\n";
+			str_allResults << game_range_lower << " " << game_range_upper << " " << play1Wins << " " << play2Wins 
+								<< " " << learnWins << " " << randWins << " " << avgMoves << " " << avgRandMoves << "\n";
 			std::ofstream tempAllResultsOut(globals.allResultsFile + "game_"
 				+ std::to_string(globals.gamesPlayed + 1) + ".txt", std::ofstream::ate);
-			
+
 			play1Wins = 0;
 			play2Wins = 0;
 			learnWins = 0;
 			randWins = 0;
+			moves = 0;
+			randMoves = 0;
 			tempAllResultsOut << str_allResults.str();
 
 			globals.playRandomPlayer = false;
@@ -96,6 +107,8 @@ int main(int argc, char* argv[])
 		try {
 			Connect4Result result = ConnectFour();
 			// Evaluate and store the result
+			moves += result.moves;
+			totalMoves += result.moves;
 			if (result.winner == 1){
 				play1Wins++;
 				play1TotalWins++;}
@@ -110,7 +123,7 @@ int main(int argc, char* argv[])
 #pragma endregion
 	// Add totals to end of train_results.txt
 	str_allResults << "0 " << globals.episodes - 1 << " " << play1TotalWins << " " << play2TotalWins
-		<< " " << play1RandWins << " " << play2RandWins;
+		<< " " << play1RandWins << " " << play2RandWins << " " << (totalMoves / globals.episodes) << " " << (totalRandMoves / globals.episodes) << '\n';
 	// Print allResults to File
 	std::ofstream allResultsOut(globals.allResultsFile + ".txt", std::ofstream::ate);
 	allResultsOut << str_allResults.str();

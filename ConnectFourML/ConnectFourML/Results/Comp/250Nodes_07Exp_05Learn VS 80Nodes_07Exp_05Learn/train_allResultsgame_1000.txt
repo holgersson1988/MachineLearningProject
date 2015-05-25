@@ -1,0 +1,3 @@
+TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand
+250Nodes_07Exp_05Learn 80Nodes_07Exp_05Learn
+0 999 500 499 0 0
