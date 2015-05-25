@@ -17,23 +17,21 @@ int charsPlaced;
 
 Connect4Result ConnectFour()
 {
-
 	std::vector<MoveDepth> gameSequence;// = globals.gameSequence;
 	int colChoice;				// Will house user row choice
 	int depthChoice = 0;		// Will hold drop value
 	charsPlaced = 0;
 	bool gamewon = false;
 
-//////////// fill place with whitespaces////////////////////////
+	// fill place with whitespaces //
 	place.clear();
 	place.resize(6, vector<char>(7, ' '));
-////////////////////////////////////////////////////////////////
 
+	// Neural Nets //
 	FANN::neural_net* net1 = globals.net1;
 	FANN::neural_net* net2 = globals.net2;
 
-///////////// Initialize LearnObject ///////////////////////////
-
+	// Initialize LearnObject //
 	Learn learnObj = Learn();
 	learnObj.setNet(net1);
 	learnObj.setDecay(globals.RL_DECAY);
@@ -43,9 +41,8 @@ Connect4Result ConnectFour()
 	learnObj2.setNet(net2);
 	learnObj2.setDecay(globals.RL_DECAY);
 	learnObj2.setLearn(globals.RL_LEARNFACTOR);
-////////////////////////////////////////////////////////////////
 
-	// initialize two players
+	// Initialize two players
 	Player* play1;
 	Player* play2;
 
@@ -68,21 +65,15 @@ Connect4Result ConnectFour()
 	else{
 		play2 = &RandomPlayer(CHAR2);
 	}
-
+	
 	if (globals.playRandomPlayer)
 		play2 = &RandomPlayer(CHAR2);
 	
-	//LearnPlayer* play1 = new LearnPlayer(CHAR1, &learnObj);
-	//LearnPlayer* play2 = new LearnPlayer(CHAR2, &learnObj);
-
+	// Alternate starting Player
 	if (globals.gamesPlayed % 2 == 0)
-	{
-		player = play2;		//start as player 2, will change back to player 1
-	}
+		player = play2;
 	else
-	{
 		player = play1;
-	}
 	
 
 	// Main game loop
@@ -118,22 +109,35 @@ Connect4Result ConnectFour()
 
 
 
- 	if (globals.isTraining){
-	/////////////////// Save every 1/10 while traing
+ 	if (globals.isTraining || globals.isCompetition){
+	/////////////////// Save every 1/10 while training
 		int game_range = globals.episodes / 10;      
 		std::stringstream ss;
 		ss << "train_gameNum_" << (globals.gamesPlayed + 1) << ".txt";
 		std::string gameFileName = ss.str();
-		if ((globals.gamesPlayed + 1) % game_range == 0)
+		if (((globals.gamesPlayed + 1) % game_range == 0))
 		{
-			// Print a Game //
+			// Print Game Sequence //
 			std::ofstream out(gameFileName, std::ofstream::out);
 			auto coutbuf = std::cout.rdbuf(out.rdbuf()); //save and redirect
 			std::string sType = typeid(*play1).name();
-			cout << "Game " << globals.gamesPlayed + 1 << "\n";
-			cout << "Player1 (x) is " << sType << std::endl;
-			sType = typeid(*play2).name();
-			cout << "Player2 (o) is " << sType << std::endl;
+
+			if (globals.isTraining && !globals.isCompetition)
+			{
+				cout << "Game " << globals.gamesPlayed + 1 << "\n";
+				cout << "Player1 (x) is " << sType << std::endl;
+				sType = typeid(*play2).name();
+				cout << "Player2 (o) is " << sType << std::endl;
+			}
+
+			if (globals.isCompetition)
+			{
+				cout << "Game " << globals.gamesPlayed + 1 << "\n";
+				cout << "Player1 (x) is " << globals.play1Name << std::endl;
+				sType = typeid(*play2).name();
+				cout << "Player2 (o) is " << globals.play2Name << std::endl;
+			}
+
 			displaySequence(gameSequence);
 			out.flush();
 			out.close();

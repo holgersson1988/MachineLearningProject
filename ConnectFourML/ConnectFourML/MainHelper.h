@@ -165,23 +165,31 @@ struct Globals{
 public:
 
 	// File Names //
-	std::string netFile1 = "train_net1",	// Save net1, is default for one LearnPlayer
-		netFile2 = "train_net2",			// Save net2
-		resultsFile = "train_results",		// TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand
-		randPlayFile = "train_randPlay",	// 0 99 450 550 677 223
-		allResultsFile = "train_allResults"; 
+	std::string 
+		allResultsFile = "train_allResults", // TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand
+		randPlayFile = "train_randPlay";	// 0 99 450 550 677 223
+		
+	// Comp //
+	std::string 
+		netFile1 = ".\\Results\\250Nodes_07Exp_05Learn\\train_net1",			//  comp. Dont include the ".net"
+		netFile2 = ".\\Results\\80Nodes_07Exp_05Learn\\train_net1",			// comp. Dont include the ".net"
+		play1Name = "250Nodes_07Exp_05Learn",				// comp
+		play2Name = "80Nodes_07Exp_05Learn";		// comp
 
 	// Neural Network //
-	unsigned int NN_LAYERS = 3,
+	unsigned int 
+		NN_LAYERS = 3,
 		NN_INPUTS = 84,
 		NN_HIDDEN_NODES = 80,
 		NN_OUPUTS = 1,
 		NN_MAXEPOCHS = 1000,
 		NN_REPORTEVERY = 1001;
-	float NN_LEARNRATE = 0.5f,
+	float 
+		NN_LEARNRATE = 0.5f,
 		NN_LEARNRATE_DECAY = 1.0,
 		NN_DESIREDERROR = 0.001;
-	bool NN_LEARNRATE_DECAY_BOOL = false;
+	bool 
+		NN_LEARNRATE_DECAY_BOOL = false;
 
 	// RL Learning //
 	float RL_REWARD_TIE = -1.0f,
@@ -190,44 +198,51 @@ public:
 		RL_LEARNFACTOR = 0.5f;
 
 	// Training //
-	unsigned int episodes = 100;      // For results set at 50000
-	unsigned int randPlayAmount = 10; // For results set at 1000
+	unsigned int episodes = 10000;		// For results set at 50000 comp train
+	unsigned int randPlayAmount = 10;	// For results set at 1000 train
+	bool isTraining = false,			// train comp
+		isCompetition = true;			// train comp
 
 	// Stats
 	int p1OpeningMoves[7]; // = { 0, 0, 0, 0, 0, 0, 0 };
 	int p2OpeningMoves[7]; // = { 0, 0, 0, 0, 0, 0, 0 };
 
 	// Other //
-	bool isTraining = true,
-		showBoard = false,
+	bool showBoard = false,
 		playRandomPlayer = false;	// Dont't set to true here
-	FANN::neural_net* net1;			// = new FANN::neural_net(); // Create two nets
+	FANN::neural_net* net1;			// 
 	FANN::neural_net* net2;			//
-	bool player1Learning = true;	// Set if learning or random
-	bool player2Learning = true;	//
-	bool loadNet1 = false;			// Load net 1 from file?
-	bool loadNet2 = false;			// Load net 2 from file? Otherwise it does not exist.
+	bool player1Learning = true;	// Always true for train/comp
+	bool player2Learning = true;	// Always true for train/comp
+	bool loadNet1 = true;			// train comp
+	bool loadNet2 = true;			// train comp
 	int gamesPlayed = 0;
+	bool error = false;
 
-
-Globals()
+	Globals()
 	{
 		// Create net 1
-		ANN ArtificialNeuralNet = ANN(NN_LAYERS, NN_INPUTS, NN_HIDDEN_NODES,
+		ANN ArtificialNeuralNet1 = ANN(NN_LAYERS, NN_INPUTS, NN_HIDDEN_NODES,
 			NN_OUPUTS, NN_LEARNRATE);
-		net1 = ArtificialNeuralNet.getANN();
-
-		if (loadNet1)
-		{
-			net1->create_from_file(netFile1 + ".net");
+		net1 = ArtificialNeuralNet1.getANN();
+		ANN ArtificialNeuralNet2 = ANN(NN_LAYERS, NN_INPUTS, NN_HIDDEN_NODES,
+			NN_OUPUTS, NN_LEARNRATE);
+		net2 = ArtificialNeuralNet2.getANN();
+		
+		// Improper setup. Competition but not loading both nets
+		if (isCompetition && (!loadNet1 || !loadNet2))
+			error = true;
+		
+		if (loadNet1){
+			if (!net1->create_from_file(netFile1 + ".net"))
+				error = true;
 		}
-		if (loadNet2)
-		{
-			net2->create_from_file(netFile2 + ".net");
+		if (loadNet2){
+			if (!net2->create_from_file(netFile2 + ".net"))
+				error = true;
 		}
 
-		for (int i = 0; i < 7; i++)
-		{
+		for (int i = 0; i < 7; i++){
 			p1OpeningMoves[i] = 0;
 			p2OpeningMoves[i] = 0;
 		}

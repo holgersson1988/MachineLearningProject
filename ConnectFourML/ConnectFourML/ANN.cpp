@@ -50,7 +50,7 @@ ANN::ANN(unsigned int layers, unsigned int inputs,  unsigned int hidden, unsigne
 
 ANN::~ANN()
 {
-	//net->destroy();
+	//delete &net;
 }
 
 FANN::neural_net* ANN::getANN()
