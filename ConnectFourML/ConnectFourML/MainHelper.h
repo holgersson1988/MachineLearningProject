@@ -163,17 +163,13 @@ extern int charsPlaced;
 
 struct Globals{
 public:
-	// Loading and saving net 
-	FANN::neural_net* net1;// = new FANN::neural_net(); // Create two nets
-	FANN::neural_net* net2;//
-	bool player1Learning = true; // Set if learning or random
-	bool player2Learning = true;
-	bool loadNet1 = false; // Load net 1 from file?
-	bool loadNet2 = false; // Load net 2 from file? Otherwise it does not exist.
-	std::string netFile1 = "train_net1",
-		netFile2 = "train_net2",
-		saveToFile = "train_results",
-		saveRandPlay = "train_randPlay";
+
+	// File Names //
+	std::string netFile1 = "train_net1",	// Save net1, is default for one LearnPlayer
+		netFile2 = "train_net2",			// Save net2
+		resultsFile = "train_results",		// TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand
+		randPlayFile = "train_randPlay",	// 0 99 450 550 677 223
+		allResultsFile = "train_allResults"; 
 
 	// Neural Network //
 	unsigned int NN_LAYERS = 3,
@@ -193,18 +189,24 @@ public:
 		RL_DECAY = 0.97f,
 		RL_LEARNFACTOR = 0.5f;
 
-	// Stats
-	int p1OpeningMoves[7];// = { 0, 0, 0, 0, 0, 0, 0 };
-	int p2OpeningMoves[7];// = { 0, 0, 0, 0, 0, 0, 0 };
-
 	// Training //
-	unsigned int episodes = 50000;
-	unsigned int randPlayAmount = 1000;
+	unsigned int episodes = 100;      // For results set at 50000
+	unsigned int randPlayAmount = 10; // For results set at 1000
+
+	// Stats
+	int p1OpeningMoves[7]; // = { 0, 0, 0, 0, 0, 0, 0 };
+	int p2OpeningMoves[7]; // = { 0, 0, 0, 0, 0, 0, 0 };
 
 	// Other //
 	bool isTraining = true,
 		showBoard = false,
-		playRandomPlayer = false; // Dont't set to true here.
+		playRandomPlayer = false;	// Dont't set to true here
+	FANN::neural_net* net1;			// = new FANN::neural_net(); // Create two nets
+	FANN::neural_net* net2;			//
+	bool player1Learning = true;	// Set if learning or random
+	bool player2Learning = true;	//
+	bool loadNet1 = false;			// Load net 1 from file?
+	bool loadNet2 = false;			// Load net 2 from file? Otherwise it does not exist.
 	int gamesPlayed = 0;
 
 
