@@ -180,7 +180,7 @@ public:
 	unsigned int 
 		NN_LAYERS = 3,
 		NN_INPUTS = 84,
-		NN_HIDDEN_NODES = 1000,
+		NN_HIDDEN_NODES = 250,
 		NN_OUPUTS = 1,
 		NN_MAXEPOCHS = 1000,
 		NN_REPORTEVERY = 1001;

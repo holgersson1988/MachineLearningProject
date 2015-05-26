@@ -114,7 +114,7 @@ Connect4Result ConnectFour()
 		int game_range = globals.episodes / 10;      
 		std::stringstream ss;
 		ss << "train_gameNum_" << (globals.gamesPlayed + 1) << ".txt";
-		std::string gameFileName = ss.str();
+		std::string gameFileName =  ss.str();
 		if (((globals.gamesPlayed + 1) % game_range == 0))
 		{
 			// Print Game Sequence //

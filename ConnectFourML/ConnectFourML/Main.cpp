@@ -71,16 +71,22 @@ int main(int argc, char* argv[])
 			if (globals.isTraining && !globals.isCompetition){
 				globals.playRandomPlayer = true;
 				globals.isTraining = false;
+
 				for (int c = 0; c < globals.randPlayAmount; c++){
 					Connect4Result result = ConnectFour();
 					randMoves += result.moves;
 					totalRandMoves += result.moves;
 					if (result.winner == 1) {
 						learnWins++;
-						play1RandWins++;}
+						play1RandWins++;
+					}
 					else {
 						randWins++;
-						play2RandWins++;}}
+						play2RandWins++;
+					}
+				}
+				globals.playRandomPlayer = false;
+				globals.isTraining = true;
 				avgRandMoves = randMoves / game_range;
 			}
 			avgMoves = moves / game_range;
@@ -98,8 +104,6 @@ int main(int argc, char* argv[])
 			randMoves = 0;
 			tempAllResultsOut << str_allResults.str();
 
-			globals.playRandomPlayer = false;
-			globals.isTraining = true;
 		}
 
 		// Play a game

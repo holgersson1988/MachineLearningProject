@@ -1,0 +1,11 @@
+TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand avgTrainGameLength avgRandGameLength
+LearnPlayer only
+0 9 4 4 4 6 24 20
+10 19 4 6 7 3 20 19
+20 29 5 5 8 2 25 15
+30 39 3 4 6 4 27 18
+40 49 4 6 5 5 17 18
+50 59 4 6 7 3 24 15
+60 69 6 4 9 1 25 15
+70 79 6 2 7 3 31 16
+80 89 2 8 7 3 18 15
