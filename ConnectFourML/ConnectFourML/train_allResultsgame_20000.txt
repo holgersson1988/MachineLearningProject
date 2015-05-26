@@ -1,0 +1,6 @@
+TrainStart TrainEnd WinPlay1 WinPlay2 WinPlay1Rand WinPlay2Rand avgTrainGameLength avgRandGameLength
+LearnPlayer only
+0 4999 2408 2466 605 395 20 3
+5000 9999 2487 2474 474 526 15 3
+10000 14999 2495 2488 778 222 12 3
+15000 19999 2420 2544 715 285 12 3

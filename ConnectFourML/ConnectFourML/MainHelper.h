@@ -180,7 +180,7 @@ public:
 	unsigned int 
 		NN_LAYERS = 3,
 		NN_INPUTS = 84,
-		NN_HIDDEN_NODES = 80,
+		NN_HIDDEN_NODES = 1000,
 		NN_OUPUTS = 1,
 		NN_MAXEPOCHS = 1000,
 		NN_REPORTEVERY = 1001;
@@ -198,10 +198,10 @@ public:
 		RL_LEARNFACTOR = 0.5f;
 
 	// Training //
-	unsigned int episodes = 10000;		// For results set at 50000 for train, 10000 for comp
-	unsigned int randPlayAmount = 10;	// For results set at 1000 train
-	bool isTraining = false,			// train comp
-		isCompetition = true;			// train comp
+	unsigned int episodes = 50000;		// For results set at 50000 for train, 10000 for comp
+	unsigned int randPlayAmount = 1000;	// For results set at 1000 train
+	bool isTraining = true,			// train comp
+		isCompetition = false;			// train comp
 
 	// Stats
 	int p1OpeningMoves[7]; // = { 0, 0, 0, 0, 0, 0, 0 };
@@ -214,8 +214,8 @@ public:
 	FANN::neural_net* net2;			//
 	bool player1Learning = true;	// Always true for train/comp
 	bool player2Learning = true;	// Always true for train/comp
-	bool loadNet1 = true;			// train comp
-	bool loadNet2 = true;			// train comp
+	bool loadNet1 = false;			// train comp
+	bool loadNet2 = false;			// train comp
 	int gamesPlayed = 0;
 	bool error = false;
 
