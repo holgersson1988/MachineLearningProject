@@ -180,12 +180,12 @@ public:
 	unsigned int 
 		NN_LAYERS = 3,
 		NN_INPUTS = 84,
-		NN_HIDDEN_NODES = 250,
+		NN_HIDDEN_NODES = 80,
 		NN_OUPUTS = 1,
 		NN_MAXEPOCHS = 1000,
 		NN_REPORTEVERY = 1001;
 	float 
-		NN_LEARNRATE = 0.5f,
+		NN_LEARNRATE = 0.1f,
 		NN_LEARNRATE_DECAY = 1.0,
 		NN_DESIREDERROR = 0.001;
 	bool 
@@ -198,8 +198,8 @@ public:
 		RL_LEARNFACTOR = 0.5f;
 
 	// Training //
-	unsigned int episodes = 50000;		// For results set at 50000 for train, 10000 for comp
-	unsigned int randPlayAmount = 1000;	// For results set at 1000 train
+	unsigned int episodes = 100;		// For results set at 50000 for train, 10000 for comp
+	unsigned int randPlayAmount = 10;	// For results set at 1000 train
 	bool isTraining = true,			// train comp
 		isCompetition = false;			// train comp
 
@@ -215,7 +215,7 @@ public:
 	bool player1Learning = true;	// Always true for train/comp
 	bool player2Learning = true;	// Always true for train/comp
 	bool loadNet1 = false;			// train comp
-	bool loadNet2 = false;			// train comp
+	bool loadNet2 = false;			// Fals for train. comp
 	int gamesPlayed = 0;
 	bool error = false;
 
